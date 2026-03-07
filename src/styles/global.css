@@ -1,77 +1,39 @@
 @import "tailwindcss";
 
-/* ============================================================
-   DESIGN TOKENS — ExAI Brand
-   ============================================================ */
-
 @theme {
-  /* --- Colors --- */
   --color-bg-base:        #0a0a0f;
   --color-bg-surface:     #111118;
   --color-bg-elevated:    #1a1a2e;
-
   --color-accent-purple:  #a855f7;
   --color-accent-violet:  #7c3aed;
   --color-accent-cyan:    #22d3ee;
   --color-accent-glow:    #c084fc;
-
   --color-text-primary:   #f4f4f5;
   --color-text-secondary: #a1a1aa;
   --color-text-muted:     #52525b;
-
   --color-border:         #27272a;
   --color-border-accent:  rgba(124, 58, 237, 0.25);
-
-  /* --- Typography --- */
-  --font-display: 'Inter', system-ui, sans-serif;
   --font-body:    'Inter', system-ui, sans-serif;
   --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
-
-  /* --- Spacing --- */
-  --spacing-section:   6rem;
-  --spacing-container: 1280px;
-
-  /* --- Radius --- */
-  --radius-card: 0.75rem;
-  --radius-pill: 9999px;
-
-  /* --- Shadows --- */
+  --radius-card:  0.75rem;
+  --radius-pill:  9999px;
   --shadow-glow-purple: 0 0 40px rgba(168, 85, 247, 0.25);
-  --shadow-glow-cyan:   0 0 40px rgba(34, 211, 238, 0.2);
 }
 
-/* ============================================================
-   BASE
-   ============================================================ */
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+/* Base */
 html {
   scroll-behavior: smooth;
   background-color: var(--color-bg-base);
   color: var(--color-text-primary);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
-
 body { min-height: 100vh; display: flex; flex-direction: column; }
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: var(--color-bg-base); }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
 
-::-webkit-scrollbar        { width: 5px; }
-::-webkit-scrollbar-track  { background: var(--color-bg-base); }
-::-webkit-scrollbar-thumb  { background: var(--color-border); border-radius: 3px; }
-
-/* ============================================================
-   UTILITIES
-   ============================================================ */
-
-.container {
-  width: 100%;
-  max-width: var(--spacing-container);
-  margin-inline: auto;
-  padding-inline: 1.5rem;
-}
-
+/* Gradient text — cannot be done with Tailwind */
 .gradient-text {
   background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-cyan));
   -webkit-background-clip: text;
@@ -79,15 +41,7 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
   background-clip: text;
 }
 
-.glow-border {
-  border: 1px solid var(--color-border-accent);
-  box-shadow: var(--shadow-glow-purple);
-}
-
-/* ============================================================
-   BUTTONS
-   ============================================================ */
-
+/* Buttons — complex enough to warrant CSS classes */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -99,9 +53,9 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
   font-weight: 600;
   font-size: 0.95rem;
   text-decoration: none;
-  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
   border: none;
   cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
 }
 .btn-primary:hover {
   background: var(--color-accent-glow);
@@ -120,9 +74,9 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
   font-weight: 500;
   font-size: 0.95rem;
   text-decoration: none;
-  transition: border-color 0.2s, color 0.2s, transform 0.15s;
   background: transparent;
   cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, transform 0.15s;
 }
 .btn-ghost:hover {
   border-color: var(--color-accent-purple);
@@ -130,16 +84,11 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
   transform: translateY(-1px);
 }
 
-/* ============================================================
-   GSAP — initial hidden state for animated elements
-   ============================================================ */
-
-[data-animate] {
-  opacity: 0;
-  transform: translateY(24px);
+/* Hero fade-in — used on index hero section only */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-
-[data-animate-child] {
-  opacity: 0;
-  transform: translateY(20px);
+.animate-fade-up {
+  animation: fadeUp 0.8s ease-out forwards;
 }

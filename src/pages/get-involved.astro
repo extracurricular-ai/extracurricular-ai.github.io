@@ -9,31 +9,31 @@ import { GITHUB_ORG, GITHUB_REPO, GITHUB_REPO_DISCUSSIONS, GITHUB_REPO_ISSUES } 
   description="Join the Extracurricular AI collective — contribute to open source AI projects, share ideas, and build with us."
 >
   <!-- PAGE HERO -->
-  <section data-animate style="padding: 10rem 0 5rem; text-align: center; position: relative; overflow: hidden;">
-    <div style="
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(168, 85, 247, 0.1) 0%, transparent 70%);
-      pointer-events: none;
-    "></div>
-    <div class="container" style="position: relative;">
-      <p style="color: var(--color-accent-purple); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem;">Join the Collective</p>
-      <h1 style="font-size: clamp(2.25rem, 6vw, 4rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 1.5rem;">
+  <section class="pt-40 pb-20 text-center relative overflow-hidden animate-fade-up">
+    <!-- radial-gradient background must stay inline -->
+    <div
+      class="absolute inset-0 pointer-events-none"
+      style="background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(168, 85, 247, 0.1) 0%, transparent 70%);"
+    ></div>
+    <div class="max-w-[1280px] mx-auto px-6 relative">
+      <p class="text-accent-purple text-[0.8rem] font-semibold uppercase tracking-[0.08em] mb-4">Join the Collective</p>
+      <h1 class="font-black tracking-[-0.03em] mb-6" style="font-size: clamp(2.25rem, 6vw, 4rem);">
         Build with <span class="gradient-text">us</span>
       </h1>
-      <p style="color: var(--color-text-secondary); font-size: clamp(1rem, 2vw, 1.2rem); max-width: 560px; margin-inline: auto; line-height: 1.75;">
+      <p class="text-text-secondary max-w-[560px] mx-auto leading-[1.75]" style="font-size: clamp(1rem, 2vw, 1.2rem);">
         No applications, no gatekeeping. If you want to build AI tools in the open, you're already in.
       </p>
     </div>
   </section>
 
   <!-- WAYS TO CONTRIBUTE -->
-  <AnimatedSection style="padding: var(--spacing-section) 0;" group>
-    <div class="container">
-      <div style="margin-bottom: 2.5rem;">
-        <h2 style="font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.75rem;">Ways to contribute</h2>
-        <p style="color: var(--color-text-secondary); max-width: 480px;">Every skill level welcome. Pick your entry point.</p>
+  <AnimatedSection class="py-6" group>
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="mb-10">
+        <h2 class="font-extrabold tracking-[-0.02em] mb-3" style="font-size: clamp(1.75rem, 4vw, 2.5rem);">Ways to contribute</h2>
+        <p class="text-text-secondary max-w-[480px]">Every skill level welcome. Pick your entry point.</p>
       </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem;">
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5">
         {[
           {
             icon: '🔧',
@@ -62,17 +62,17 @@ import { GITHUB_ORG, GITHUB_REPO, GITHUB_REPO_DISCUSSIONS, GITHUB_REPO_ISSUES } 
         ].map(({ icon, title, description, cta, href, external }) => (
           <div
             data-animate-child
-            style="background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-card); padding: 1.75rem; display: flex; flex-direction: column;"
+            class="bg-bg-surface border border-border rounded-[var(--radius-card)] p-7 flex flex-col"
           >
-            <div style="font-size: 2rem; margin-bottom: 1rem;">{icon}</div>
-            <h3 style="color: var(--color-text-primary); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">{title}</h3>
-            <p style="color: var(--color-text-secondary); font-size: 0.9rem; line-height: 1.6; flex: 1; margin-bottom: 1.5rem;">{description}</p>
+            <div class="text-[2rem] mb-4">{icon}</div>
+            <h3 class="text-text-primary text-[1.1rem] font-bold mb-2">{title}</h3>
+            <p class="text-text-secondary text-[0.9rem] leading-relaxed flex-1 mb-6">{description}</p>
             <a
               href={href}
               target={external ? '_blank' : undefined}
               rel={external ? 'noopener noreferrer' : undefined}
-              class="btn-ghost"
-              style="align-self: flex-start; padding: 0.5rem 1.25rem; font-size: 0.875rem;"
+              class="btn-ghost self-start"
+              style="padding: 0.5rem 1.25rem; font-size: 0.875rem;"
             >
               {cta} {external ? '↗' : '→'}
             </a>
@@ -83,15 +83,15 @@ import { GITHUB_ORG, GITHUB_REPO, GITHUB_REPO_DISCUSSIONS, GITHUB_REPO_ISSUES } 
   </AnimatedSection>
 
   <!-- OPEN ISSUES -->
-  <AnimatedSection style="padding: var(--spacing-section) 0; background: var(--color-bg-surface);">
-    <div class="container">
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+  <AnimatedSection class="py-6 bg-bg-surface">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
         <div>
-          <p style="color: var(--color-accent-purple); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem;">Good first issues</p>
-          <h2 style="font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem;">
+          <p class="text-accent-purple text-[0.8rem] font-semibold uppercase tracking-[0.08em] mb-3">Good first issues</p>
+          <h2 class="font-extrabold tracking-[-0.02em] mb-4" style="font-size: clamp(1.5rem, 3vw, 2.25rem);">
             Jump right in
           </h2>
-          <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: 2rem;">
+          <p class="text-text-secondary leading-[1.8] mb-8">
             Check out open issues on our repos — we tag beginner-friendly tasks so you can find your footing without any friction.
           </p>
           <a
@@ -103,33 +103,25 @@ import { GITHUB_ORG, GITHUB_REPO, GITHUB_REPO_DISCUSSIONS, GITHUB_REPO_ISSUES } 
             View Open Issues ↗
           </a>
         </div>
-        <div style="
-          background: var(--color-bg-elevated);
-          border: 1px solid var(--color-border);
-          border-radius: 1rem;
-          padding: 1.5rem;
-          font-family: var(--font-mono);
-          font-size: 0.82rem;
-          line-height: 1.9;
-        ">
-          <p style="color: var(--color-text-muted); margin-bottom: 0.5rem;"># how to contribute</p>
-          <p><span style="color: var(--color-accent-cyan);">1.</span> <span style="color: var(--color-text-secondary);">Fork the repo</span></p>
-          <p><span style="color: var(--color-accent-cyan);">2.</span> <span style="color: var(--color-text-secondary);">Create a branch</span></p>
-          <p><span style="color: var(--color-accent-cyan);">3.</span> <span style="color: var(--color-text-secondary);">Make your changes</span></p>
-          <p><span style="color: var(--color-accent-cyan);">4.</span> <span style="color: var(--color-text-secondary);">Open a PR</span></p>
-          <p><span style="color: var(--color-accent-cyan);">5.</span> <span style="color: var(--color-accent-purple);">Ship it 🚀</span></p>
+        <div class="bg-bg-elevated border border-border rounded-[1rem] p-6 font-mono text-[0.82rem] leading-[1.9]">
+          <p class="text-text-muted mb-2"># how to contribute</p>
+          <p><span class="text-accent-cyan">1.</span> <span class="text-text-secondary">Fork the repo</span></p>
+          <p><span class="text-accent-cyan">2.</span> <span class="text-text-secondary">Create a branch</span></p>
+          <p><span class="text-accent-cyan">3.</span> <span class="text-text-secondary">Make your changes</span></p>
+          <p><span class="text-accent-cyan">4.</span> <span class="text-text-secondary">Open a PR</span></p>
+          <p><span class="text-accent-cyan">5.</span> <span class="text-accent-purple">Ship it 🚀</span></p>
         </div>
       </div>
     </div>
   </AnimatedSection>
 
   <!-- FINAL CTA -->
-  <AnimatedSection style="padding: var(--spacing-section) 0; text-align: center;">
-    <div class="container">
-      <h2 style="font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem;">
+  <AnimatedSection class="py-16 text-center">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <h2 class="font-extrabold tracking-[-0.02em] mb-4" style="font-size: clamp(1.75rem, 4vw, 2.75rem);">
         The door is <span class="gradient-text">always open.</span>
       </h2>
-      <p style="color: var(--color-text-secondary); max-width: 440px; margin: 0 auto 2rem; line-height: 1.7;">
+      <p class="text-text-secondary max-w-[440px] mx-auto mb-8 leading-[1.7]">
         You don't need permission to contribute. Just show up, build something, and share it.
       </p>
       <a href={GITHUB_ORG} target="_blank" rel="noopener noreferrer" class="btn-primary">
@@ -138,9 +130,3 @@ import { GITHUB_ORG, GITHUB_REPO, GITHUB_REPO_DISCUSSIONS, GITHUB_REPO_ISSUES } 
     </div>
   </AnimatedSection>
 </BaseLayout>
-
-<style>
-  @media (max-width: 768px) {
-    .two-col { grid-template-columns: 1fr !important; }
-  }
-</style>

@@ -11,67 +11,34 @@ import { GITHUB_ORG, GITHUB_REPO } from '../config';
   description="Extracurricular AI — a space for builders who learn by shipping."
 >
   <!-- HERO -->
-  <section
-    data-animate
-    style="
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding-top: 5rem;
-      position: relative;
-      overflow: hidden;
-    "
-  >
-    <!-- background glow -->
-    <div style="
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(124, 58, 237, 0.12) 0%, transparent 70%);
-      pointer-events: none;
-    "></div>
+  <section class="min-h-screen flex items-center pt-20 relative overflow-hidden animate-fade-up">
+    <!-- background glow — radial-gradient must stay inline -->
+    <div
+      class="absolute inset-0 pointer-events-none"
+      style="background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(124, 58, 237, 0.12) 0%, transparent 70%);"
+    ></div>
 
-    <div class="container" style="position: relative; text-align: center;">
-      <div style="
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        background: rgba(168, 85, 247, 0.1);
-        border: 1px solid rgba(168, 85, 247, 0.25);
-        border-radius: 9999px;
-        padding: 0.35rem 1rem;
-        font-size: 0.8rem;
-        font-weight: 600;
-        color: var(--color-accent-purple);
-        margin-bottom: 2rem;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-      ">
+    <div class="max-w-[1280px] mx-auto px-6 relative text-center">
+      <div class="inline-flex items-center gap-2 bg-accent-purple/10 border border-accent-purple/25 rounded-full px-4 py-1.5 text-[0.8rem] font-semibold text-accent-purple mb-8 uppercase tracking-[0.05em]">
         Open Collective · Open Source
       </div>
 
-      <h1 style="
-        font-size: clamp(2.75rem, 8vw, 5.5rem);
-        font-weight: 900;
-        line-height: 1.05;
-        letter-spacing: -0.03em;
-        margin-bottom: 1.5rem;
-        color: var(--color-text-primary);
-      ">
+      <h1
+        class="font-black leading-[1.05] tracking-[-0.03em] mb-6 text-text-primary"
+        style="font-size: clamp(2.75rem, 8vw, 5.5rem);"
+      >
         Building AI,<br /><span class="gradient-text">in the open.</span>
       </h1>
 
-      <p style="
-        font-size: clamp(1rem, 2.5vw, 1.25rem);
-        color: var(--color-text-secondary);
-        max-width: 600px;
-        margin: 0 auto 2.5rem;
-        line-height: 1.7;
-      ">
+      <p
+        class="text-text-secondary max-w-[600px] mx-auto mb-10 leading-[1.7]"
+        style="font-size: clamp(1rem, 2.5vw, 1.25rem);"
+      >
         An open collective exploring AI through hands-on experimentation —
         a space for builders who learn by shipping.
       </p>
 
-      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <div class="flex gap-4 justify-center flex-wrap">
         <a href="/projects" class="btn-primary">See Projects</a>
         <a href="/get-involved" class="btn-ghost">Get Involved</a>
       </div>
@@ -79,18 +46,18 @@ import { GITHUB_ORG, GITHUB_REPO } from '../config';
   </section>
 
   <!-- STATS STRIP -->
-  <AnimatedSection style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); padding: 2rem 0;">
-    <div class="container">
-      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem;">
+  <AnimatedSection class="border-t border-b border-border py-8">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="flex flex-wrap justify-center gap-12">
         {[
           { label: 'Open Source', value: '100%' },
           { label: 'Community Driven', value: '∞' },
           { label: 'Free Tools', value: 'Always' },
           { label: 'Learning by Doing', value: '⟶' },
         ].map(({ label, value }) => (
-          <div style="text-align: center;">
-            <div style="font-size: 1.75rem; font-weight: 900; color: var(--color-accent-purple);">{value}</div>
-            <div style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em;">{label}</div>
+          <div class="text-center">
+            <div class="text-[1.75rem] font-black text-accent-purple">{value}</div>
+            <div class="text-[0.8rem] text-text-muted mt-1 uppercase tracking-[0.05em]">{label}</div>
           </div>
         ))}
       </div>
@@ -98,14 +65,14 @@ import { GITHUB_ORG, GITHUB_REPO } from '../config';
   </AnimatedSection>
 
   <!-- FEATURED PROJECT -->
-  <AnimatedSection style="padding: var(--spacing-section) 0;">
-    <div class="container">
-      <div style="margin-bottom: 2.5rem;">
-        <p style="color: var(--color-accent-purple); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem;">Featured Project</p>
-        <h2 style="font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.75rem;">What we're building</h2>
-        <p style="color: var(--color-text-secondary); max-width: 520px;">Real tools, shipped in the open. Here's what the collective is working on right now.</p>
+  <AnimatedSection class="py-6">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="mb-10">
+        <p class="text-accent-purple text-[0.8rem] font-semibold uppercase tracking-[0.08em] mb-3">Featured Project</p>
+        <h2 class="font-extrabold tracking-[-0.02em] mb-3" style="font-size: clamp(1.75rem, 4vw, 2.5rem);">What we're building</h2>
+        <p class="text-text-secondary max-w-[520px]">Real tools, shipped in the open. Here's what the collective is working on right now.</p>
       </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 1.25rem;" data-animate-group>
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,480px),1fr))] gap-5" data-animate-group>
         <ProjectCard
           name="Open Deep Research"
           description="An open replication of OpenAI's Deep Research — parallel background tasks, real-time streaming UI, and a multi-agent pipeline. Built fast, shipped open."
@@ -114,20 +81,20 @@ import { GITHUB_ORG, GITHUB_REPO } from '../config';
           status="live"
         />
       </div>
-      <div style="margin-top: 2rem;">
+      <div class="mt-8">
         <a href="/projects" class="btn-ghost">View all projects →</a>
       </div>
     </div>
   </AnimatedSection>
 
   <!-- VALUES -->
-  <AnimatedSection style="padding: var(--spacing-section) 0; background: var(--color-bg-surface);" group>
-    <div class="container">
-      <div style="margin-bottom: 2.5rem; text-align: center;">
-        <h2 style="font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.75rem;">What we stand for</h2>
-        <p style="color: var(--color-text-secondary); max-width: 480px; margin-inline: auto;">The principles that guide everything we build and how we build it.</p>
+  <AnimatedSection class="py-6 bg-bg-surface" group>
+    <div class="max-w-[1280px] mx-auto px-6">
+      <div class="mb-10 text-center">
+        <h2 class="font-extrabold tracking-[-0.02em] mb-3" style="font-size: clamp(1.75rem, 4vw, 2.5rem);">What we stand for</h2>
+        <p class="text-text-secondary max-w-[480px] mx-auto">The principles that guide everything we build and how we build it.</p>
       </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
         <ValuePill icon="⚡" title="Learn by Shipping" description="The fastest way to learn AI is to build something real and put it in front of people." />
         <ValuePill icon="🔓" title="Open Source" description="Everything we make is public. No paywalls, no black boxes, no gatekeeping." />
         <ValuePill icon="🤝" title="Community First" description="We build together. Every contributor matters, regardless of skill level." />
@@ -137,21 +104,19 @@ import { GITHUB_ORG, GITHUB_REPO } from '../config';
   </AnimatedSection>
 
   <!-- GET INVOLVED CTA -->
-  <AnimatedSection style="padding: var(--spacing-section) 0;">
-    <div class="container" style="text-align: center;">
-      <div style="
-        background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(34, 211, 238, 0.08));
-        border: 1px solid var(--color-border-accent);
-        border-radius: 1.25rem;
-        padding: clamp(2rem, 6vw, 4rem);
-      ">
-        <h2 style="font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem;">
+  <AnimatedSection class="py-16">
+    <div class="max-w-[1280px] mx-auto px-6 text-center">
+      <div
+        class="border border-[var(--color-border-accent)] rounded-[1.25rem]"
+        style="background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(34, 211, 238, 0.08)); padding: clamp(2rem, 6vw, 4rem);"
+      >
+        <h2 class="font-extrabold tracking-[-0.02em] mb-4" style="font-size: clamp(1.75rem, 4vw, 2.75rem);">
           Ready to <span class="gradient-text">build something?</span>
         </h2>
-        <p style="color: var(--color-text-secondary); max-width: 480px; margin: 0 auto 2rem; line-height: 1.7;">
+        <p class="text-text-secondary max-w-[480px] mx-auto mb-8 leading-[1.7]">
           Join the collective. Open a PR, share an idea, or just say hi on GitHub.
         </p>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <div class="flex gap-4 justify-center flex-wrap">
           <a href="/get-involved" class="btn-primary">Get Involved</a>
           <a href={GITHUB_ORG} target="_blank" rel="noopener noreferrer" class="btn-ghost">GitHub ↗</a>
         </div>

@@ -45,7 +45,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://extracur
   </head>
   <body>
     <Nav client:load />
-    <main style="flex: 1;">
+    <main class="flex-1">
       <slot />
     </main>
     <Footer />

@@ -17,39 +17,27 @@ const isLive = status === 'live';
   target="_blank"
   rel="noopener noreferrer"
   data-animate-child
-  style={{
-    display: 'block',
-    background: 'var(--color-bg-surface)',
-    border: '1px solid var(--color-border)',
-    borderRadius: 'var(--radius-card)',
-    padding: '1.75rem',
-    textDecoration: 'none',
-    transition: 'border-color 0.2s, box-shadow 0.2s, transform 0.2s',
-    cursor: isLive ? 'pointer' : 'default',
-    opacity: isLive ? 1 : 0.5,
-  }}
-  onmouseover={isLive ? "this.style.borderColor='var(--color-accent-purple)'; this.style.boxShadow='var(--shadow-glow-purple)'; this.style.transform='translateY(-2px)'" : ''}
-  onmouseout={isLive ? "this.style.borderColor='var(--color-border)'; this.style.boxShadow='none'; this.style.transform='none'" : ''}
+  class:list={[
+    'block bg-bg-surface border border-border rounded-[var(--radius-card)] p-7 no-underline transition-[border-color,box-shadow,transform] duration-200',
+    isLive ? 'cursor-pointer opacity-100 hover:border-accent-purple hover:[box-shadow:var(--shadow-glow-purple)] hover:-translate-y-0.5' : 'cursor-default opacity-50',
+  ]}
 >
-  <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.75rem;">
-    <h3 style="color: var(--color-text-primary); font-size: 1.1rem; font-weight: 700;">{name}</h3>
-    <span style={{
-      fontSize: '0.7rem',
-      fontWeight: 600,
-      padding: '0.2rem 0.6rem',
-      borderRadius: 'var(--radius-pill)',
-      background: isLive ? 'rgba(168, 85, 247, 0.15)' : 'rgba(82, 82, 91, 0.3)',
-      color: isLive ? 'var(--color-accent-purple)' : 'var(--color-text-muted)',
-      whiteSpace: 'nowrap',
-    }}>
+  <div class="flex items-start justify-between gap-4 mb-3">
+    <h3 class="text-text-primary text-[1.1rem] font-bold">{name}</h3>
+    <span
+      class:list={[
+        'text-[0.7rem] font-semibold py-0.5 px-2.5 rounded-full whitespace-nowrap',
+        isLive ? 'bg-accent-purple/15 text-accent-purple' : 'bg-[rgba(82,82,91,0.3)] text-text-muted',
+      ]}
+    >
       {isLive ? '● Live' : '⟳ In progress'}
     </span>
   </div>
-  <p style="color: var(--color-text-secondary); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.25rem;">{description}</p>
+  <p class="text-text-secondary text-[0.9rem] leading-relaxed mb-5">{description}</p>
   {tags.length > 0 && (
-    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+    <div class="flex flex-wrap gap-2">
       {tags.map((tag) => (
-        <span style="font-size: 0.75rem; padding: 0.2rem 0.65rem; background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: var(--radius-pill); color: var(--color-text-muted);">
+        <span class="text-[0.75rem] py-0.5 px-2.5 bg-bg-elevated border border-border rounded-full text-text-muted">
           {tag}
         </span>
       ))}

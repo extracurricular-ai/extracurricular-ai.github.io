@@ -10,30 +10,30 @@ import { GITHUB_ORG, GITHUB_REPO } from '../config';
   description="Open source AI projects built by the Extracurricular AI collective."
 >
   <!-- PAGE HERO -->
-  <section data-animate style="padding: 10rem 0 5rem; position: relative; overflow: hidden;">
-    <div style="
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(34, 211, 238, 0.07) 0%, transparent 70%);
-      pointer-events: none;
-    "></div>
-    <div class="container" style="position: relative;">
-      <p style="color: var(--color-accent-cyan); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem;">Open Source Projects</p>
-      <h1 style="font-size: clamp(2.25rem, 6vw, 4rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 1.5rem;">
+  <section class="pt-40 pb-20 relative overflow-hidden animate-fade-up">
+    <!-- radial-gradient background must stay inline -->
+    <div
+      class="absolute inset-0 pointer-events-none"
+      style="background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(34, 211, 238, 0.07) 0%, transparent 70%);"
+    ></div>
+    <div class="max-w-[1280px] mx-auto px-6 relative">
+      <p class="text-accent-cyan text-[0.8rem] font-semibold uppercase tracking-[0.08em] mb-4">Open Source Projects</p>
+      <h1 class="font-black tracking-[-0.03em] mb-6" style="font-size: clamp(2.25rem, 6vw, 4rem);">
         What we're <span class="gradient-text">building</span>
       </h1>
-      <p style="color: var(--color-text-secondary); font-size: clamp(1rem, 2vw, 1.2rem); max-width: 560px; line-height: 1.75;">
+      <p class="text-text-secondary max-w-[560px] leading-[1.75]" style="font-size: clamp(1rem, 2vw, 1.2rem);">
         Real tools, shipped in the open. Everything below is free to use, fork, and contribute to.
       </p>
     </div>
   </section>
 
   <!-- LIVE PROJECTS -->
-  <AnimatedSection style="padding: var(--spacing-section) 0;">
-    <div class="container">
-      <h2 style="font-size: 1.1rem; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.5rem;">
+  <AnimatedSection class="py-6">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <h2 class="text-[1.1rem] font-semibold text-text-muted uppercase tracking-[0.08em] mb-6">
         Live Projects
       </h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 480px), 1fr)); gap: 1.25rem;" data-animate-group>
+      <div class="grid grid-cols-[repeat(auto-fill,minmax(min(100%,480px),1fr))] gap-5" data-animate-group>
         <ProjectCard
           name="Open Deep Research"
           description="An open replication of OpenAI's Deep Research. Features parallel background tasks, real-time streaming UI with Preact, and a full multi-agent pipeline. Built fast, shipped open — because that's how we learn."
@@ -46,12 +46,12 @@ import { GITHUB_ORG, GITHUB_REPO } from '../config';
   </AnimatedSection>
 
   <!-- IN PROGRESS -->
-  <AnimatedSection style="padding-bottom: var(--spacing-section);">
-    <div class="container">
-      <h2 style="font-size: 1.1rem; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.5rem;">
+  <AnimatedSection class="py-6">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <h2 class="text-[1.1rem] font-semibold text-text-muted uppercase tracking-[0.08em] mb-6">
         Coming Soon
       </h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 480px), 1fr)); gap: 1.25rem;" data-animate-group>
+      <div class="grid grid-cols-[repeat(auto-fill,minmax(min(100%,480px),1fr))] gap-5" data-animate-group>
         <ProjectCard
           name="More projects in progress..."
           description="The collective is always experimenting. Watch the GitHub org for what's brewing next."
@@ -64,12 +64,12 @@ import { GITHUB_ORG, GITHUB_REPO } from '../config';
   </AnimatedSection>
 
   <!-- CONTRIBUTE CTA -->
-  <AnimatedSection style="padding: var(--spacing-section) 0; background: var(--color-bg-surface);">
-    <div class="container" style="text-align: center;">
-      <h2 style="font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem;">
+  <AnimatedSection class="py-16 bg-bg-surface">
+    <div class="max-w-[1280px] mx-auto px-6 text-center">
+      <h2 class="font-extrabold tracking-[-0.02em] mb-4" style="font-size: clamp(1.5rem, 3vw, 2.25rem);">
         Want to build <span class="gradient-text">something new?</span>
       </h2>
-      <p style="color: var(--color-text-secondary); max-width: 440px; margin: 0 auto 2rem; line-height: 1.7;">
+      <p class="text-text-secondary max-w-[440px] mx-auto mb-8 leading-[1.7]">
         Open an issue, propose a project, or just jump into an existing one. All contributions welcome.
       </p>
       <a href="/get-involved" class="btn-primary">Get Involved →</a>

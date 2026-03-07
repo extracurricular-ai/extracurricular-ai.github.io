@@ -3,19 +3,19 @@ import { GITHUB_ORG } from '../config';
 const year = new Date().getFullYear();
 ---
 
-<footer style="border-top: 1px solid var(--color-border); margin-top: auto; padding: 2.5rem 0;">
-  <div class="container" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
+<footer class="border-t border-border py-10">
+  <div class="max-w-[1280px] mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
     <div>
-      <span class="gradient-text" style="font-weight: 800; font-size: 1.1rem;">ExAI</span>
-      <p style="color: var(--color-text-muted); font-size: 0.8rem; margin-top: 0.25rem;">
-        © {year} Extracurricular AI. Open source, always.
+      <span class="gradient-text font-extrabold text-[1.1rem]">ExAI</span>
+      <p class="text-text-muted text-[0.8rem] mt-1">
+        &copy; {year} Extracurricular AI. Open source, always.
       </p>
     </div>
-    <nav style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
-      <a href="/about" style="color: var(--color-text-muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--color-text-secondary)'" onmouseout="this.style.color='var(--color-text-muted)'">About</a>
-      <a href="/projects" style="color: var(--color-text-muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--color-text-secondary)'" onmouseout="this.style.color='var(--color-text-muted)'">Projects</a>
-      <a href="/get-involved" style="color: var(--color-text-muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--color-text-secondary)'" onmouseout="this.style.color='var(--color-text-muted)'">Get Involved</a>
-      <a href={GITHUB_ORG} target="_blank" rel="noopener noreferrer" style="color: var(--color-text-muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--color-accent-purple)'" onmouseout="this.style.color='var(--color-text-muted)'">GitHub ↗</a>
+    <nav class="flex gap-6 flex-wrap">
+      <a href="/about" class="text-text-muted no-underline text-sm transition-colors duration-200 hover:text-text-secondary">About</a>
+      <a href="/projects" class="text-text-muted no-underline text-sm transition-colors duration-200 hover:text-text-secondary">Projects</a>
+      <a href="/get-involved" class="text-text-muted no-underline text-sm transition-colors duration-200 hover:text-text-secondary">Get Involved</a>
+      <a href={GITHUB_ORG} target="_blank" rel="noopener noreferrer" class="text-text-muted no-underline text-sm transition-colors duration-200 hover:text-accent-purple">GitHub ↗</a>
     </nav>
   </div>
 </footer>

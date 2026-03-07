@@ -20,39 +20,26 @@ export default function Nav() {
 
   return (
     <nav
+      class="fixed top-0 left-0 right-0 z-50 transition-[background,border-color,backdrop-filter] duration-300"
       style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
-        transition: 'background 0.3s, border-color 0.3s, backdrop-filter 0.3s',
         background: scrolled ? 'rgba(26, 26, 46, 0.85)' : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
         borderBottom: scrolled ? '1px solid var(--color-border)' : '1px solid transparent',
       }}
     >
-      <div class="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '4rem' }}>
+      <div class="max-w-[1280px] mx-auto px-6 flex items-center justify-between h-16">
         {/* Logo */}
-        <a href="/" style={{ fontWeight: 800, fontSize: '1.25rem', textDecoration: 'none' }}>
+        <a href="/" class="font-extrabold text-xl no-underline">
           <span class="gradient-text">ExAI</span>
         </a>
 
         {/* Desktop links */}
-        <ul style={{ display: 'flex', gap: '2rem', listStyle: 'none', alignItems: 'center' }} class="desktop-nav">
+        <ul class="desktop-nav flex gap-8 list-none items-center">
           {links.map((l) => (
             <li key={l.href}>
               <a
                 href={l.href}
-                style={{
-                  color: 'var(--color-text-secondary)',
-                  textDecoration: 'none',
-                  fontSize: '0.9rem',
-                  fontWeight: 500,
-                  transition: 'color 0.2s',
-                }}
-                onMouseEnter={(e) => ((e.target as HTMLElement).style.color = 'var(--color-text-primary)')}
-                onMouseLeave={(e) => ((e.target as HTMLElement).style.color = 'var(--color-text-secondary)')}
+                class="text-text-secondary no-underline text-[0.9rem] font-medium transition-colors duration-200 hover:text-text-primary"
               >
                 {l.label}
               </a>
@@ -75,59 +62,23 @@ export default function Nav() {
         <button
           onClick={() => setOpen((o) => !o)}
           aria-label="Toggle menu"
-          class="mobile-nav"
-          style={{
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: '0.5rem',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '5px',
-          }}
+          class="mobile-nav bg-transparent border-0 cursor-pointer p-2 flex flex-col gap-[5px]"
         >
-          <span style={{
-            display: 'block', width: '24px', height: '2px',
-            background: 'var(--color-text-primary)',
-            transition: 'transform 0.3s',
-            transform: open ? 'rotate(45deg) translate(5px, 5px)' : 'none',
-          }} />
-          <span style={{
-            display: 'block', width: '24px', height: '2px',
-            background: 'var(--color-text-primary)',
-            transition: 'opacity 0.3s',
-            opacity: open ? 0 : 1,
-          }} />
-          <span style={{
-            display: 'block', width: '24px', height: '2px',
-            background: 'var(--color-text-primary)',
-            transition: 'transform 0.3s',
-            transform: open ? 'rotate(-45deg) translate(5px, -5px)' : 'none',
-          }} />
+          <span class="block w-6 h-0.5 bg-[var(--color-text-primary)] transition-transform duration-300" style={{ transform: open ? 'rotate(45deg) translate(5px, 5px)' : 'none' }} />
+          <span class="block w-6 h-0.5 bg-[var(--color-text-primary)] transition-opacity duration-300" style={{ opacity: open ? 0 : 1 }} />
+          <span class="block w-6 h-0.5 bg-[var(--color-text-primary)] transition-transform duration-300" style={{ transform: open ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }} />
         </button>
       </div>
 
       {/* Mobile drawer */}
       {open && (
-        <div style={{
-          background: 'var(--color-bg-elevated)',
-          borderTop: '1px solid var(--color-border)',
-          padding: '1.5rem',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
-        }}>
+        <div class="bg-bg-elevated border-t border-border p-6 flex flex-col gap-4">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              style={{
-                color: 'var(--color-text-secondary)',
-                textDecoration: 'none',
-                fontSize: '1.1rem',
-                fontWeight: 500,
-              }}
+              class="text-text-secondary no-underline text-[1.1rem] font-medium"
             >
               {l.label}
             </a>
@@ -136,7 +87,7 @@ export default function Nav() {
             href={GITHUB_ORG}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: 'var(--color-accent-purple)', textDecoration: 'none', fontWeight: 600 }}
+            class="text-accent-purple no-underline font-semibold"
           >
             GitHub ↗
           </a>
