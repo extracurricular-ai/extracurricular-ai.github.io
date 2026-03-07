@@ -1,0 +1,17 @@
+---
+interface Props {
+  class?: string;
+  group?: boolean;
+  tag?: string;
+}
+
+const { class: className = '', group = false, tag = 'section' } = Astro.props;
+const Tag = tag;
+---
+
+<Tag
+  class={className}
+  {...group ? { 'data-animate-group': '' } : { 'data-animate': '' }}
+>
+  <slot />
+</Tag>

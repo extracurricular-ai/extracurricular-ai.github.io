@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AnimatedSection from '../components/AnimatedSection.astro';
+import ValuePill from '../components/ValuePill.astro';
+import { GITHUB_ORG } from '../config';
+---
+
+<BaseLayout
+  title="About"
+  description="Extracurricular AI is an open collective of builders exploring AI through hands-on experimentation."
+>
+  <!-- PAGE HERO -->
+  <section data-animate style="padding: 10rem 0 5rem; text-align: center; position: relative; overflow: hidden;">
+    <div style="
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    "></div>
+    <div class="container" style="position: relative;">
+      <p style="color: var(--color-accent-purple); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem;">About ExAI</p>
+      <h1 style="font-size: clamp(2.25rem, 6vw, 4rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 1.5rem;">
+        Who <span class="gradient-text">we are</span>
+      </h1>
+      <p style="color: var(--color-text-secondary); font-size: clamp(1rem, 2vw, 1.2rem); max-width: 600px; margin-inline: auto; line-height: 1.75;">
+        Extracurricular AI is an open collective of builders, tinkerers, and learners who believe the best way to understand AI is to build real things with it — and share everything along the way.
+      </p>
+    </div>
+  </section>
+
+  <!-- ORIGIN STORY -->
+  <AnimatedSection style="padding: var(--spacing-section) 0;">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+        <div>
+          <h2 style="font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.25rem;">
+            Born from curiosity,<br />built in public
+          </h2>
+          <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: 1rem;">
+            ExAI started as a group of builders who wanted to learn AI by building real things — not just reading papers or watching tutorials, but shipping actual software.
+          </p>
+          <p style="color: var(--color-text-secondary); line-height: 1.8; margin-bottom: 1rem;">
+            We're not affiliated with any company or institution. We're just people who are genuinely excited about AI and want to explore it together, in the open.
+          </p>
+          <p style="color: var(--color-text-secondary); line-height: 1.8;">
+            Everything we build is open source. Everything we learn gets shared. That's the deal.
+          </p>
+        </div>
+        <div style="
+          background: var(--color-bg-surface);
+          border: 1px solid var(--color-border);
+          border-radius: 1rem;
+          padding: 2rem;
+          font-family: var(--font-mono);
+          font-size: 0.85rem;
+          color: var(--color-text-secondary);
+          line-height: 1.8;
+        ">
+          <p style="color: var(--color-accent-purple); margin-bottom: 0.5rem;"># our approach</p>
+          <p>$ git clone [idea]</p>
+          <p>$ cd idea && ship it</p>
+          <p>$ open-source --everything</p>
+          <p>$ share --with community</p>
+          <p>$ repeat</p>
+          <br />
+          <p style="color: var(--color-text-muted);"># no gatekeeping. no paywalls.</p>
+          <p style="color: var(--color-text-muted);"># just building.</p>
+        </div>
+      </div>
+    </div>
+  </AnimatedSection>
+
+  <!-- VALUES -->
+  <AnimatedSection style="padding: var(--spacing-section) 0; background: var(--color-bg-surface);" group>
+    <div class="container">
+      <div style="margin-bottom: 2.5rem;">
+        <h2 style="font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.75rem;">Our values</h2>
+        <p style="color: var(--color-text-secondary); max-width: 480px;">These aren't mission statement buzzwords. They're how we actually operate.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+        <ValuePill icon="⚡" title="Learn by Shipping" description="The fastest way to understand something is to build it. Theory without practice is just trivia." />
+        <ValuePill icon="🔓" title="Open Source" description="Code, ideas, mistakes — all of it is public. Transparency makes better builders." />
+        <ValuePill icon="🤝" title="Community First" description="We're stronger together. Every contributor, at every level, belongs here." />
+        <ValuePill icon="🛠️" title="Free Forever" description="Our tools stay free. Knowledge and tooling shouldn't be locked behind a paywall." />
+      </div>
+    </div>
+  </AnimatedSection>
+
+  <!-- GITHUB CTA -->
+  <AnimatedSection style="padding: var(--spacing-section) 0; text-align: center;">
+    <div class="container">
+      <h2 style="font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem;">
+        Find us on <span class="gradient-text">GitHub</span>
+      </h2>
+      <p style="color: var(--color-text-secondary); max-width: 440px; margin: 0 auto 2rem; line-height: 1.7;">
+        All of our projects, discussions, and code live in the open at github.com/extracurricular-ai.
+      </p>
+      <a href={GITHUB_ORG} target="_blank" rel="noopener noreferrer" class="btn-primary">
+        Visit us on GitHub ↗
+      </a>
+    </div>
+  </AnimatedSection>
+</BaseLayout>
+
+<style>
+  @media (max-width: 768px) {
+    .two-col { grid-template-columns: 1fr !important; }
+  }
+</style>

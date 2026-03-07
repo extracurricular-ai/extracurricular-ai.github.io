@@ -1,0 +1,19 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  icon: string;
+  'data-animate-child'?: string;
+}
+
+const { title, description, icon } = Astro.props;
+---
+
+<div
+  data-animate-child
+  style="background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-card); padding: 1.5rem;"
+>
+  <div style="font-size: 1.75rem; margin-bottom: 0.75rem;">{icon}</div>
+  <h3 style="color: var(--color-text-primary); font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem;">{title}</h3>
+  <p style="color: var(--color-text-secondary); font-size: 0.875rem; line-height: 1.6;">{description}</p>
+</div>

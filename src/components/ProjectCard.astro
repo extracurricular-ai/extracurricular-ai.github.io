@@ -1,0 +1,58 @@
+---
+interface Props {
+  name: string;
+  description: string;
+  href: string;
+  tags?: string[];
+  status?: 'live' | 'in-progress';
+  'data-animate-child'?: string;
+}
+
+const { name, description, href, tags = [], status = 'live' } = Astro.props;
+const isLive = status === 'live';
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  data-animate-child
+  style={{
+    display: 'block',
+    background: 'var(--color-bg-surface)',
+    border: '1px solid var(--color-border)',
+    borderRadius: 'var(--radius-card)',
+    padding: '1.75rem',
+    textDecoration: 'none',
+    transition: 'border-color 0.2s, box-shadow 0.2s, transform 0.2s',
+    cursor: isLive ? 'pointer' : 'default',
+    opacity: isLive ? 1 : 0.5,
+  }}
+  onmouseover={isLive ? "this.style.borderColor='var(--color-accent-purple)'; this.style.boxShadow='var(--shadow-glow-purple)'; this.style.transform='translateY(-2px)'" : ''}
+  onmouseout={isLive ? "this.style.borderColor='var(--color-border)'; this.style.boxShadow='none'; this.style.transform='none'" : ''}
+>
+  <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.75rem;">
+    <h3 style="color: var(--color-text-primary); font-size: 1.1rem; font-weight: 700;">{name}</h3>
+    <span style={{
+      fontSize: '0.7rem',
+      fontWeight: 600,
+      padding: '0.2rem 0.6rem',
+      borderRadius: 'var(--radius-pill)',
+      background: isLive ? 'rgba(168, 85, 247, 0.15)' : 'rgba(82, 82, 91, 0.3)',
+      color: isLive ? 'var(--color-accent-purple)' : 'var(--color-text-muted)',
+      whiteSpace: 'nowrap',
+    }}>
+      {isLive ? '● Live' : '⟳ In progress'}
+    </span>
+  </div>
+  <p style="color: var(--color-text-secondary); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.25rem;">{description}</p>
+  {tags.length > 0 && (
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      {tags.map((tag) => (
+        <span style="font-size: 0.75rem; padding: 0.2rem 0.65rem; background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: var(--radius-pill); color: var(--color-text-muted);">
+          {tag}
+        </span>
+      ))}
+    </div>
+  )}
+</a>
