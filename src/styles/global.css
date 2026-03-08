@@ -1,23 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-base:        #0a0a0f;
-  --color-bg-surface:     #111118;
-  --color-bg-elevated:    #1a1a2e;
-  --color-accent-purple:  #a855f7;
-  --color-accent-violet:  #7c3aed;
-  --color-accent-cyan:    #22d3ee;
-  --color-accent-glow:    #c084fc;
+  --color-bg-base:        #050e0d;
+  --color-bg-surface:     #0a1a18;
+  --color-bg-elevated:    #0f2622;
+  --color-accent-purple:  #2ab5a5;
+  --color-accent-violet:  #0d4f4a;
+  --color-accent-cyan:    #f5821f;
+  --color-accent-glow:    #3dd6c4;
   --color-text-primary:   #f4f4f5;
   --color-text-secondary: #a1a1aa;
   --color-text-muted:     #52525b;
-  --color-border:         #27272a;
-  --color-border-accent:  rgba(124, 58, 237, 0.25);
+  --color-border:         #1a3330;
+  --color-border-accent:  rgba(42, 181, 165, 0.25);
   --font-body:    'Inter', system-ui, sans-serif;
   --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
   --radius-card:  0.75rem;
   --radius-pill:  9999px;
-  --shadow-glow-purple: 0 0 40px rgba(168, 85, 247, 0.25);
+  --shadow-glow-purple: 0 0 40px rgba(42, 181, 165, 0.3);
 }
 
 /* Base */
@@ -35,7 +35,7 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
 
 /* Gradient text — cannot be done with Tailwind */
 .gradient-text {
-  background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-cyan));
+  background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-cyan) 80%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

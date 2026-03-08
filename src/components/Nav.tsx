@@ -29,8 +29,9 @@ export default function Nav() {
     >
       <div class="max-w-[1280px] mx-auto px-6 flex items-center justify-between h-16">
         {/* Logo */}
-        <a href="/" class="font-extrabold text-xl no-underline">
-          <span class="gradient-text">ExAI</span>
+        <a href="/" class="flex items-center gap-2 no-underline">
+          <img src="/logo.png" alt="ExAI" class="h-8 w-8 object-contain" />
+          <span class="gradient-text font-extrabold text-xl">ExAI</span>
         </a>
 
         {/* Desktop links */}
