@@ -1,14 +1,31 @@
 import { useState, useEffect } from 'preact/hooks';
 import { GITHUB_ORG } from '../config';
+import { localizedPath, type Locale } from '../i18n/index';
 
-const links = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/get-involved', label: 'Get Involved' },
-];
+interface NavLabels {
+  home: string;
+  about: string;
+  projects: string;
+  getInvolved: string;
+  github: string;
+  switchLanguage: string;
+}
 
-export default function Nav() {
+interface SwitcherLink {
+  locale: string;
+  label: string;
+  href: string;
+  active: boolean;
+}
+
+interface NavProps {
+  currentLocale: string;
+  currentPath: string;
+  labels: NavLabels;
+  switcherLinks: SwitcherLink[];
+}
+
+export default function Nav({ currentLocale, currentPath, labels, switcherLinks }: NavProps) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -18,25 +35,32 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', handler);
   }, []);
 
+  const navLinks = [
+    { href: localizedPath('/', currentLocale as Locale), label: labels.home },
+    { href: localizedPath('/about', currentLocale as Locale), label: labels.about },
+    { href: localizedPath('/projects', currentLocale as Locale), label: labels.projects },
+    { href: localizedPath('/get-involved', currentLocale as Locale), label: labels.getInvolved },
+  ];
+
   return (
     <nav
       class="fixed top-0 left-0 right-0 z-50 transition-[background,border-color,backdrop-filter] duration-300"
       style={{
-        background: scrolled ? 'rgba(26, 26, 46, 0.85)' : 'transparent',
+        background: scrolled ? 'rgba(15, 38, 34, 0.9)' : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
         borderBottom: scrolled ? '1px solid var(--color-border)' : '1px solid transparent',
       }}
     >
       <div class="max-w-[1280px] mx-auto px-6 flex items-center justify-between h-16">
         {/* Logo */}
-        <a href="/" class="flex items-center gap-2 no-underline">
+        <a href={localizedPath('/', currentLocale as Locale)} class="flex items-center gap-2 no-underline">
           <img src="/logo.png" alt="ExAI" class="h-8 w-8 object-contain" />
           <span class="gradient-text font-extrabold text-xl">ExAI</span>
         </a>
 
         {/* Desktop links */}
         <ul class="desktop-nav flex gap-8 list-none items-center">
-          {links.map((l) => (
+          {navLinks.map((l) => (
             <li key={l.href}>
               <a
                 href={l.href}
@@ -48,16 +72,38 @@ export default function Nav() {
           ))}
         </ul>
 
-        {/* GitHub CTA */}
-        <a
-          href={GITHUB_ORG}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn-ghost desktop-nav"
-          style={{ padding: '0.5rem 1.25rem', fontSize: '0.875rem' }}
-        >
-          GitHub ↗
-        </a>
+        {/* Desktop right: GitHub + language switcher */}
+        <div class="desktop-nav flex items-center gap-3">
+          <a
+            href={GITHUB_ORG}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-ghost"
+            style={{ padding: '0.5rem 1.25rem', fontSize: '0.875rem' }}
+          >
+            {labels.github} ↗
+          </a>
+
+          {/* CSS-only language switcher — hover/focus-within to open */}
+          <div class="lang-switcher relative">
+            <button class="lang-trigger border border-border text-text-secondary rounded-full px-3 py-1.5 text-[0.825rem] font-medium bg-transparent cursor-pointer transition-colors duration-200 hover:border-accent-purple hover:text-text-primary whitespace-nowrap">
+              {switcherLinks.find((l) => l.active)?.label ?? labels.switchLanguage} ▾
+            </button>
+            <ul class="lang-dropdown hidden absolute top-[calc(100%+8px)] right-0 bg-bg-elevated border border-border rounded-lg py-1 list-none min-w-[120px] shadow-[0_8px_24px_rgba(0,0,0,0.4)] z-[100]">
+              {switcherLinks.map(({ locale, label, href, active }) => (
+                <li key={locale}>
+                  <a
+                    href={href}
+                    aria-current={active ? 'true' : undefined}
+                    class={`block px-4 py-2 text-[0.875rem] no-underline transition-colors duration-150 hover:bg-bg-base hover:text-text-primary ${active ? 'text-accent-purple font-semibold' : 'text-text-secondary'}`}
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
 
         {/* Mobile hamburger */}
         <button
@@ -74,7 +120,7 @@ export default function Nav() {
       {/* Mobile drawer */}
       {open && (
         <div class="bg-bg-elevated border-t border-border p-6 flex flex-col gap-4">
-          {links.map((l) => (
+          {navLinks.map((l) => (
             <a
               key={l.href}
               href={l.href}
@@ -90,18 +136,28 @@ export default function Nav() {
             rel="noopener noreferrer"
             class="text-accent-purple no-underline font-semibold"
           >
-            GitHub ↗
+            {labels.github} ↗
           </a>
+          <div class="flex flex-wrap gap-3 pt-2 border-t border-border">
+            {switcherLinks.map(({ locale, label, href, active }) => (
+              <a
+                key={locale}
+                href={href}
+                class={`text-[0.875rem] no-underline ${active ? 'text-accent-purple font-semibold' : 'text-text-muted'}`}
+              >
+                {label}
+              </a>
+            ))}
+          </div>
         </div>
       )}
 
       <style>{`
-        @media (min-width: 768px) {
-          .mobile-nav { display: none !important; }
-        }
-        @media (max-width: 767px) {
-          .desktop-nav { display: none !important; }
-        }
+        @media (min-width: 768px) { .mobile-nav { display: none !important; } }
+        @media (max-width: 767px) { .desktop-nav { display: none !important; } }
+        /* CSS-only dropdown — Tailwind cannot do :focus-within show/hide */
+        .lang-switcher:hover .lang-dropdown,
+        .lang-switcher:focus-within .lang-dropdown { display: block !important; }
       `}</style>
     </nav>
   );

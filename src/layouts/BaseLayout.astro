@@ -2,27 +2,54 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.tsx';
 import Footer from '../components/Footer.astro';
+import { locales, localeNames, localizedPath, t, defaultLocale } from '../i18n/index';
 
 interface Props {
   title: string;
   description?: string;
+  locale?: string;
 }
 
-const {
-  title,
-  description = 'Extracurricular AI — An open collective exploring AI through hands-on experimentation.',
-} = Astro.props;
+const { title, locale = defaultLocale } = Astro.props;
+const description = Astro.props.description ?? t(locale, 'site.tagline');
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://extracurricularai.org');
+
+const hreflangLinks = locales.map((loc) => ({
+  locale: loc,
+  href: new URL(localizedPath(Astro.url.pathname, loc), Astro.site ?? 'https://extracurricularai.org').toString(),
+}));
+const xDefaultHref = new URL(localizedPath(Astro.url.pathname, 'en'), Astro.site ?? 'https://extracurricularai.org').toString();
+
+const navLabels = {
+  home: t(locale, 'nav.home'),
+  about: t(locale, 'nav.about'),
+  projects: t(locale, 'nav.projects'),
+  getInvolved: t(locale, 'nav.getInvolved'),
+  github: t(locale, 'nav.github'),
+  switchLanguage: t(locale, 'nav.switchLanguage'),
+};
+
+const switcherLinks = locales.map((loc) => ({
+  locale: loc,
+  label: localeNames[loc],
+  href: localizedPath(Astro.url.pathname, loc),
+  active: loc === locale,
+}));
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
+
+    {hreflangLinks.map(({ locale: loc, href }) => (
+      <link rel="alternate" hreflang={loc} href={href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
 
     <title>{title} | ExAI</title>
     <meta name="description" content={description} />
@@ -44,11 +71,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://extracur
     />
   </head>
   <body>
-    <Nav client:load />
+    <Nav client:load currentLocale={locale} currentPath={Astro.url.pathname} labels={navLabels} switcherLinks={switcherLinks} />
     <main class="flex-1">
       <slot />
     </main>
-    <Footer />
+    <Footer locale={locale} />
     <script>
       import '../scripts/animations.ts';
     </script>

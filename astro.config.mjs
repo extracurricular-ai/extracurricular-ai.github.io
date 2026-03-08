@@ -12,4 +12,11 @@ export default defineConfig({
       tailwindcss(),
     ],
   },
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'zh', 'es', 'fr'],
+    routing: {
+      prefixDefaultLocale: true,
+    },
+  },
 });

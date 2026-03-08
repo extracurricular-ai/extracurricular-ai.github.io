@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AnimatedSection from '../../components/AnimatedSection.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { GITHUB_ORG, GITHUB_REPO } from '../../config';
+import { t, locales, localizedPath, type Locale } from '../../i18n/index';
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: Locale };
+---
+
+<BaseLayout
+  title={t(locale, 'projects.metaTitle')}
+  description={t(locale, 'projects.metaDescription')}
+  locale={locale}>
+  <!-- PAGE HERO -->
+  <section class="pt-40 pb-20 relative overflow-hidden animate-fade-up">
+    <!-- radial-gradient background must stay inline -->
+    <div
+      class="absolute inset-0 pointer-events-none"
+      style="background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(245, 130, 31, 0.07) 0%, transparent 70%);"
+    ></div>
+    <div class="max-w-[1280px] mx-auto px-6 relative">
+      <p class="text-accent-cyan text-[0.8rem] font-semibold uppercase tracking-[0.08em] mb-4">{t(locale, 'projects.label')}</p>
+      <h1 class="font-black tracking-[-0.03em] mb-6" style="font-size: clamp(2.25rem, 6vw, 4rem);">
+        {t(locale, 'projects.heroTitle')} <span class="gradient-text">{t(locale, 'projects.heroTitleAccent')}</span>
+      </h1>
+      <p class="text-text-secondary max-w-[560px] leading-[1.75]" style="font-size: clamp(1rem, 2vw, 1.2rem);">
+        {t(locale, 'projects.heroSubtitle')}
+      </p>
+    </div>
+  </section>
+
+  <!-- LIVE PROJECTS -->
+  <AnimatedSection class="py-6">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <h2 class="text-[1.1rem] font-semibold text-text-muted uppercase tracking-[0.08em] mb-6">
+        {t(locale, 'projects.liveLabel')}
+      </h2>
+      <div class="grid grid-cols-[repeat(auto-fill,minmax(min(100%,480px),1fr))] gap-5" data-animate-group>
+        <ProjectCard
+          name={t(locale, 'projects.odrName')}
+          description={t(locale, 'projects.odrDescription')}
+          href={GITHUB_REPO}
+          tags={["Python", "Preact", "AI Agents", "Streaming", "Multi-Agent"]}
+          status="live"
+        />
+      </div>
+    </div>
+  </AnimatedSection>
+
+  <!-- IN PROGRESS -->
+  <AnimatedSection class="py-6">
+    <div class="max-w-[1280px] mx-auto px-6">
+      <h2 class="text-[1.1rem] font-semibold text-text-muted uppercase tracking-[0.08em] mb-6">
+        {t(locale, 'projects.comingLabel')}
+      </h2>
+      <div class="grid grid-cols-[repeat(auto-fill,minmax(min(100%,480px),1fr))] gap-5" data-animate-group>
+        <ProjectCard
+          name={t(locale, 'projects.comingName')}
+          description={t(locale, 'projects.comingDescription')}
+          href={GITHUB_ORG}
+          tags={["TBD"]}
+          status="in-progress"
+        />
+      </div>
+    </div>
+  </AnimatedSection>
+
+  <!-- CONTRIBUTE CTA -->
+  <AnimatedSection class="py-16 bg-bg-surface">
+    <div class="max-w-[1280px] mx-auto px-6 text-center">
+      <h2 class="font-extrabold tracking-[-0.02em] mb-4" style="font-size: clamp(1.5rem, 3vw, 2.25rem);">
+        {t(locale, 'projects.contributeTitle')} <span class="gradient-text">{t(locale, 'projects.contributeTitleAccent')}</span>
+      </h2>
+      <p class="text-text-secondary max-w-[440px] mx-auto mb-8 leading-[1.7]">
+        {t(locale, 'projects.contributeBody')}
+      </p>
+      <a href={localizedPath('/get-involved', locale)} class="btn-primary">{t(locale, 'projects.contributeCta')}</a>
+    </div>
+  </AnimatedSection>
+</BaseLayout>
