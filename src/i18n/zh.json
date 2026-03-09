@@ -8,6 +8,7 @@
     "about": "关于",
     "projects": "项目",
     "getInvolved": "参与贡献",
+    "blog": "博客",
     "github": "GitHub",
     "switchLanguage": "语言"
   },
@@ -107,6 +108,18 @@
     "finalTitleAccent": "永远敞开。",
     "finalBody": "你不需要任何许可就可以贡献。只需出现、构建些什么，然后分享它。",
     "finalCta": "在 GitHub 上开始 ↗"
+  },
+  "blog": {
+    "metaTitle": "博客",
+    "metaDescription": "来自 ExAI 社区的想法、动态与故事。",
+    "heroLabel": "博客",
+    "heroTitle": "来自",
+    "heroTitleAccent": "社区",
+    "heroSubtitle": "来自构建 ExAI 的人们的想法、动态与故事。",
+    "noPosts": "暂无文章，敬请期待。",
+    "latestPost": "最新文章",
+    "readPost": "阅读文章",
+    "morePosts": "更多文章"
   },
   "values": {
     "learnTitle": "通过构建学习",

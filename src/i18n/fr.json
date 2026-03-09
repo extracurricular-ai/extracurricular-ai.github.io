@@ -8,6 +8,7 @@
     "about": "À propos",
     "projects": "Projets",
     "getInvolved": "Participer",
+    "blog": "Blog",
     "github": "GitHub",
     "switchLanguage": "Langue"
   },
@@ -107,6 +108,18 @@
     "finalTitleAccent": "toujours ouverte.",
     "finalBody": "Vous n'avez pas besoin de permission pour contribuer. Montrez-vous, construisez quelque chose et partagez-le.",
     "finalCta": "Commencer sur GitHub ↗"
+  },
+  "blog": {
+    "metaTitle": "Blog",
+    "metaDescription": "Pensées, mises à jour et histoires du collectif ExAI.",
+    "heroLabel": "Blog",
+    "heroTitle": "Du",
+    "heroTitleAccent": "collectif",
+    "heroSubtitle": "Pensées, mises à jour et histoires des personnes qui construisent ExAI.",
+    "noPosts": "Pas encore de publications. Revenez bientôt.",
+    "latestPost": "Dernière publication",
+    "readPost": "Lire la publication",
+    "morePosts": "Plus de publications"
   },
   "values": {
     "learnTitle": "Apprendre en Livrant",

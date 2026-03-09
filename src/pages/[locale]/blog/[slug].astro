@@ -1,0 +1,155 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { locales, localizedPath, type Locale } from '../../../i18n/index';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  return locales.flatMap((locale) => {
+    const localePosts = allPosts.filter((p) => p.data.locale === locale);
+    // If no posts for this locale, fall back to English posts
+    const fallback = localePosts.length === 0
+      ? allPosts.filter((p) => p.data.locale === 'en')
+      : localePosts;
+    return fallback.map((post) => {
+      const slug = post.id.split('/').pop()?.replace(/\.md$/, '') ?? post.id;
+      return { params: { locale, slug }, props: { post } };
+    });
+  });
+}
+
+const { locale, slug } = Astro.params as { locale: Locale; slug: string };
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const date = post.data.pubDate.toLocaleDateString(
+  locale === 'zh' ? 'zh-CN' : locale === 'es' ? 'es-ES' : locale === 'fr' ? 'fr-FR' : 'en-US',
+  { year: 'numeric', month: 'long', day: 'numeric' }
+);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description} locale={locale}>
+  <article class="pt-36 pb-24">
+    <div class="max-w-[760px] mx-auto px-6">
+
+      <!-- Back link -->
+      <a
+        href={localizedPath('/blog', locale)}
+        class="inline-flex items-center gap-2 text-text-muted text-[0.875rem] no-underline hover:text-accent-purple transition-colors duration-200 mb-12 group"
+      >
+        <span class="group-hover:-translate-x-1 transition-transform duration-200">←</span> Blog
+      </a>
+
+      <!-- Header -->
+      <header class="mb-14 animate-fade-up">
+        <div class="flex flex-wrap gap-2 mb-6">
+          {post.data.tags.map((tag) => (
+            <span class="text-[0.75rem] px-3 py-1 rounded-full bg-accent-purple/10 text-accent-purple font-semibold border border-accent-purple/25 uppercase tracking-[0.05em]">
+              {tag}
+            </span>
+          ))}
+        </div>
+        <h1 class="font-black tracking-[-0.03em] text-text-primary mb-5 leading-[1.08]" style="font-size: clamp(2rem, 5vw, 3.25rem);">
+          {post.data.title}
+        </h1>
+        <p class="text-text-secondary leading-[1.75] mb-8" style="font-size: clamp(1rem, 2vw, 1.15rem);">{post.data.description}</p>
+        <div class="flex items-center gap-4 pt-6 border-t border-border">
+          <div class="h-9 w-9 rounded-full bg-accent-purple/20 border border-accent-purple/30 flex items-center justify-center text-[0.7rem] font-bold text-accent-purple shrink-0">
+            {post.data.author.slice(0, 2).toUpperCase()}
+          </div>
+          <div class="flex flex-col gap-0.5">
+            <span class="text-text-primary text-[0.875rem] font-semibold">{post.data.author}</span>
+            <time class="text-text-muted text-[0.8rem]">{date}</time>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="prose">
+        <Content />
+      </div>
+
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  :global(.prose) {
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+    font-size: 1.0625rem;
+  }
+  :global(.prose h2) {
+    color: var(--color-text-primary);
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 2.5rem 0 1rem;
+    letter-spacing: -0.02em;
+  }
+  :global(.prose h3) {
+    color: var(--color-text-primary);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 2rem 0 0.75rem;
+  }
+  :global(.prose p) {
+    margin: 0 0 1.5rem;
+  }
+  :global(.prose a) {
+    color: var(--color-accent-purple);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  :global(.prose a:hover) {
+    color: var(--color-accent-glow);
+  }
+  :global(.prose strong) {
+    color: var(--color-text-primary);
+    font-weight: 700;
+  }
+  :global(.prose em) {
+    color: var(--color-text-secondary);
+  }
+  :global(.prose ul), :global(.prose ol) {
+    margin: 0 0 1.5rem 1.5rem;
+  }
+  :global(.prose li) {
+    margin-bottom: 0.4rem;
+  }
+  :global(.prose hr) {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 2.5rem 0;
+  }
+  :global(.prose blockquote) {
+    border-left: 3px solid var(--color-accent-purple);
+    padding-left: 1.25rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin: 1.5rem 0;
+  }
+  :global(.prose code) {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    padding: 0.15em 0.4em;
+    border-radius: 0.3rem;
+    color: var(--color-accent-purple);
+  }
+  :global(.prose pre) {
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+  :global(.prose pre code) {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+  }
+</style>

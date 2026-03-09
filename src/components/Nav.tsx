@@ -7,6 +7,7 @@ interface NavLabels {
   about: string;
   projects: string;
   getInvolved: string;
+  blog: string;
   github: string;
   switchLanguage: string;
 }
@@ -39,6 +40,7 @@ export default function Nav({ currentLocale, currentPath, labels, switcherLinks 
     { href: localizedPath('/', currentLocale as Locale), label: labels.home },
     { href: localizedPath('/about', currentLocale as Locale), label: labels.about },
     { href: localizedPath('/projects', currentLocale as Locale), label: labels.projects },
+    { href: localizedPath('/blog', currentLocale as Locale), label: labels.blog },
     { href: localizedPath('/get-involved', currentLocale as Locale), label: labels.getInvolved },
   ];
 
