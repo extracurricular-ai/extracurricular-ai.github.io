@@ -1,7 +1,7 @@
 {
   "site": {
     "name": "ExAI",
-    "tagline": "Extracurricular AI — An open collective exploring AI through hands-on experimentation."
+    "tagline": "Extracurricular AI — An AI-native collective making AI accessible to everyone through hands-on experimentation."
   },
   "nav": {
     "home": "Home",
@@ -19,10 +19,10 @@
     "getInvolved": "Get Involved"
   },
   "home": {
-    "badge": "Open Collective · Open Source",
-    "heroTitle": "Building AI,",
-    "heroTitleAccent": "in the open.",
-    "heroSubtitle": "An open collective exploring AI through hands-on experimentation — a space for builders who learn by shipping.",
+    "badge": "AI-Native · Open Source · Everyone Welcome",
+    "heroTitle": "AI for",
+    "heroTitleAccent": "everyone.",
+    "heroSubtitle": "An AI-native collective making AI accessible through hands-on experimentation — whether you're here to learn, build, or both.",
     "ctaProjects": "See Projects",
     "ctaInvolved": "Get Involved",
     "stat1Label": "Open Source",
@@ -35,27 +35,27 @@
     "stat4Value": "⟶",
     "featuredLabel": "Featured Project",
     "featuredTitle": "What we're building",
-    "featuredSubtitle": "Real tools, shipped in the open. Here's what the collective is working on right now.",
+    "featuredSubtitle": "Real tools, shipped in the open. AI-native from day one — here's what the collective is working on right now.",
     "viewAllProjects": "View all projects →",
     "valuesTitle": "What we stand for",
     "valuesSubtitle": "The principles that guide everything we build and how we build it.",
     "ctaTitle": "Ready to",
-    "ctaTitleAccent": "build something?",
-    "ctaBody": "Join the collective. Open a PR, share an idea, or just say hi on GitHub.",
+    "ctaTitleAccent": "dive in?",
+    "ctaBody": "Join the collective. Learner or builder, beginner or veteran — open a PR, share an idea, or just say hi on GitHub.",
     "ctaGetInvolved": "Get Involved",
     "ctaGithub": "GitHub ↗"
   },
   "about": {
     "metaTitle": "About",
-    "metaDescription": "Extracurricular AI is an open collective of builders exploring AI through hands-on experimentation.",
+    "metaDescription": "Extracurricular AI is an AI-native open collective making AI accessible to everyone through hands-on experimentation.",
     "label": "About ExAI",
     "heroTitle": "Who",
     "heroTitleAccent": "we are",
-    "heroSubtitle": "Extracurricular AI is an open collective of builders, tinkerers, and learners who believe the best way to understand AI is to build real things with it — and share everything along the way.",
+    "heroSubtitle": "Extracurricular AI is an AI-native collective of builders, tinkerers, and learners — united by a belief that the best way to understand AI is to build real things with it, and that AI should be accessible to everyone who's curious.",
     "originTitle": "Born from curiosity,",
     "originTitleLine2": "built in public",
-    "originP1": "ExAI started as a group of builders who wanted to learn AI by building real things — not just reading papers or watching tutorials, but shipping actual software.",
-    "originP2": "We're not affiliated with any company or institution. We're just people who are genuinely excited about AI and want to explore it together, in the open.",
+    "originP1": "ExAI started as a group of builders who wanted to work with AI the way they work with any other technology — by building real things, not just reading papers or watching tutorials.",
+    "originP2": "We're AI-native by default: agents, LLMs, and inference are our everyday tools. But we're not exclusive about it. Old-school engineers, first-time learners, and everyone in between are just as welcome here.",
     "originP3": "Everything we build is open source. Everything we learn gets shared. That's the deal.",
     "valuesTitle": "Our values",
     "valuesSubtitle": "These aren't mission statement buzzwords. They're how we actually operate.",
@@ -88,9 +88,9 @@
     "label": "Join the Collective",
     "heroTitle": "Build with",
     "heroTitleAccent": "us",
-    "heroSubtitle": "No applications, no gatekeeping. If you want to build AI tools in the open, you're already in.",
+    "heroSubtitle": "No applications, no gatekeeping. Learner or builder, new to AI or a seasoned engineer — if you're curious, you're already in.",
     "waysTitle": "Ways to contribute",
-    "waysSubtitle": "Every skill level welcome. Pick your entry point.",
+    "waysSubtitle": "Every background and skill level welcome. Pick your entry point.",
     "card1Title": "Build with us",
     "card1Body": "Open a PR on an existing project, tackle an open issue, or propose something entirely new.",
     "card1Cta": "Browse GitHub",
@@ -106,7 +106,7 @@
     "issuesCta": "View Open Issues ↗",
     "finalTitle": "The door is",
     "finalTitleAccent": "always open.",
-    "finalBody": "You don't need permission to contribute. Just show up, build something, and share it.",
+    "finalBody": "You don't need permission to contribute. Whether you're here to learn or to ship — just show up, dig in, and share what you find.",
     "finalCta": "Start on GitHub ↗"
   },
   "blog": {
@@ -123,11 +123,11 @@
   },
   "values": {
     "learnTitle": "Learn by Shipping",
-    "learnBody": "The fastest way to learn AI is to build something real and put it in front of people.",
+    "learnBody": "The fastest way to learn AI is to build something real and put it in front of people. That goes for beginners and veterans alike.",
     "openTitle": "Open Source",
     "openBody": "Everything we make is public. No paywalls, no black boxes, no gatekeeping.",
-    "communityTitle": "Community First",
-    "communityBody": "We build together. Every contributor matters, regardless of skill level.",
+    "communityTitle": "Everyone Welcome",
+    "communityBody": "Learners, builders, old-school engineers, AI newcomers, and the occasional AI agent 🤖 — every background matters. We grow together.",
     "freeTitle": "Free Tools",
     "freeBody": "Our tools are free for the community, always. That's non-negotiable."
   }

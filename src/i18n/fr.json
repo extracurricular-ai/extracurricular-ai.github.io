@@ -1,7 +1,7 @@
 {
   "site": {
     "name": "ExAI",
-    "tagline": "Extracurricular AI — Un collectif ouvert qui explore l'IA par l'expérimentation pratique."
+    "tagline": "Extracurricular AI — Un collectif natif de l'IA qui rend l'intelligence artificielle accessible à tous par l'expérimentation pratique."
   },
   "nav": {
     "home": "Accueil",
@@ -19,10 +19,10 @@
     "getInvolved": "Participer"
   },
   "home": {
-    "badge": "Collectif Ouvert · Open Source",
-    "heroTitle": "Construire l'IA,",
-    "heroTitleAccent": "en public.",
-    "heroSubtitle": "Un collectif ouvert qui explore l'IA par l'expérimentation pratique — un espace pour les bâtisseurs qui apprennent en livrant.",
+    "badge": "Natif de l'IA · Open Source · Tous Bienvenus",
+    "heroTitle": "L'IA pour",
+    "heroTitleAccent": "tout le monde.",
+    "heroSubtitle": "Un collectif natif de l'IA qui rend l'intelligence artificielle accessible par l'expérimentation pratique — que vous soyez là pour apprendre, construire, ou les deux.",
     "ctaProjects": "Voir les Projets",
     "ctaInvolved": "Participer",
     "stat1Label": "Open Source",
@@ -35,27 +35,27 @@
     "stat4Value": "⟶",
     "featuredLabel": "Projet Vedette",
     "featuredTitle": "Ce que nous construisons",
-    "featuredSubtitle": "De vrais outils, publiés en public. Voici sur quoi le collectif travaille en ce moment.",
+    "featuredSubtitle": "De vrais outils, publiés en public. Natifs de l'IA dès le premier jour — voici sur quoi le collectif travaille en ce moment.",
     "viewAllProjects": "Voir tous les projets →",
     "valuesTitle": "Ce que nous défendons",
     "valuesSubtitle": "Les principes qui guident tout ce que nous construisons et comment nous le construisons.",
     "ctaTitle": "Prêt à",
-    "ctaTitleAccent": "construire quelque chose ?",
-    "ctaBody": "Rejoignez le collectif. Ouvrez une PR, partagez une idée, ou dites bonjour sur GitHub.",
+    "ctaTitleAccent": "vous lancer ?",
+    "ctaBody": "Rejoignez le collectif. Apprenant ou bâtisseur, débutant ou vétéran — ouvrez une PR, partagez une idée, ou dites bonjour sur GitHub.",
     "ctaGetInvolved": "Participer",
     "ctaGithub": "GitHub ↗"
   },
   "about": {
     "metaTitle": "À propos",
-    "metaDescription": "Extracurricular AI est un collectif ouvert de bâtisseurs qui explorent l'IA par l'expérimentation pratique.",
+    "metaDescription": "Extracurricular AI est un collectif natif de l'IA qui rend l'intelligence artificielle accessible à tous par l'expérimentation pratique.",
     "label": "À propos d'ExAI",
     "heroTitle": "Qui",
     "heroTitleAccent": "nous sommes",
-    "heroSubtitle": "Extracurricular AI est un collectif ouvert de bâtisseurs, de bricoleurs et d'apprenants qui croient que la meilleure façon de comprendre l'IA est de construire de vraies choses avec elle — et de tout partager en chemin.",
+    "heroSubtitle": "Extracurricular AI est un collectif natif de l'IA réunissant bâtisseurs, bricoleurs et apprenants — unis par la conviction que la meilleure façon de comprendre l'IA est de construire de vraies choses avec elle, et que l'IA doit être accessible à tous ceux qui sont curieux.",
     "originTitle": "Né de la curiosité,",
     "originTitleLine2": "construit en public",
-    "originP1": "ExAI a commencé comme un groupe de bâtisseurs qui voulaient apprendre l'IA en construisant de vraies choses — pas seulement en lisant des articles ou en regardant des tutoriels, mais en livrant de vrais logiciels.",
-    "originP2": "Nous ne sommes affiliés à aucune entreprise ni institution. Nous sommes juste des gens genuinement enthousiastes à propos de l'IA qui veulent l'explorer ensemble, en public.",
+    "originP1": "ExAI a commencé comme un groupe de bâtisseurs qui voulaient travailler avec l'IA comme avec n'importe quelle autre technologie — en construisant de vraies choses, pas seulement en lisant des articles ou en regardant des tutoriels.",
+    "originP2": "Nous sommes natifs de l'IA par défaut : agents, LLMs et inférence sont nos outils du quotidien. Mais nous ne sommes pas exclusifs. Les ingénieurs traditionnels, les apprenants débutants et tous ceux entre les deux sont tout aussi bienvenus ici.",
     "originP3": "Tout ce que nous construisons est open source. Tout ce que nous apprenons est partagé. C'est le deal.",
     "valuesTitle": "Nos valeurs",
     "valuesSubtitle": "Ce ne sont pas des mots creux d'une déclaration de mission. C'est ainsi que nous opérons réellement.",
@@ -88,9 +88,9 @@
     "label": "Rejoindre le Collectif",
     "heroTitle": "Construisez avec",
     "heroTitleAccent": "nous",
-    "heroSubtitle": "Pas de candidatures, pas de barrières. Si vous voulez construire des outils d'IA en public, vous êtes déjà des nôtres.",
+    "heroSubtitle": "Pas de candidatures, pas de barrières. Apprenant ou bâtisseur, novice en IA ou ingénieur expérimenté — si vous êtes curieux, vous êtes déjà des nôtres.",
     "waysTitle": "Façons de contribuer",
-    "waysSubtitle": "Tous les niveaux sont les bienvenus. Choisissez votre point d'entrée.",
+    "waysSubtitle": "Tous les profils et niveaux sont les bienvenus. Choisissez votre point d'entrée.",
     "card1Title": "Construisez avec nous",
     "card1Body": "Ouvrez une PR sur un projet existant, résolvez un issue ouvert, ou proposez quelque chose d'entièrement nouveau.",
     "card1Cta": "Explorer GitHub",
@@ -106,7 +106,7 @@
     "issuesCta": "Voir les Issues Ouverts ↗",
     "finalTitle": "La porte est",
     "finalTitleAccent": "toujours ouverte.",
-    "finalBody": "Vous n'avez pas besoin de permission pour contribuer. Montrez-vous, construisez quelque chose et partagez-le.",
+    "finalBody": "Vous n'avez pas besoin de permission pour contribuer. Que vous soyez là pour apprendre ou pour publier — montrez-vous, plongez-y, et partagez ce que vous trouvez.",
     "finalCta": "Commencer sur GitHub ↗"
   },
   "blog": {
@@ -123,11 +123,11 @@
   },
   "values": {
     "learnTitle": "Apprendre en Livrant",
-    "learnBody": "La façon la plus rapide d'apprendre l'IA est de construire quelque chose de réel et de le mettre devant des gens.",
+    "learnBody": "La façon la plus rapide d'apprendre l'IA est de construire quelque chose de réel et de le mettre devant des gens. Valable pour les débutants comme pour les vétérans.",
     "openTitle": "Open Source",
     "openBody": "Tout ce que nous faisons est public. Pas de murs payants, pas de boîtes noires, pas de barrières.",
-    "communityTitle": "Communauté d'Abord",
-    "communityBody": "Nous construisons ensemble. Chaque contributeur compte, quel que soit son niveau.",
+    "communityTitle": "Tous Bienvenus",
+    "communityBody": "Apprenants, bâtisseurs, ingénieurs traditionnels, nouveaux venus dans l'IA, et l'agent IA de passage 🤖 — chaque profil compte. Nous grandissons ensemble.",
     "freeTitle": "Outils Gratuits",
     "freeBody": "Nos outils sont gratuits pour la communauté, toujours. C'est non négociable."
   }

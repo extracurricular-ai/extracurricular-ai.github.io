@@ -1,7 +1,7 @@
 {
   "site": {
     "name": "ExAI",
-    "tagline": "Extracurricular AI — Un colectivo abierto que explora la IA a través de la experimentación práctica."
+    "tagline": "Extracurricular AI — Un colectivo nativo de IA que hace la inteligencia artificial accesible para todos a través de la experimentación práctica."
   },
   "nav": {
     "home": "Inicio",
@@ -19,10 +19,10 @@
     "getInvolved": "Participa"
   },
   "home": {
-    "badge": "Colectivo Abierto · Código Abierto",
-    "heroTitle": "Construyendo IA,",
-    "heroTitleAccent": "en abierto.",
-    "heroSubtitle": "Un colectivo abierto que explora la IA a través de la experimentación práctica — un espacio para constructores que aprenden enviando.",
+    "badge": "Nativo de IA · Código Abierto · Todos Bienvenidos",
+    "heroTitle": "IA para",
+    "heroTitleAccent": "todos.",
+    "heroSubtitle": "Un colectivo nativo de IA que hace la inteligencia artificial accesible a través de la experimentación práctica — ya sea que estés aquí para aprender, construir, o ambas cosas.",
     "ctaProjects": "Ver Proyectos",
     "ctaInvolved": "Participa",
     "stat1Label": "Código Abierto",
@@ -35,27 +35,27 @@
     "stat4Value": "⟶",
     "featuredLabel": "Proyecto Destacado",
     "featuredTitle": "Lo que estamos construyendo",
-    "featuredSubtitle": "Herramientas reales, publicadas en abierto. Esto es en lo que el colectivo trabaja ahora mismo.",
+    "featuredSubtitle": "Herramientas reales, publicadas en abierto. Nativas de IA desde el primer día — esto es en lo que el colectivo trabaja ahora mismo.",
     "viewAllProjects": "Ver todos los proyectos →",
     "valuesTitle": "Lo que defendemos",
     "valuesSubtitle": "Los principios que guían todo lo que construimos y cómo lo construimos.",
     "ctaTitle": "¿Listo para",
-    "ctaTitleAccent": "construir algo?",
-    "ctaBody": "Únete al colectivo. Abre un PR, comparte una idea, o saluda en GitHub.",
+    "ctaTitleAccent": "sumergirte?",
+    "ctaBody": "Únete al colectivo. Aprendiz o constructor, principiante o veterano — abre un PR, comparte una idea, o saluda en GitHub.",
     "ctaGetInvolved": "Participa",
     "ctaGithub": "GitHub ↗"
   },
   "about": {
     "metaTitle": "Acerca de",
-    "metaDescription": "Extracurricular AI es un colectivo abierto de constructores que exploran la IA a través de la experimentación práctica.",
+    "metaDescription": "Extracurricular AI es un colectivo nativo de IA que hace la inteligencia artificial accesible para todos a través de la experimentación práctica.",
     "label": "Acerca de ExAI",
     "heroTitle": "Quiénes",
     "heroTitleAccent": "somos",
-    "heroSubtitle": "Extracurricular AI es un colectivo abierto de constructores, experimentadores y aprendices que creen que la mejor forma de entender la IA es construir cosas reales con ella — y compartir todo en el camino.",
+    "heroSubtitle": "Extracurricular AI es un colectivo nativo de IA de constructores, experimentadores y aprendices — unidos por la creencia de que la mejor forma de entender la IA es construir cosas reales con ella, y que la IA debe ser accesible para todos los que sientan curiosidad.",
     "originTitle": "Nacido de la curiosidad,",
     "originTitleLine2": "construido en público",
-    "originP1": "ExAI comenzó como un grupo de constructores que querían aprender IA construyendo cosas reales — no solo leyendo artículos o viendo tutoriales, sino enviando software real.",
-    "originP2": "No estamos afiliados a ninguna empresa o institución. Solo somos personas genuinamente emocionadas por la IA que quieren explorarla juntos, en abierto.",
+    "originP1": "ExAI comenzó como un grupo de constructores que querían trabajar con la IA como trabajan con cualquier otra tecnología — construyendo cosas reales, no solo leyendo artículos o viendo tutoriales.",
+    "originP2": "Somos nativos de IA por defecto: agentes, LLMs e inferencia son nuestras herramientas cotidianas. Pero no somos exclusivos. Los ingenieros tradicionales, los aprendices primerizos y todos los que están en medio son igual de bienvenidos aquí.",
     "originP3": "Todo lo que construimos es de código abierto. Todo lo que aprendemos se comparte. Ese es el trato.",
     "valuesTitle": "Nuestros valores",
     "valuesSubtitle": "No son palabras vacías de una declaración de misión. Así es como operamos realmente.",
@@ -88,9 +88,9 @@
     "label": "Únete al Colectivo",
     "heroTitle": "Construye con",
     "heroTitleAccent": "nosotros",
-    "heroSubtitle": "Sin solicitudes, sin barreras. Si quieres construir herramientas de IA en abierto, ya eres parte de esto.",
+    "heroSubtitle": "Sin solicitudes, sin barreras. Aprendiz o constructor, nuevo en IA o ingeniero experimentado — si sientes curiosidad, ya eres parte de esto.",
     "waysTitle": "Formas de contribuir",
-    "waysSubtitle": "Todos los niveles son bienvenidos. Elige tu punto de entrada.",
+    "waysSubtitle": "Todos los orígenes y niveles son bienvenidos. Elige tu punto de entrada.",
     "card1Title": "Construye con nosotros",
     "card1Body": "Abre un PR en un proyecto existente, resuelve un issue abierto, o propone algo completamente nuevo.",
     "card1Cta": "Explorar GitHub",
@@ -106,7 +106,7 @@
     "issuesCta": "Ver Issues Abiertos ↗",
     "finalTitle": "La puerta está",
     "finalTitleAccent": "siempre abierta.",
-    "finalBody": "No necesitas permiso para contribuir. Solo aparece, construye algo y compártelo.",
+    "finalBody": "No necesitas permiso para contribuir. Ya sea que estés aquí para aprender o para publicar — solo aparece, sumérgete, y comparte lo que encuentres.",
     "finalCta": "Empieza en GitHub ↗"
   },
   "blog": {
@@ -123,11 +123,11 @@
   },
   "values": {
     "learnTitle": "Aprender Enviando",
-    "learnBody": "La forma más rápida de aprender IA es construir algo real y ponerlo frente a la gente.",
+    "learnBody": "La forma más rápida de aprender IA es construir algo real y ponerlo frente a la gente. Vale para principiantes y veteranos por igual.",
     "openTitle": "Código Abierto",
     "openBody": "Todo lo que hacemos es público. Sin muros de pago, sin cajas negras, sin barreras.",
-    "communityTitle": "Comunidad Primero",
-    "communityBody": "Construimos juntos. Cada contribuidor importa, independientemente de su nivel.",
+    "communityTitle": "Todos Bienvenidos",
+    "communityBody": "Aprendices, constructores, ingenieros tradicionales, recién llegados a la IA, y algún que otro agente de IA 🤖 — cada perfil importa. Crecemos juntos.",
     "freeTitle": "Herramientas Gratis",
     "freeBody": "Nuestras herramientas son gratuitas para la comunidad, siempre. Eso no es negociable."
   }
