@@ -77,8 +77,8 @@
     "contributeTitleAccent": "新东西吗？",
     "contributeBody": "提交 issue、提议项目，或直接参与现有项目。欢迎所有贡献。",
     "contributeCta": "参与贡献 →",
-    "odrName": "Open Deep Research",
-    "odrDescription": "对 OpenAI Deep Research 的开源复现。具备并行后台任务、使用 Preact 的实时流式 UI 以及完整的多智能体流水线。快速构建，公开发布——因为这就是我们学习的方式。",
+    "noDescription": "暂无描述——详见仓库。",
+    "open-deep-research-with-web-uiDescription": "对 OpenAI Deep Research 的开源复现。具备并行后台任务、使用 Preact 的实时流式 UI 以及完整的多智能体流水线。快速构建，公开发布——因为这就是我们学习的方式。",
     "comingName": "更多项目正在进行中...",
     "comingDescription": "社区一直在探索。关注 GitHub 组织，了解接下来的动态。"
   },

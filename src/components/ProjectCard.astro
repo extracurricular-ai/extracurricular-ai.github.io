@@ -4,11 +4,13 @@ interface Props {
   description: string;
   href: string;
   tags?: string[];
+  stars?: number;
+  language?: string | null;
   status?: 'live' | 'in-progress';
   'data-animate-child'?: string;
 }
 
-const { name, description, href, tags = [], status = 'live' } = Astro.props;
+const { name, description, href, tags = [], stars = 0, language = null, status = 'live' } = Astro.props;
 const isLive = status === 'live';
 ---
 
@@ -33,7 +35,18 @@ const isLive = status === 'live';
       {isLive ? '● Live' : '⟳ In progress'}
     </span>
   </div>
-  <p class="text-text-secondary text-[0.9rem] leading-relaxed mb-5">{description}</p>
+  <p class="text-text-secondary text-[0.9rem] leading-relaxed mb-4">{description}</p>
+  {(language || stars > 0) && (
+    <div class="flex items-center gap-4 mb-4 text-[0.8rem] text-text-muted">
+      {language && (
+        <span class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-accent-cyan"></span>
+          {language}
+        </span>
+      )}
+      {stars > 0 && <span>★ {stars}</span>}
+    </div>
+  )}
   {tags.length > 0 && (
     <div class="flex flex-wrap gap-2">
       {tags.map((tag) => (

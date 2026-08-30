@@ -2,7 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AnimatedSection from '../../components/AnimatedSection.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import { GITHUB_ORG, GITHUB_REPO } from '../../config';
+import { GITHUB_ORG } from '../../config';
+import { fetchProjects } from '../../lib/github';
 import { t, locales, localizedPath, type Locale } from '../../i18n/index';
 
 export function getStaticPaths() {
@@ -10,6 +11,20 @@ export function getStaticPaths() {
 }
 
 const { locale } = Astro.params as { locale: Locale };
+
+const projects = await fetchProjects();
+
+// A hand-written translation wins when we have one; otherwise we fall back to
+// what GitHub already knows, so a new repo shows up without a code change.
+const described = projects.map((project) => ({
+  ...project,
+  name: t(locale, `projects.${project.slug}Name`, project.name),
+  description: t(
+    locale,
+    `projects.${project.slug}Description`,
+    project.description ?? t(locale, 'projects.noDescription'),
+  ),
+}));
 ---
 
 <BaseLayout
@@ -41,18 +56,22 @@ const { locale } = Astro.params as { locale: Locale };
         {t(locale, 'projects.liveLabel')}
       </h2>
       <div class="grid grid-cols-[repeat(auto-fill,minmax(min(100%,480px),1fr))] gap-5" data-animate-group>
-        <ProjectCard
-          name={t(locale, 'projects.odrName')}
-          description={t(locale, 'projects.odrDescription')}
-          href={GITHUB_REPO}
-          tags={["Python", "Preact", "AI Agents", "Streaming", "Multi-Agent"]}
-          status="live"
-        />
+        {described.map((project) => (
+          <ProjectCard
+            name={project.name}
+            description={project.description}
+            href={project.href}
+            tags={project.topics}
+            stars={project.stars}
+            language={project.language}
+            status={project.status}
+          />
+        ))}
       </div>
     </div>
   </AnimatedSection>
 
-  <!-- IN PROGRESS -->
+  <!-- MORE TO COME -->
   <AnimatedSection class="py-6">
     <div class="max-w-[1280px] mx-auto px-6">
       <h2 class="text-[1.1rem] font-semibold text-text-muted uppercase tracking-[0.08em] mb-6">
@@ -63,7 +82,7 @@ const { locale } = Astro.params as { locale: Locale };
           name={t(locale, 'projects.comingName')}
           description={t(locale, 'projects.comingDescription')}
           href={GITHUB_ORG}
-          tags={["TBD"]}
+          tags={[]}
           status="in-progress"
         />
       </div>

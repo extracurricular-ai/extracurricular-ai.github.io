@@ -77,8 +77,8 @@
     "contributeTitleAccent": "quelque chose de nouveau ?",
     "contributeBody": "Ouvrez un issue, proposez un projet, ou rejoignez un existant. Toutes les contributions sont les bienvenues.",
     "contributeCta": "Participer →",
-    "odrName": "Open Deep Research",
-    "odrDescription": "Une réplication ouverte du Deep Research d'OpenAI. Comprend des tâches parallèles en arrière-plan, une interface de streaming en temps réel avec Preact et un pipeline multi-agents complet. Construit vite, publié en public — parce que c'est ainsi qu'on apprend.",
+    "noDescription": "Pas encore de description — consultez le dépôt pour plus de détails.",
+    "open-deep-research-with-web-uiDescription": "Une réplication ouverte du Deep Research d'OpenAI. Comprend des tâches parallèles en arrière-plan, une interface de streaming en temps réel avec Preact et un pipeline multi-agents complet. Construit vite, publié en public — parce que c'est ainsi qu'on apprend.",
     "comingName": "Plus de projets en cours...",
     "comingDescription": "Le collectif expérimente toujours. Suivez l'organisation GitHub pour voir ce qui se prépare."
   },
