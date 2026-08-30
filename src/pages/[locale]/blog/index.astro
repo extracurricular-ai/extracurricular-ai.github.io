@@ -8,7 +8,9 @@ export async function getStaticPaths() {
   return locales.map((locale) => ({ params: { locale } }));
 }
 
-const { locale } = Astro.params as { locale: Locale };
+// Astro.params on the /[locale]/ route; Astro.props when the root-level page
+// renders this directly to serve the default locale.
+const { locale } = { ...Astro.params, ...Astro.props } as { locale: Locale };
 
 const allPosts = await getCollection('blog');
 const posts = allPosts

@@ -1,3 +1,13 @@
 ---
-return Astro.redirect('/en/');
+// The root URL renders the default-locale homepage directly rather than
+// redirecting to /en/. A static host can't send a real 301, so a redirect here
+// degrades to a meta refresh — a visible "Redirecting..." flash before any
+// content paints. Rendering in place removes that hop entirely; BaseLayout's
+// canonical tag points at /en/ so the duplicate URL doesn't split SEO signals.
+import Homepage from './[locale]/index.astro';
+import { defaultLocale } from '../i18n/index';
+
+export const partial = false;
 ---
+
+<Homepage locale={defaultLocale} />

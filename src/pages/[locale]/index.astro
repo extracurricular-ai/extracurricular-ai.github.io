@@ -3,14 +3,21 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import AnimatedSection from '../../components/AnimatedSection.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import ValuePill from '../../components/ValuePill.astro';
-import { GITHUB_ORG, GITHUB_REPO } from '../../config';
+import { GITHUB_ORG } from '../../config';
+import { fetchProjects, localize } from '../../lib/github';
 import { t, locales, localizedPath, type Locale } from '../../i18n/index';
 
 export function getStaticPaths() {
   return locales.map((locale) => ({ params: { locale } }));
 }
 
-const { locale } = Astro.params as { locale: Locale };
+// Astro.params on the /[locale]/ route; Astro.props when the root index.astro
+// renders this directly to serve the default locale at /.
+const { locale } = { ...Astro.params, ...Astro.props } as { locale: Locale };
+
+// fetchProjects sorts by stars, so the most-starred repo leads the homepage.
+const [topProject] = await fetchProjects();
+const featured = localize(topProject, locale);
 ---
 
 <BaseLayout
@@ -30,7 +37,7 @@ const { locale } = Astro.params as { locale: Locale };
       <img src="/logo.png" alt="ExAI" class="h-24 w-24 object-contain mx-auto mb-6" />
 
       <div class="inline-flex items-center gap-2 bg-accent-purple/10 border border-accent-purple/25 rounded-full px-4 py-1.5 text-[0.8rem] font-semibold text-accent-purple mb-8 uppercase tracking-[0.05em]">
-        Open Collective · Open Source
+        {t(locale, 'home.badge')}
       </div>
 
       <h1
@@ -83,11 +90,13 @@ const { locale } = Astro.params as { locale: Locale };
       </div>
       <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,480px),1fr))] gap-5" data-animate-group>
         <ProjectCard
-          name={t(locale, 'projects.odrName')}
-          description={t(locale, 'projects.odrDescription')}
-          href={GITHUB_REPO}
-          tags={["Python", "Preact", "AI Agents", "Streaming"]}
-          status="live"
+          name={featured.name}
+          description={featured.description}
+          href={featured.href}
+          tags={featured.topics}
+          stars={featured.stars}
+          language={featured.language}
+          status={featured.status}
         />
       </div>
       <div class="mt-8">

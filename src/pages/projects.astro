@@ -1,3 +1,8 @@
 ---
-return Astro.redirect('/en/projects');
+// Renders the default locale in place instead of redirecting to /en/projects —
+// see src/pages/index.astro for why a redirect here costs a visible flash.
+import Projects from './[locale]/projects.astro';
+import { defaultLocale } from '../i18n/index';
 ---
+
+<Projects locale={defaultLocale} />

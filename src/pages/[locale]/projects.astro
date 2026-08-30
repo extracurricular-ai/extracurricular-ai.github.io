@@ -3,28 +3,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import AnimatedSection from '../../components/AnimatedSection.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import { GITHUB_ORG } from '../../config';
-import { fetchProjects } from '../../lib/github';
+import { fetchProjects, localize } from '../../lib/github';
 import { t, locales, localizedPath, type Locale } from '../../i18n/index';
 
 export function getStaticPaths() {
   return locales.map((locale) => ({ params: { locale } }));
 }
 
-const { locale } = Astro.params as { locale: Locale };
+// Astro.params on the /[locale]/ route; Astro.props when the root-level page
+// renders this directly to serve the default locale.
+const { locale } = { ...Astro.params, ...Astro.props } as { locale: Locale };
 
-const projects = await fetchProjects();
-
-// A hand-written translation wins when we have one; otherwise we fall back to
-// what GitHub already knows, so a new repo shows up without a code change.
-const described = projects.map((project) => ({
-  ...project,
-  name: t(locale, `projects.${project.slug}Name`, project.name),
-  description: t(
-    locale,
-    `projects.${project.slug}Description`,
-    project.description ?? t(locale, 'projects.noDescription'),
-  ),
-}));
+const projects = (await fetchProjects()).map((p) => localize(p, locale));
 ---
 
 <BaseLayout
@@ -56,7 +46,7 @@ const described = projects.map((project) => ({
         {t(locale, 'projects.liveLabel')}
       </h2>
       <div class="grid grid-cols-[repeat(auto-fill,minmax(min(100%,480px),1fr))] gap-5" data-animate-group>
-        {described.map((project) => (
+        {projects.map((project) => (
           <ProjectCard
             name={project.name}
             description={project.description}

@@ -16,7 +16,10 @@ export default defineConfig({
     defaultLocale: 'en',
     locales: ['en', 'zh', 'es', 'fr'],
     routing: {
-      prefixDefaultLocale: true,
+      // The default locale is served at / rather than redirected to /en/.
+      // A static host can only express that redirect as a meta refresh, which
+      // shows a visible "Redirecting..." flash before anything paints.
+      prefixDefaultLocale: false,
     },
   },
 });

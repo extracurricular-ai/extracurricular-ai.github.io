@@ -1,4 +1,5 @@
 import { GITHUB_ORG, GITHUB_ORG_NAME, HIDDEN_REPOS, MAX_TOPICS } from '../config';
+import { t } from '../i18n/index';
 
 export interface Project {
   name: string;
@@ -56,6 +57,23 @@ function toProject(repo: GitHubRepo): Project {
     // Archived repos are done being worked on, so they read as reference rather
     // than as something you can jump into today.
     status: repo.archived ? 'in-progress' : 'live',
+  };
+}
+
+/**
+ * Resolve the name and blurb we actually render for a repo: a hand-written
+ * translation wins where we have one, otherwise we fall back to what GitHub
+ * already knows, so a new repo shows up without needing a code change.
+ */
+export function localize(project: Project, locale: string): Project {
+  return {
+    ...project,
+    name: t(locale, `projects.${project.slug}Name`, project.name),
+    description: t(
+      locale,
+      `projects.${project.slug}Description`,
+      project.description ?? t(locale, 'projects.noDescription'),
+    ),
   };
 }
 

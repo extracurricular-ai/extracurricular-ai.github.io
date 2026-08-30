@@ -1,3 +1,8 @@
 ---
-return Astro.redirect('/en/blog');
+// Renders the default locale in place instead of redirecting to /en/blog —
+// see src/pages/index.astro for why a redirect here costs a visible flash.
+import Blog from './[locale]/blog/index.astro';
+import { defaultLocale } from '../i18n/index';
 ---
+
+<Blog locale={defaultLocale} />

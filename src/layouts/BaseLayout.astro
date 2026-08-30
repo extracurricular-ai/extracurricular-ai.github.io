@@ -13,13 +13,18 @@ interface Props {
 const { title, locale = defaultLocale } = Astro.props;
 const description = Astro.props.description ?? t(locale, 'site.tagline');
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://extracurricularai.org');
+const SITE = Astro.site ?? 'https://extracurricular.ai';
+
+// The default locale is served at both / and /en/. Canonicalizing on the
+// prefixed form keeps the two from competing as separate pages, and matches
+// the hreflang="en" target below.
+const canonicalURL = new URL(localizedPath(Astro.url.pathname, locale as (typeof locales)[number]), SITE);
 
 const hreflangLinks = locales.map((loc) => ({
   locale: loc,
-  href: new URL(localizedPath(Astro.url.pathname, loc), Astro.site ?? 'https://extracurricularai.org').toString(),
+  href: new URL(localizedPath(Astro.url.pathname, loc), SITE).toString(),
 }));
-const xDefaultHref = new URL(localizedPath(Astro.url.pathname, 'en'), Astro.site ?? 'https://extracurricularai.org').toString();
+const xDefaultHref = new URL(localizedPath(Astro.url.pathname, defaultLocale), SITE).toString();
 
 const navLabels = {
   home: t(locale, 'nav.home'),
