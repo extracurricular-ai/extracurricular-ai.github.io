@@ -5,22 +5,19 @@ import { locales, localizedPath, type Locale } from '../../../i18n/index';
 
 export async function getStaticPaths() {
   const allPosts = await getCollection('blog');
-  return locales.flatMap((locale) => {
-    const localePosts = allPosts.filter((p) => p.data.locale === locale);
-    // If no posts for this locale, fall back to English posts
-    const fallback = localePosts.length === 0
-      ? allPosts.filter((p) => p.data.locale === 'en')
-      : localePosts;
-    return fallback.map((post) => {
-      const slug = post.id.split('/').pop()?.replace(/\.md$/, '') ?? post.id;
-      return { params: { locale, slug }, props: { post } };
-    });
+  return allPosts.map((post) => {
+    const slug = post.id.split('/').pop()?.replace(/\.md$/, '') ?? post.id;
+    return { params: { locale: post.data.locale, slug }, props: { post } };
   });
 }
 
 const { locale, slug } = Astro.params as { locale: Locale; slug: string };
 const { post } = Astro.props;
 const { Content } = await post.render();
+const allPosts = await getCollection('blog');
+const translationLocales = locales.filter((loc) => allPosts.some((entry) =>
+  entry.data.locale === loc && entry.id.split('/').pop()?.replace(/\.md$/, '') === slug
+));
 
 const date = post.data.pubDate.toLocaleDateString(
   locale === 'zh' ? 'zh-CN' : locale === 'es' ? 'es-ES' : locale === 'fr' ? 'fr-FR' : 'en-US',
@@ -28,7 +25,15 @@ const date = post.data.pubDate.toLocaleDateString(
 );
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description} locale={locale}>
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  locale={locale}
+  image={post.data.image}
+  imageAlt={post.data.imageAlt}
+  article={{ author: post.data.author, publishedAt: post.data.pubDate.toISOString() }}
+  translationLocales={translationLocales}
+>
   <article class="pt-36 pb-24">
     <div class="max-w-[760px] mx-auto px-6">
 
@@ -64,6 +69,17 @@ const date = post.data.pubDate.toLocaleDateString(
         </div>
       </header>
 
+      {post.data.image && (
+        <img
+          src={post.data.image}
+          alt={post.data.imageAlt ?? ''}
+          width="1672"
+          height="941"
+          fetchpriority="high"
+          class="w-full h-auto rounded-xl border border-border mb-10"
+        />
+      )}
+
       <!-- Content -->
       <div class="prose">
         <Content />
@@ -78,6 +94,7 @@ const date = post.data.pubDate.toLocaleDateString(
     color: var(--color-text-secondary);
     line-height: 1.8;
     font-size: 1.0625rem;
+    overflow-wrap: anywhere;
   }
   :global(.prose h2) {
     color: var(--color-text-primary);
@@ -151,5 +168,31 @@ const date = post.data.pubDate.toLocaleDateString(
     padding: 0;
     color: var(--color-text-secondary);
     font-size: 0.875rem;
+  }
+  :global(.prose img) {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+    margin: 2rem auto;
+  }
+  :global(.prose table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.875rem;
+  }
+  :global(.prose th), :global(.prose td) {
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    text-align: left;
+    vertical-align: top;
+    min-width: 10rem;
+  }
+  :global(.prose th) {
+    color: var(--color-text-primary);
+    background: var(--color-bg-elevated);
   }
 </style>

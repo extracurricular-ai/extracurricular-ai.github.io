@@ -15,7 +15,7 @@ const { locale } = { ...Astro.params, ...Astro.props } as { locale: Locale };
 const allPosts = await getCollection('blog');
 const posts = allPosts
   .filter((p) => p.data.locale === locale || (locale === 'en' && !p.id.startsWith('zh/') && !p.id.startsWith('es/') && !p.id.startsWith('fr/')))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const displayPosts = posts.length > 0 ? posts : allPosts
   .filter((p) => p.data.locale === 'en')
@@ -51,11 +51,14 @@ const featuredSlug = featured?.id.split('/').pop()?.replace(/\.md$/, '') ?? feat
       <AnimatedSection class="py-6">
         <div class="max-w-[1280px] mx-auto px-6">
           <a
-            href={localizedPath(`/blog/${featuredSlug}`, locale)}
+            href={localizedPath(`/blog/${featuredSlug}`, featured.data.locale)}
             class="group relative block rounded-[1.25rem] overflow-hidden no-underline border border-border hover:border-accent-purple/40 transition-colors duration-300"
             style="background: linear-gradient(135deg, rgba(42, 181, 165, 0.08), rgba(245, 130, 31, 0.04));"
           >
             <div class="p-10 md:p-14">
+              {featured.data.image && (
+                <img src={featured.data.image} alt={featured.data.imageAlt ?? ''} width="1672" height="941" class="w-full max-h-[360px] object-cover rounded-xl mb-8" />
+              )}
               <!-- Top row -->
               <div class="flex items-center justify-between mb-6">
                 <span class="text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-accent-purple bg-accent-purple/10 border border-accent-purple/20 rounded-full px-3 py-1">
@@ -116,7 +119,7 @@ const featuredSlug = featured?.id.split('/').pop()?.replace(/\.md$/, '') ?? feat
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" data-animate-group>
               {rest.map((post) => {
                 const slug = post.id.split('/').pop()?.replace(/\.md$/, '') ?? post.id;
-                const href = localizedPath(`/blog/${slug}`, locale);
+                const href = localizedPath(`/blog/${slug}`, post.data.locale);
                 const date = post.data.pubDate.toLocaleDateString(
                   locale === 'zh' ? 'zh-CN' : locale === 'es' ? 'es-ES' : locale === 'fr' ? 'fr-FR' : 'en-US',
                   { year: 'numeric', month: 'short', day: 'numeric' }
@@ -127,6 +130,9 @@ const featuredSlug = featured?.id.split('/').pop()?.replace(/\.md$/, '') ?? feat
                     href={href}
                     class="group bg-bg-surface border border-border hover:border-accent-purple/40 rounded-[var(--radius-card)] p-7 flex flex-col no-underline transition-colors duration-200"
                   >
+                    {post.data.image && (
+                      <img src={post.data.image} alt={post.data.imageAlt ?? ''} width="1672" height="941" loading="lazy" class="w-full h-auto rounded-lg mb-5" />
+                    )}
                     <div class="flex items-center justify-between mb-5">
                       <time class="text-text-muted text-[0.775rem] font-mono">{date}</time>
                       <span class="text-accent-purple opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-sm">→</span>

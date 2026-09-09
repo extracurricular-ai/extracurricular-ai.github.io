@@ -2,12 +2,16 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.tsx';
 import Footer from '../components/Footer.astro';
-import { locales, localeNames, localizedPath, t, defaultLocale } from '../i18n/index';
+import { locales, localeNames, localizedPath, t, defaultLocale, type Locale } from '../i18n/index';
 
 interface Props {
   title: string;
   description?: string;
   locale?: string;
+  image?: string;
+  imageAlt?: string;
+  article?: { author: string; publishedAt: string };
+  translationLocales?: Locale[];
 }
 
 const { title, locale = defaultLocale } = Astro.props;
@@ -20,11 +24,14 @@ const SITE = Astro.site ?? 'https://extracurricular.ai';
 // the hreflang="en" target below.
 const canonicalURL = new URL(localizedPath(Astro.url.pathname, locale as (typeof locales)[number]), SITE);
 
-const hreflangLinks = locales.map((loc) => ({
+const availableLocales = Astro.props.translationLocales ?? [...locales];
+const hreflangLinks = availableLocales.map((loc) => ({
   locale: loc,
   href: new URL(localizedPath(Astro.url.pathname, loc), SITE).toString(),
 }));
-const xDefaultHref = new URL(localizedPath(Astro.url.pathname, defaultLocale), SITE).toString();
+const xDefaultLocale = availableLocales.includes(defaultLocale) ? defaultLocale : availableLocales[0] ?? defaultLocale;
+const xDefaultHref = new URL(localizedPath(Astro.url.pathname, xDefaultLocale), SITE).toString();
+const imageURL = Astro.props.image ? new URL(Astro.props.image, SITE).toString() : undefined;
 
 const navLabels = {
   home: t(locale, 'nav.home'),
@@ -39,7 +46,7 @@ const navLabels = {
 const switcherLinks = locales.map((loc) => ({
   locale: loc,
   label: localeNames[loc],
-  href: localizedPath(Astro.url.pathname, loc),
+  href: localizedPath(availableLocales.includes(loc) ? Astro.url.pathname : '/blog', loc),
   active: loc === locale,
 }));
 ---
@@ -60,14 +67,20 @@ const switcherLinks = locales.map((loc) => ({
     <title>{title} | ExAI</title>
     <meta name="description" content={description} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={Astro.props.article ? 'article' : 'website'} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={`${title} | ExAI`} />
     <meta property="og:description" content={description} />
+    {imageURL && <meta property="og:image" content={imageURL} />}
+    {imageURL && Astro.props.imageAlt && <meta property="og:image:alt" content={Astro.props.imageAlt} />}
+    {Astro.props.article && <meta property="article:published_time" content={Astro.props.article.publishedAt} />}
+    {Astro.props.article && <meta name="author" content={Astro.props.article.author} />}
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={`${title} | ExAI`} />
     <meta name="twitter:description" content={description} />
+    {imageURL && <meta name="twitter:image" content={imageURL} />}
+    {imageURL && Astro.props.imageAlt && <meta name="twitter:image:alt" content={Astro.props.imageAlt} />}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
