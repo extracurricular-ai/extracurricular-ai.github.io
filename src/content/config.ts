@@ -12,6 +12,8 @@ const blog = defineCollection({
     slug: z.string().optional(),
     image: z.string().optional(),
     imageAlt: z.string().optional(),
+    imageWidth: z.number().int().positive().default(1672),
+    imageHeight: z.number().int().positive().default(941),
     featured: z.boolean().default(false),
   }),
 });

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="680" viewBox="0 0 760 680" role="img" aria-labelledby="title desc">
+<title id="title">Rewind, then reverse it</title><desc id="desc">Transcript is kept when you rewind. Continue from the selected point. One shared workspace directory. Reverse the rewind using its rescue state.</desc>
+<rect width="760" height="680" rx="24" fill="#f6f9ff"/>
+<g font-family="system-ui, sans-serif" fill="#163666">
+<text x="40" y="56" font-size="30" font-weight="700">Rewind, then reverse it</text>
+<rect x="40" y="90" width="680" height="106" rx="16" fill="white" stroke="#c5d6f9"/>
+<text x="64" y="132" font-size="26" font-weight="700">1  Original conversation</text><text x="64" y="170" font-size="22">Transcript is kept when you rewind.</text>
+<path d="M380 207v25m-8-8 8 8 8-8" fill="none" stroke="#4176e6" stroke-width="3"/>
+<rect x="40" y="244" width="680" height="106" rx="16" fill="white" stroke="#4176e6" stroke-width="2"/>
+<text x="64" y="286" font-size="26" font-weight="700">2  Child conversation</text><text x="64" y="324" font-size="22">Continue from the selected point.</text>
+<rect x="40" y="374" width="680" height="106" rx="16" fill="#edf3fe"/>
+<text x="64" y="416" font-size="26" font-weight="700">One shared workspace directory</text><text x="64" y="454" font-size="22">Rewind restores captured files here.</text>
+<path d="M380 492v24m-8-8 8 8 8-8" fill="none" stroke="#4176e6" stroke-width="3"/>
+<rect x="40" y="528" width="680" height="112" rx="16" fill="#4176e6"/>
+<text x="64" y="570" font-size="26" font-weight="700" fill="white">3  /redo in the child</text><text x="64" y="610" font-size="22" fill="white">Reverse the rewind using its rescue state.</text>
+</g></svg>

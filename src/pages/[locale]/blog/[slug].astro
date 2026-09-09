@@ -73,8 +73,8 @@ const date = post.data.pubDate.toLocaleDateString(
         <img
           src={post.data.image}
           alt={post.data.imageAlt ?? ''}
-          width="1672"
-          height="941"
+          width={post.data.imageWidth}
+          height={post.data.imageHeight}
           fetchpriority="high"
           class="w-full h-auto rounded-xl border border-border mb-10"
         />
