@@ -44,3 +44,34 @@ Both comparison translations now lead with documented workflow-based recommendat
 Added static sitemap and robots endpoints. The sitemap follows the existing localized canonical convention, including only existing translated posts and excluding root-level English aliases. It intentionally omits lastmod because a build is not evidence of a content change. If shared page routes change, update the sitemap's sharedPaths list.
 
 Validation: production build succeeded; parsed XML contains 32 unique URLs matching all rendered canonical URLs, including all four DSH articles. Robots points to the sitemap; project links and comparison article local links resolve in generated output. Search Console inspection, live deployment checks and Google indexing remain outstanding.
+
+
+## 2026-09-10: recorded demo edits
+
+The user supplied separate English and Chinese 2560 × 1440 WebM recordings and matching M4A narration tracks. Each tutorial now embeds its own 20-second horizontal edit, original narration, poster and optional WebVTT voice captions. These are local files under `public/videos/dsh-rewind/`; no deployment was performed as part of video editing.
+
+The edits omit waiting and exploratory steps, select original narration excerpts and hold the verified terminal result. They are a maintainer demonstration, not a speed benchmark or completion of the three-plugin R01–R06 protocol. `/redo` returns to the pre-rewind state, including deleting `data.txt` again in this example.
+
+Reproducible source intervals, crop rectangles, audio selections and output validation are kept in the sibling `dsh-plugin-dev/dsh-filesnap-social-medias/video-work/` folder. Source recordings are unchanged.
+
+Validation for the video embeds: Astro production build passed. Chromium played and sought both localized videos to 8.5 seconds at 1440 px and 390 px viewport widths, loaded all seven voice-caption cues per video, and found no horizontal overflow. Four final MP4 files passed complete decoding and duration/codec checks.
+
+
+## Walkthrough revision: full frame and 1.5×
+
+The user rejected the 20-second montage as too short and too tightly cropped. Its entries above describe an earlier iteration. The current tutorial embeds use full 2560 × 1440 horizontal recordings: Chinese 144.1 s and English approximately 148.77 s. Source audio and video share identical cuts and are both accelerated by exactly 1.5×. No spatial crop, zoom or held verification result is used in the walkthrough. Waiting and a small amount of repeated introduction are removed; action order and the extended rewind/redo explanation are retained. A 2.5-second installation card follows the demonstration.
+
+The full edit decision list and removed intervals are recorded in `dsh-filesnap-social-medias/video-work/long-v2/plan.json`. Subtitles are cleaned for readability and correct ASR mistakes in product names, file names and v1/v2; they are not a word-for-word transcript. The original source recordings remain available. This revision was prepared locally, without publishing.
+
+Walkthrough validation: all encoded segments match the planned frame counts; both complete files decode successfully. Chinese audio/video duration is 144.100 s; English video is 148.766667 s and audio 148.766 s. The Astro build passed. Desktop/mobile browser checks played both videos, sought to 90 s, loaded 74 Chinese / 43 English caption cues, and found no horizontal overflow.
+
+
+## Platform video embeds — 2026-09-10
+
+The user confirmed the English YouTube upload (`WPEXKesR_EM`) and publication of the Chinese Bilibili video (`BV1BiYT6qEjs`). The English tutorial now uses the YouTube iframe; the Chinese tutorial uses Bilibili's external player. Both retain direct viewing links for each language, full written instructions, and the accepted walkthrough descriptions. Earlier local MP4 files remain available; the tutorial HTML no longer loads them.
+
+Both frames use lazy loading, autoplay disabled, accessible localized titles, full-screen permissions, and responsive 16:9 sizing with a 200px minimum height. `strict-origin-when-cross-origin` preserves the origin referrer used by embedded platforms. No custom player JavaScript is required.
+
+References: https://developers.google.com/youtube/player_parameters and https://player.bilibili.com/ . Video publication is recorded from user confirmation; local layout validation does not establish third-party playback availability in every region.
+
+Validation: final Astro build passed (37 pages). Chromium checked both language routes at 1440px, 390px, and 320px: exactly one iframe per tutorial, correct video IDs, no autoplay, full-screen enabled, direct links present, minimum 200px player height, and no page overflow. Third-party requests were blocked for these deterministic layout checks; external playback must be verified after deployment. No commit, push, or deployment was performed.

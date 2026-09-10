@@ -17,6 +17,14 @@ imageAlt: "DSH Rewind & Redo — by FileSnap 蓝白二次元鲸鱼娘封面"
 
 我们是 dsh-filesnap 的维护者。本文按 **0.2.2** 编写，资料核查日期为 **2026 年 9 月 9 日**。截图来自已有的 0.2.2 Web UI 实际会话，宿主为 DSH 0.1.2-rc.1 本地构建；这不代表已经验证后续所有宿主版本。
 
+## 完整操作演示（1.5 倍速）
+
+<iframe src="https://player.bilibili.com/player.html?bvid=BV1BiYT6qEjs&amp;p=1&amp;autoplay=0&amp;danmaku=0" title="DSH 回退与 Redo 中文完整操作演示（哔哩哔哩）" width="960" height="540" style="display: block; width: 100%; height: auto; min-height: 200px; aspect-ratio: 16 / 9; border: 0;" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
+
+[在 B 站观看完整演示](https://www.bilibili.com/video/BV1BiYT6qEjs/) · [English walkthrough (YouTube)](https://www.youtube.com/watch?v=WPEXKesR_EM)
+
+这段演示约 2 分 24 秒，保留完整录屏画面，语音和画面同步按 1.5 倍速播放，仅去掉等待和少量重复内容。从准备文件开始，连续展示删除、回退恢复、保留原对话、用 `/redo` 撤销，以及再次选择更早的恢复点。Redo 会回到回退前的状态，在这个例子中也会让文件再次被删除。
+
 ## 安装到 Web UI profile
 
 需要 Node.js **^22.19 或 >=24**，支持 Linux、macOS、Windows 的 x64 和 arm64。安装包包含 FileSnap 原生引擎，无需自行安装 Rust 工具链。

@@ -17,6 +17,14 @@ imageAlt: "DSH Rewind & Redo by FileSnap, with a blue and white anime whale-girl
 
 We maintain dsh-filesnap. This guide describes **0.2.2**, reviewed on **September 9, 2026**. The screenshots come from an existing 0.2.2 Web UI session on a DSH 0.1.2-rc.1 local build; this article does not certify later host releases.
 
+## Full walkthrough at 1.5× speed
+
+<iframe src="https://www.youtube.com/embed/WPEXKesR_EM?autoplay=0&amp;playsinline=1&amp;hl=en" title="DSH Rewind and Redo — full English walkthrough on YouTube" width="960" height="540" style="display: block; width: 100%; height: auto; min-height: 200px; aspect-ratio: 16 / 9; border: 0;" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
+
+[Watch on YouTube](https://www.youtube.com/watch?v=WPEXKesR_EM) · [中文演示（B 站）](https://www.bilibili.com/video/BV1BiYT6qEjs/)
+
+This 2-minute-29-second walkthrough keeps the full screen recording, with video and original narration accelerated together to 1.5×. Only waiting and a little repeated explanation are removed. It follows file setup, deletion, rewind, the preserved original conversation, `/redo`, and another rewind to an earlier point. Redo returns to the pre-rewind state, which deletes the file again in this example.
+
 ## Install in the Web UI profile
 
 Use Node.js **^22.19 or >=24**, on Linux, macOS, or Windows, with x64 or arm64. The package includes its native FileSnap engine; a Rust toolchain is unnecessary.
