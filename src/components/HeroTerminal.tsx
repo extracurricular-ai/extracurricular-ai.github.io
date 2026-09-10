@@ -23,15 +23,14 @@ export default function HeroTerminal({ files, locale }: Props) {
   const [expanded, setExpanded] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const latestRef = useRef<HTMLDivElement>(null);
   const interacted = useRef(false);
 
   useEffect(() => {
     if (!interacted.current || !scrollRef.current) return;
-    // Keep the beginning of a long article visible; the prompt stays pinned below it.
+    // Follow the new prompt, like a shell. Older output remains in the scrollback.
     const output = scrollRef.current;
-    output.scrollTop = latestRef.current ? latestRef.current.offsetTop - 16 : output.scrollHeight;
-  }, [entries]);
+    output.scrollTop = output.scrollHeight;
+  }, [entries, game, closed, minimized]);
 
   function focusInput() {
     requestAnimationFrame(() => inputRef.current?.focus({ preventScroll: true }));
@@ -105,7 +104,7 @@ export default function HeroTerminal({ files, locale }: Props) {
   return <div class={`terminal-wrap ${expanded ? 'is-expanded' : ''}`}>
     <div class="terminal-caption"><span><span class="terminal-status-dot" /> EXAI / PLAYGROUND</span><span>v.01</span></div>
     {closed ? <div class="terminal-closed"><span>{copy.label}</span><button onClick={() => { setClosed(false); setMinimized(false); }}>{copy.reopen} ↗</button></div> :
-      <section class={`terminal-window ${entries.length === 0 ? 'is-fresh' : ''}`} aria-label="ExAI Terminal">
+      <section class="terminal-window" aria-label="ExAI Terminal">
         <header class="terminal-titlebar">
           <div class="terminal-traffic">
             <button class="traffic-close" aria-label={copy.close} title={copy.close} onClick={() => { setGame(false); setClosed(true); }}><span>×</span></button>
@@ -118,9 +117,14 @@ export default function HeroTerminal({ files, locale }: Props) {
         {minimized ? <button class="terminal-restore" onClick={() => setMinimized(false)}>{copy.restore} ↓</button> : game ?
           <Invaders copy={copy} onExit={() => { setGame(false); focusInput(); }} /> : <>
           <div class="terminal-session">
-          <div class="terminal-output" ref={scrollRef} role="region" aria-label={copy.label} tabIndex={0}>
+          <div class="terminal-output" ref={scrollRef} role="region" aria-label={copy.label} tabIndex={0}
+            onClick={(event) => {
+              if (event.target !== event.currentTarget || window.getSelection()?.isCollapsed === false) return;
+              inputRef.current?.focus({ preventScroll: true });
+              event.currentTarget.scrollTop = event.currentTarget.scrollHeight;
+            }}>
             {showWelcome && <div class="terminal-welcome"><div class="terminal-wordmark" aria-hidden="true">&gt;_ <span>hello, world.</span></div><p>{copy.welcome}</p><p class="terminal-muted">{copy.hint}</p></div>}
-            {entries.map((entry, index) => <div class="terminal-entry" key={index} ref={index === entries.length - 1 ? latestRef : undefined}>
+            {entries.map((entry, index) => <div class="terminal-entry" key={index}>
               <div class="terminal-command"><span class="terminal-user">visitor<span>@exai</span></span> <span class="terminal-path">{entry.cwd === '/' ? '~' : `~${entry.cwd}`}</span> <span class="terminal-chevron">❯</span> {entry.command}</div>
               {entry.output.text && <pre class={entry.output.error ? 'terminal-error' : 'terminal-text'}>{entry.output.text}</pre>}
               {entry.output.files && <div class="terminal-files">{entry.output.files.map((file) => <button class={`terminal-file ${file.directory ? 'is-directory' : ''}`} onClick={() => clickFile(file)} title={file.title}>
@@ -128,12 +132,11 @@ export default function HeroTerminal({ files, locale }: Props) {
               </button>)}</div>}
               {entry.output.href && <a class="terminal-result-link" href={entry.output.href}>{copy.read}</a>}
             </div>)}
-          </div>
           <form class="terminal-input-row" onSubmit={(event) => { event.preventDefault(); run(input); }}>
             <label for="hero-terminal-input" class="sr-only">{copy.input}</label>
             <span class="terminal-prompt-identity" aria-hidden="true"><span class="terminal-user">visitor@exai</span><span class="terminal-path">{cwd === '/' ? '~' : `~${cwd}`}</span></span>
             <span class="terminal-chevron" aria-hidden="true">❯</span>
-            <input ref={inputRef} id="hero-terminal-input" value={input} placeholder={copy.placeholder} autoComplete="off" autoCapitalize="off" spellcheck={false} enterKeyHint="go" maxLength={500}
+            <input ref={inputRef} id="hero-terminal-input" value={input} autoComplete="off" autoCapitalize="off" spellcheck={false} enterKeyHint="go" maxLength={500}
               onInput={(event) => { setInput(event.currentTarget.value); setHistoryIndex(-1); }}
               onKeyDown={(event) => {
                 if (event.isComposing) return;
@@ -154,13 +157,13 @@ export default function HeroTerminal({ files, locale }: Props) {
                   setHistoryIndex(next); setInput(next === -1 ? draft.current : history[history.length - 1 - next]);
                 }
               }} />
-            <button type="submit" aria-label={copy.run} title={copy.run}>↵</button>
           </form>
+          </div>
           </div>
           <footer class="terminal-footer"><span><i />{copy.ready}</span><span>{copy.shortcuts}</span></footer>
         </>}
       </section>}
-    <div class="terminal-quickstart"><span>$</span>{['ls /', 'cat /README.md', 'man', 'play invaders'].map((command) => <button onClick={() => { setClosed(false); setMinimized(false); setGame(false); run(command, false); }}>{command}<span aria-hidden="true"> ↗</span></button>)}</div>
+    <div class="terminal-quickstart"><span>$</span>{['ls /', 'cat /README.md', 'man', 'clear', 'play invaders'].map((command) => <button onClick={() => { setClosed(false); setMinimized(false); setGame(false); run(command, false); }}>{command}<span aria-hidden="true"> ↗</span></button>)}</div>
     <span class="sr-only" role="status" aria-live="polite" aria-atomic="true">{interacted.current && entries.length > 0 ? `${entries[entries.length - 1].command}: ${entries[entries.length - 1].output.text?.slice(0, 180) ?? entries[entries.length - 1].output.files?.map((file) => file.path.split('/').pop()).join(', ') ?? ''}` : ''}</span>
     <noscript><p>{copy.hint} (JavaScript required.)</p></noscript>
   </div>;
