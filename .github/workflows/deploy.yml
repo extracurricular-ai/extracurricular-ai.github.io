@@ -8,9 +8,12 @@ on:
   schedule:
     - cron: '0 3 * * *'
   workflow_dispatch:
+  discussion_comment:
+    types: [created, edited, deleted]
 
 permissions:
   contents: read
+  discussions: read
   pages: write
   id-token: write
 
@@ -21,6 +24,7 @@ concurrency:
 
 jobs:
   build:
+    if: github.event_name != 'discussion_comment' || github.event.discussion.number == 1
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,8 +40,7 @@ jobs:
 
       - run: pnpm build
         env:
-          # Raises the GitHub API rate limit from 60/hr to 1000/hr for the
-          # org repo fetch in src/lib/github.ts.
+          # Fetch public projects and the community discussion snapshot at build time.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/upload-pages-artifact@v3

@@ -7,7 +7,7 @@ import type { TerminalFile } from '../../lib/terminal';
 import AnimatedSection from '../../components/AnimatedSection.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import ValuePill from '../../components/ValuePill.astro';
-import { GITHUB_ORG } from '../../config';
+import CommunityDiscussion from '../../components/CommunityDiscussion.astro';
 import { fetchProjects, localize } from '../../lib/github';
 import { t, locales, localizedPath, type Locale } from '../../i18n/index';
 
@@ -133,24 +133,8 @@ const files: TerminalFile[] = [
     </div>
   </AnimatedSection>
 
-  <!-- GET INVOLVED CTA -->
-  <AnimatedSection class="py-16">
-    <div class="max-w-[1280px] mx-auto px-6 text-center">
-      <div
-        class="border border-[var(--color-border-accent)] rounded-[1.25rem]"
-        style="background: linear-gradient(135deg, rgba(42, 181, 165, 0.12), rgba(245, 130, 31, 0.08)); padding: clamp(2rem, 6vw, 4rem);"
-      >
-        <h2 class="font-extrabold tracking-[-0.02em] mb-4" style="font-size: clamp(1.75rem, 4vw, 2.75rem);">
-          {t(locale, 'home.ctaTitle')} <span class="gradient-text">{t(locale, 'home.ctaTitleAccent')}</span>
-        </h2>
-        <p class="text-text-secondary max-w-[480px] mx-auto mb-8 leading-[1.7]">
-          {t(locale, 'home.ctaBody')}
-        </p>
-        <div class="flex gap-4 justify-center flex-wrap">
-          <a href={localizedPath('/get-involved', locale)} class="btn-primary">{t(locale, 'home.ctaGetInvolved')}</a>
-          <a href={GITHUB_ORG} target="_blank" rel="noopener noreferrer" class="btn-ghost">{t(locale, 'home.ctaGithub')}</a>
-        </div>
-      </div>
-    </div>
+  <!-- COMMUNITY DISCUSSION -->
+  <AnimatedSection class="py-16 px-6">
+    <CommunityDiscussion locale={locale} />
   </AnimatedSection>
 </BaseLayout>

@@ -1,0 +1,83 @@
+---
+import { COMMUNITY_DISCUSSION_URL } from '../config';
+import { fetchDiscussionComments } from '../lib/discussion';
+import { t, type Locale } from '../i18n/index';
+import DiscussionComposer from './DiscussionComposer';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const snapshot = await fetchDiscussionComments();
+const commentHref = `${COMMUNITY_DISCUSSION_URL}#issue-comment-box`;
+const labels = {
+  label: t(locale, 'home.messageLabel'), placeholder: t(locale, 'home.messagePlaceholder'),
+  hint: t(locale, 'home.messageHint'), submit: t(locale, 'home.messageSubmit'),
+  copying: t(locale, 'home.messageCopying'), copied: t(locale, 'home.messageCopied'),
+  failed: t(locale, 'home.messageFailed'), open: t(locale, 'home.messageOpen'),
+};
+---
+
+<section class="community-discussion" aria-labelledby="community-title">
+  <div class="community-intro">
+    <p class="community-eyebrow">GITHUB DISCUSSIONS / 01</p>
+    <h2 id="community-title">{t(locale, 'home.ctaTitle')} <span class="gradient-text">{t(locale, 'home.ctaTitleAccent')}</span></h2>
+    <p class="community-description">{t(locale, 'home.ctaBody')}</p>
+    <DiscussionComposer client:visible href={commentHref} labels={labels} />
+    <noscript><p><a class="btn-primary" href={commentHref}>{t(locale, 'home.messageOpen')}</a></p></noscript>
+  </div>
+  <div class="community-comments">
+    <div class="community-comments-heading"><h3>{t(locale, 'home.commentsTitle')}</h3><a class="discussion-text-link" href={`${COMMUNITY_DISCUSSION_URL}#discussion-comment-count`}>{t(locale, 'home.commentsAll')}</a></div>
+    {snapshot.status === 'ready' && snapshot.comments.length > 0 ? <ol class="community-comment-list">
+      {snapshot.comments.map((comment) => <li class="community-comment">
+        <div class="community-comment-meta">
+          {comment.author ? <a class="community-author" href={comment.author.url} target="_blank" rel="noopener noreferrer">
+            <img src={comment.author.avatarUrl} alt="" width="28" height="28" loading="lazy" />
+            <span>{comment.author.login}</span>
+          </a> : <span class="community-author">{t(locale, 'home.commentDeletedUser')}</span>}
+          <a href={comment.url} class="community-comment-date"><time datetime={comment.createdAt}>{new Date(comment.createdAt).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' })}</time></a>
+        </div>
+        <p class="community-comment-body">{comment.bodyText}</p>
+        <a class="discussion-text-link" href={comment.url}>{t(locale, 'home.commentRead')}</a>
+      </li>)}
+    </ol> : <div class="community-comments-empty">
+      <span aria-hidden="true">&gt;_</span>
+      <p>{t(locale, snapshot.status === 'ready' ? 'home.commentsEmpty' : 'home.commentsUnavailable')}</p>
+      <a class="discussion-text-link" href={commentHref}>{t(locale, 'home.messageOpen')}</a>
+    </div>}
+    {snapshot.fetchedAt && <p class="discussion-hint community-updated">{t(locale, 'home.commentsUpdated')} <time datetime={snapshot.fetchedAt}>{new Date(snapshot.fetchedAt).toLocaleString(locale, { timeZone: 'UTC', dateStyle: 'medium', timeStyle: 'short' })} UTC</time></p>}
+  </div>
+</section>
+
+<style is:global>
+  .community-discussion { max-width: 1232px; margin: auto; padding: clamp(24px, 4vw, 48px); border: 1px solid var(--color-border-accent); border-radius: 20px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); background: linear-gradient(135deg, #2ab5a50f, #f5821f05); }
+  .community-eyebrow { color: var(--color-accent-purple); font: 10px var(--font-mono); letter-spacing: .12em; margin-bottom: 20px; }
+  .community-intro h2 { font-size: clamp(28px, 3vw, 40px); font-weight: 800; letter-spacing: -.035em; line-height: 1.25; margin-bottom: 18px; }
+  .community-description { color: var(--color-text-secondary); line-height: 1.8; font-size: 14px; }
+  .discussion-composer { margin-top: 26px; }
+  .discussion-composer label { display: block; font-size: 12px; color: #c9ded4; margin-bottom: 9px; }
+  .discussion-composer textarea { display: block; width: 100%; min-height: 120px; resize: vertical; border: 1px solid #315147; border-radius: 9px; padding: 14px; background: #061310; color: #e3eee8; font: 14px/1.7 var(--font-body); }
+  .discussion-composer textarea::placeholder { color: #81978b; }
+  .discussion-composer textarea:focus-visible { outline: 2px solid var(--color-accent-purple); outline-offset: 3px; }
+  .discussion-hint { font-size: 11px; color: #8ea89a; line-height: 1.7; margin-top: 10px; }
+  .discussion-composer-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 18px; }
+  .discussion-composer-actions .btn-primary { font-size: 12px; padding: 11px 18px; }
+  .discussion-composer button:disabled { opacity: .45; cursor: default; transform: none; box-shadow: none; }
+  .discussion-text-link { color: #86d3bd; font-size: 11px; text-underline-offset: 4px; }
+  .discussion-text-link:hover { text-decoration: underline; }
+  .discussion-status { color: #e6bc83; font-size: 12px; line-height: 1.6; margin-top: 12px; }
+  .discussion-status:empty { display: none; }
+  .community-comments-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+  .community-comments-heading h3 { font-size: 14px; font-weight: 600; }
+  .community-comment-list { list-style: none; padding: 0; }
+  .community-comment { padding: 18px 0; border-top: 1px solid #294038; }
+  .community-comment-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .community-author { display: inline-flex; min-width: 0; align-items: center; gap: 8px; font: 11px var(--font-mono); color: #d0e0d6; }
+  .community-author img { border-radius: 50%; flex-shrink: 0; }
+  .community-author span { overflow: hidden; text-overflow: ellipsis; }
+  .community-comment-date { color: #8ea89a; font-size: 10px; white-space: nowrap; }
+  .community-comment-body { color: #b6c8bd; font-size: 13px; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; margin: 12px 0 8px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden; }
+  .community-comments-empty { min-height: 220px; border: 1px dashed #315147; border-radius: 10px; padding: 30px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 14px; }
+  .community-comments-empty > span { color: #71cbb0; font: 24px var(--font-mono); }
+  .community-comments-empty p { color: #9bb3a4; font-size: 13px; line-height: 1.8; }
+  .community-updated { margin-top: 18px; }
+  @media (max-width: 760px) { .community-discussion { grid-template-columns: minmax(0, 1fr); } .discussion-composer textarea { font-size: 16px; } }
+</style>
