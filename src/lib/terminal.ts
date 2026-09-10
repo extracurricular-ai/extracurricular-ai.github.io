@@ -30,6 +30,16 @@ export function findFile(files: TerminalFile[], path: string) {
   return files.find((file) => file.path === path || (!file.directory && file.path === `${path}.md`));
 }
 
+export function longestCommonPrefix(values: string[]): string {
+  let prefix = '';
+  for (const character of values[0] ?? '') {
+    const next = prefix + character;
+    if (values.some((value) => !value.startsWith(next))) break;
+    prefix = next;
+  }
+  return prefix;
+}
+
 export function complete(input: string, cwd: string, files: TerminalFile[]): string[] {
   if (!input.includes(' ')) return commands.filter((command) => command.startsWith(input)).map((command) => command + ' ');
   const split = input.lastIndexOf(' ') + 1;

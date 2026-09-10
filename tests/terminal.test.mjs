@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { children, complete, findFile, resolvePath } from '../src/lib/terminal.ts';
+import { children, complete, findFile, longestCommonPrefix, resolvePath } from '../src/lib/terminal.ts';
 
 const files = [
   { path: '/', directory: true },
@@ -51,4 +51,22 @@ test('shell syntax stays inert virtual path text', () => {
   assert.equal(findFile(files, resolvePath('$(whoami)', '/')), undefined);
   assert.equal(findFile(files, resolvePath('README.md; echo hello', '/')), undefined);
   assert.equal(findFile(files, resolvePath('<script>alert(1)</script>', '/')), undefined);
+});
+
+test('ambiguous completion extends to the longest common prefix before listing choices', () => {
+  const posts = [
+    ...files,
+    { path: '/blog/dsh-rewind-restore-files.md' },
+    { path: '/blog/dsh-rewind-plugin-comparison.md' },
+  ];
+  assert.equal(longestCommonPrefix(complete('cat d', '/blog', posts)), 'cat dsh-rewind-');
+  assert.equal(longestCommonPrefix(complete('cat dsh-rewind-', '/blog', posts)), 'cat dsh-rewind-');
+  assert.equal(longestCommonPrefix(complete('cat dsh-rewind-r', '/blog', posts)), 'cat dsh-rewind-restore-files.md');
+  assert.equal(longestCommonPrefix(complete('cat ~/blog/d', '/', posts)), 'cat ~/blog/dsh-rewind-');
+  assert.equal(longestCommonPrefix(complete('cat /blog/d', '/', posts)), 'cat /blog/dsh-rewind-');
+  assert.equal(longestCommonPrefix(complete('c', '/', posts)), 'c');
+  assert.equal(longestCommonPrefix(complete('neo', '/', posts)), 'neofetch ');
+  assert.equal(longestCommonPrefix([]), '');
+  assert.equal(longestCommonPrefix(['hello', 'world']), '');
+  assert.equal(longestCommonPrefix(['文件😀', '文件😁']), '文件');
 });

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { children, complete, findFile, resolvePath, type TerminalFile } from '../lib/terminal';
+import { children, complete, findFile, longestCommonPrefix, resolvePath, type TerminalFile } from '../lib/terminal';
 import { terminalCopy } from './terminal-copy';
 import Invaders from './Invaders';
 import '../styles/terminal.css';
@@ -13,7 +13,7 @@ export default function HeroTerminal({ files, locale }: Props) {
   const [cwd, setCwd] = useState('/');
   const [input, setInput] = useState('');
   const [showWelcome, setShowWelcome] = useState(true);
-  const [entries, setEntries] = useState<Entry[]>([{ command: 'ls', cwd: '/', output: { files: children(files, '/') } }]);
+  const [entries, setEntries] = useState<Entry[]>([]);
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const draft = useRef('');
@@ -105,7 +105,7 @@ export default function HeroTerminal({ files, locale }: Props) {
   return <div class={`terminal-wrap ${expanded ? 'is-expanded' : ''}`}>
     <div class="terminal-caption"><span><span class="terminal-status-dot" /> EXAI / PLAYGROUND</span><span>v.01</span></div>
     {closed ? <div class="terminal-closed"><span>{copy.label}</span><button onClick={() => { setClosed(false); setMinimized(false); }}>{copy.reopen} ↗</button></div> :
-      <section class="terminal-window" aria-label="ExAI Terminal">
+      <section class={`terminal-window ${entries.length === 0 ? 'is-fresh' : ''}`} aria-label="ExAI Terminal">
         <header class="terminal-titlebar">
           <div class="terminal-traffic">
             <button class="traffic-close" aria-label={copy.close} title={copy.close} onClick={() => { setGame(false); setClosed(true); }}><span>×</span></button>
@@ -117,6 +117,7 @@ export default function HeroTerminal({ files, locale }: Props) {
         </header>
         {minimized ? <button class="terminal-restore" onClick={() => setMinimized(false)}>{copy.restore} ↓</button> : game ?
           <Invaders copy={copy} onExit={() => { setGame(false); focusInput(); }} /> : <>
+          <div class="terminal-session">
           <div class="terminal-output" ref={scrollRef} role="region" aria-label={copy.label} tabIndex={0}>
             {showWelcome && <div class="terminal-welcome"><div class="terminal-wordmark" aria-hidden="true">&gt;_ <span>hello, world.</span></div><p>{copy.welcome}</p><p class="terminal-muted">{copy.hint}</p></div>}
             {entries.map((entry, index) => <div class="terminal-entry" key={index} ref={index === entries.length - 1 ? latestRef : undefined}>
@@ -130,6 +131,7 @@ export default function HeroTerminal({ files, locale }: Props) {
           </div>
           <form class="terminal-input-row" onSubmit={(event) => { event.preventDefault(); run(input); }}>
             <label for="hero-terminal-input" class="sr-only">{copy.input}</label>
+            <span class="terminal-prompt-identity" aria-hidden="true"><span class="terminal-user">visitor@exai</span><span class="terminal-path">{cwd === '/' ? '~' : `~${cwd}`}</span></span>
             <span class="terminal-chevron" aria-hidden="true">❯</span>
             <input ref={inputRef} id="hero-terminal-input" value={input} placeholder={copy.placeholder} autoComplete="off" autoCapitalize="off" spellcheck={false} enterKeyHint="go" maxLength={500}
               onInput={(event) => { setInput(event.currentTarget.value); setHistoryIndex(-1); }}
@@ -141,8 +143,9 @@ export default function HeroTerminal({ files, locale }: Props) {
                   const options = complete(input, cwd, files);
                   if (options.length) {
                     event.preventDefault();
-                    if (options.length === 1) setInput(options[0]);
-                    else { interacted.current = true; setEntries((previous) => [...previous, { command: input, cwd, output: { text: options.join('\n') } }].slice(-60)); }
+                    const prefix = longestCommonPrefix(options);
+                    if (prefix.length > input.length) setInput(prefix);
+                    else if (options.length > 1) { interacted.current = true; setEntries((previous) => [...previous, { command: input, cwd, output: { text: options.join('\n') } }].slice(-60)); }
                   }
                 } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
                   event.preventDefault();
@@ -153,6 +156,7 @@ export default function HeroTerminal({ files, locale }: Props) {
               }} />
             <button type="submit" aria-label={copy.run} title={copy.run}>↵</button>
           </form>
+          </div>
           <footer class="terminal-footer"><span><i />{copy.ready}</span><span>{copy.shortcuts}</span></footer>
         </>}
       </section>}
