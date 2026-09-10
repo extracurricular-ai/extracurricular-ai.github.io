@@ -26,6 +26,10 @@ export default function HeroTerminal({ files, locale }: Props) {
   const interacted = useRef(false);
 
   useEffect(() => {
+    inputRef.current?.focus({ preventScroll: true });
+  }, []);
+
+  useEffect(() => {
     if (!interacted.current || !scrollRef.current) return;
     // Follow the new prompt, like a shell. Older output remains in the scrollback.
     const output = scrollRef.current;

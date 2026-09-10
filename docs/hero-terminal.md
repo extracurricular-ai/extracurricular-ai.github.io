@@ -2,7 +2,7 @@
 
 The homepage renders a Preact terminal with a virtual filesystem populated at build time from Astro's blog collection and the existing GitHub project feed. It starts with a welcome message and an empty prompt; no commands run automatically. Blog files contain the full Markdown body in the current locale. Project files contain descriptions and repository links. Commands never execute a real shell or evaluate input.
 
-The input prompt follows the last output line inside the scrollback, with no separate input bar. Enter submits the command and reveals a new prompt beneath the result. Long output scrolls to the new prompt; scroll up to read earlier content. Clicking empty space in the terminal focuses the prompt.
+The input prompt follows the last output line inside the scrollback, with no separate input bar. It receives focus when the homepage loads, without scrolling the page, so typing can begin immediately. Enter submits the command and reveals a new prompt beneath the result. Long output scrolls to the new prompt; scroll up to read earlier content. Clicking empty space in the terminal focuses the prompt.
 
 Try:
 
