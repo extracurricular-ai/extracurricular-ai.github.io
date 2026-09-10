@@ -1,0 +1,63 @@
+const en = {
+  cancel: 'cancel the current input',
+  label: 'The collective, at your command.', intro: 'A little curiosity goes a long way. Start exploring.',
+  welcome: 'Welcome to the ExAI playground.', hint: 'Type a command or click a directory. Try man to find your way.',
+  ready: 'Ready when you are', shortcuts: 'Tab complete · ↑ ↓ history', placeholder: 'try ls, cat README.md, or play invaders',
+  input: 'Terminal command', run: 'Run command', close: 'Close terminal', minimize: 'Minimize terminal', expand: 'Toggle window size', reopen: 'Open terminal', restore: 'Restore terminal',
+  read: 'Read on the website ↗', visit: 'Open page ↗', missing: 'No such file or directory', notDir: 'Not a directory', isDir: 'This is a directory. Try ls', unknown: 'Command not found. Try man.',
+  usage: 'Usage', help: 'EXAI SHELL — a small guide for curious people',
+  manuals: {
+    ls: 'ls [path] [-a] — list files; -a reveals hidden surprises', cd: 'cd [path] — change directory; cd .. goes back; cd ~ goes home',
+    pwd: 'pwd — print the current directory', cat: 'cat <file> — read an article or README in this window',
+    open: 'open <path> — visit the corresponding page or repository', man: 'man [command] — show this guide or a command reference',
+    help: 'help — show the guide', clear: 'clear — clear the screen (Ctrl+L)', history: 'history — show previous commands (↑ / ↓ to recall)',
+    whoami: 'whoami — meet your fellow explorer', date: 'date — the time is now', echo: 'echo <text> — say something',
+    neofetch: 'neofetch — a peek inside the collective', coffee: 'coffee — fuel your next experiment', sudo: 'sudo <command> — a little power trip',
+    games: 'games — browse the arcade', play: 'play invaders — launch the pixel arcade; Esc returns to the terminal',
+  },
+  explorer: 'visitor · curious human (or exceptionally curious AI)\nAccess level: everyone is welcome.',
+  coffee: '   ( (\n    ) )\n  .------.\n  |      |]\n  \\______/\n\nCoffee compiled successfully. Go build something.',
+  sudo: 'No superpowers needed. You already have permission to be curious.',
+  secret: 'You found the hidden room.\nThe secret ingredient is showing up.\nTry coffee, neofetch, or play invaders.',
+  arcade: 'SPACE INVADERS', gameHint: '← → / A D move · Space fire · P pause · Esc exit',
+  start: 'Start game', pause: 'Pause', resume: 'Resume', restart: 'Play again', exit: 'Back to terminal',
+  score: 'Score', lives: 'Lives', wave: 'Wave', paused: 'Paused', over: 'Game over', fire: 'Fire', left: 'Move left', right: 'Move right',
+  gameIntro: 'Small ship. Big curiosity. Clear the sky.',
+};
+
+export type TerminalCopy = typeof en;
+export const terminalCopy: Record<string, TerminalCopy> = {
+  en,
+  zh: {
+    ...en, cancel: '取消当前输入', label: '整个社区，听你指令。', intro: '带上好奇心，从这里开始探索。',
+    welcome: '欢迎来到 ExAI 游乐场。', hint: '输入命令，或点击目录。试试 man，看看这里能做什么。',
+    ready: '等你开始探索', shortcuts: 'Tab 补全 · ↑ ↓ 历史命令', placeholder: '试试 ls、cat README.md 或 play invaders',
+    input: '终端命令', run: '执行命令', close: '关闭终端', minimize: '最小化终端', expand: '切换窗口大小', reopen: '打开终端', restore: '恢复终端',
+    read: '在网站上阅读 ↗', visit: '打开页面 ↗', missing: '文件或目录不存在', notDir: '这不是目录', isDir: '这是一个目录，请使用 ls', unknown: '没有这个命令，试试 man。',
+    usage: '用法', help: 'EXAI SHELL — 写给好奇的你',
+    manuals: {
+      ls: 'ls [路径] [-a] — 列出文件；-a 发现隐藏惊喜', cd: 'cd [路径] — 切换目录；cd .. 返回上层；cd ~ 回到根目录',
+      pwd: 'pwd — 显示当前目录', cat: 'cat <文件> — 在窗口内阅读文章或 README', open: 'open <路径> — 打开对应网页或项目仓库',
+      man: 'man [命令] — 显示帮助或具体命令用法', help: 'help — 查看帮助', clear: 'clear — 清空屏幕（Ctrl+L）', history: 'history — 查看历史命令（↑ / ↓ 翻阅）',
+      whoami: 'whoami — 认识一下自己', date: 'date — 就是现在', echo: 'echo <文字> — 说点什么', neofetch: 'neofetch — 查看社区的系统信息',
+      coffee: 'coffee — 给下一个实验续杯', sudo: 'sudo <命令> — 体验一下超能力', games: 'games — 查看游戏目录', play: 'play invaders — 启动像素打飞机；Esc 返回终端',
+    },
+    explorer: 'visitor · 好奇的人类（或特别好奇的 AI）\n权限：人人都能参与。',
+    coffee: en.coffee.replace('Coffee compiled successfully. Go build something.', '咖啡编译成功。去创造点什么吧。'),
+    sudo: '探索不需要超级权限，你的好奇心已经足够。', secret: '你发现了隐藏房间。\n秘诀就是：开始动手。\n试试 coffee、neofetch 或 play invaders。',
+    arcade: '像素打飞机', gameHint: '← → / A D 移动 · 空格射击 · P 暂停 · Esc 退出', start: '开始游戏', pause: '暂停', resume: '继续', restart: '再玩一次', exit: '返回终端',
+    score: '得分', lives: '生命', wave: '波次', paused: '已暂停', over: '游戏结束', fire: '射击', left: '向左移动', right: '向右移动', gameIntro: '小小飞船，大大好奇心。出发吧。',
+  },
+  es: {
+    ...en, label: 'El colectivo, a tus órdenes.', intro: 'La curiosidad es el primer paso. Explora.', welcome: 'Te damos la bienvenida al laboratorio ExAI.',
+    hint: 'Escribe un comando o pulsa un directorio. Prueba man para orientarte.', ready: 'Todo listo', shortcuts: 'Tab completar · ↑ ↓ historial',
+    placeholder: 'prueba ls, cat README.md o play invaders', input: 'Comando de terminal', run: 'Ejecutar', close: 'Cerrar terminal', minimize: 'Minimizar', expand: 'Cambiar tamaño', reopen: 'Abrir terminal', restore: 'Restaurar',
+    read: 'Leer en la web ↗', visit: 'Abrir página ↗', start: 'Jugar', pause: 'Pausar', resume: 'Continuar', restart: 'Volver a jugar', exit: 'Volver al terminal', score: 'Puntos', lives: 'Vidas', wave: 'Oleada', paused: 'En pausa', over: 'Fin del juego', fire: 'Disparar', left: 'Mover a la izquierda', right: 'Mover a la derecha', gameHint: '← → / A D mover · Espacio disparar · P pausa · Esc salir', gameIntro: 'Pequeña nave. Gran curiosidad. Despeja el cielo.',
+  },
+  fr: {
+    ...en, label: 'Le collectif, à vos commandes.', intro: 'Un peu de curiosité. Beaucoup à découvrir.', welcome: 'Bienvenue dans le terrain de jeu ExAI.',
+    hint: 'Tapez une commande ou cliquez sur un dossier. Essayez man pour vous guider.', ready: 'À vous de jouer', shortcuts: 'Tab compléter · ↑ ↓ historique',
+    placeholder: 'essayez ls, cat README.md ou play invaders', input: 'Commande du terminal', run: 'Exécuter', close: 'Fermer le terminal', minimize: 'Réduire', expand: 'Changer la taille', reopen: 'Ouvrir le terminal', restore: 'Restaurer',
+    read: 'Lire sur le site ↗', visit: 'Ouvrir la page ↗', start: 'Jouer', pause: 'Pause', resume: 'Continuer', restart: 'Rejouer', exit: 'Retour au terminal', score: 'Score', lives: 'Vies', wave: 'Vague', paused: 'En pause', over: 'Partie terminée', fire: 'Tirer', left: 'Aller à gauche', right: 'Aller à droite', gameHint: '← → / A D bouger · Espace tirer · P pause · Esc quitter', gameIntro: 'Petit vaisseau. Grande curiosité. À vous le ciel.',
+  },
+};

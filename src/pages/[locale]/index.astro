@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import HeroTerminal from '../../components/HeroTerminal';
+import { terminalCopy } from '../../components/terminal-copy';
+import type { TerminalFile } from '../../lib/terminal';
 import AnimatedSection from '../../components/AnimatedSection.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import ValuePill from '../../components/ValuePill.astro';
@@ -16,8 +20,32 @@ export function getStaticPaths() {
 const { locale } = { ...Astro.params, ...Astro.props } as { locale: Locale };
 
 // fetchProjects sorts by stars, so the most-starred repo leads the homepage.
-const [topProject] = await fetchProjects();
-const featured = localize(topProject, locale);
+const [projects, allPosts] = await Promise.all([fetchProjects(), getCollection('blog')]);
+const featured = localize(projects[0], locale);
+const copy = terminalCopy[locale];
+const posts = allPosts.filter((post) => post.data.locale === locale)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const files: TerminalFile[] = [
+  { path: '/', title: 'ExAI', body: '', directory: true, href: localizedPath('/', locale) },
+  { path: '/blog', title: t(locale, 'nav.blog'), body: '', directory: true, href: localizedPath('/blog', locale) },
+  { path: '/projects', title: t(locale, 'nav.projects'), body: '', directory: true, href: localizedPath('/projects', locale) },
+  { path: '/about', title: t(locale, 'nav.about'), body: '', directory: true, href: localizedPath('/about', locale) },
+  { path: '/get-involved', title: t(locale, 'nav.getInvolved'), body: '', directory: true, href: localizedPath('/get-involved', locale) },
+  { path: '/games', title: copy.arcade, body: '', directory: true },
+  { path: '/README.md', title: 'Hello, world.', body: `# Extracurricular AI\n\n${t(locale, 'home.heroSubtitle')}\n\n${copy.hint}\n\nls blog/\nls projects/\nplay invaders`, href: localizedPath('/about', locale) },
+  { path: '/about/README.md', title: t(locale, 'nav.about'), body: `${t(locale, 'about.heroSubtitle')}\n\n${t(locale, 'about.originP1')}\n\n${t(locale, 'about.originP2')}\n\n${t(locale, 'about.originP3')}`, href: localizedPath('/about', locale) },
+  { path: '/get-involved/README.md', title: t(locale, 'nav.getInvolved'), body: `${t(locale, 'getInvolved.heroSubtitle')}\n\n${t(locale, 'getInvolved.card1Title')}\n${t(locale, 'getInvolved.card1Body')}\n\n${t(locale, 'getInvolved.card2Title')}\n${t(locale, 'getInvolved.card2Body')}`, href: localizedPath('/get-involved', locale) },
+  { path: '/games/invaders', title: copy.arcade, body: `${copy.gameIntro}\n\n${copy.manuals.play}\n${copy.gameHint}` },
+  { path: '/.secret', title: 'psst…', body: copy.secret },
+  ...posts.map((post) => {
+    const slug = post.id.split('/').pop()!.replace(/\.md$/, '');
+    return { path: `/blog/${slug}.md`, title: post.data.title, body: `# ${post.data.title}\n${post.data.pubDate.toISOString().slice(0, 10)} · ${post.data.author}\n\n${post.body}`, href: localizedPath(`/blog/${slug}`, post.data.locale) };
+  }),
+  ...projects.map((project) => {
+    const localized = localize(project, locale);
+    return { path: `/projects/${project.slug}.md`, title: localized.name, body: `# ${localized.name}\n\n${localized.description}\n\n${project.topics.join(' · ')}\n${project.href}`, href: project.href };
+  }),
+];
 ---
 
 <BaseLayout
@@ -26,38 +54,22 @@ const featured = localize(topProject, locale);
   locale={locale}
 >
   <!-- HERO -->
-  <section class="min-h-screen flex items-center pt-20 relative overflow-hidden animate-fade-up">
-    <!-- background glow — radial-gradient must stay inline -->
-    <div
-      class="absolute inset-0 pointer-events-none"
-      style="background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(42, 181, 165, 0.12) 0%, transparent 70%);"
-    ></div>
-
-    <div class="max-w-[1280px] mx-auto px-6 relative text-center">
-      <img src="/logo.png" alt="ExAI" class="h-24 w-24 object-contain mx-auto mb-6" />
-
-      <div class="inline-flex items-center gap-2 bg-accent-purple/10 border border-accent-purple/25 rounded-full px-4 py-1.5 text-[0.8rem] font-semibold text-accent-purple mb-8 uppercase tracking-[0.05em]">
-        {t(locale, 'home.badge')}
+  <section class="home-playground animate-fade-up">
+    <div class="home-playground-grid">
+      <div class="home-intro">
+        <div class="home-brand">
+          <img src="/logo.png" alt="ExAI" width="44" height="44" />
+          <span>{t(locale, 'home.badge')}</span>
+        </div>
+        <h1>{t(locale, 'home.heroTitle')}<br />{' '}<span class="gradient-text">{t(locale, 'home.heroTitleAccent')}</span></h1>
+        <p>{t(locale, 'home.heroSubtitle')}</p>
+        <div class="home-intro-actions">
+          <a href={localizedPath('/projects', locale)} class="btn-primary">{t(locale, 'home.ctaProjects')} ↗</a>
+          <a href={localizedPath('/get-involved', locale)} class="btn-ghost">{t(locale, 'home.ctaInvolved')}</a>
+        </div>
+        <div class="home-explore-note"><span aria-hidden="true">↳</span><span>{copy.intro}</span></div>
       </div>
-
-      <h1
-        class="font-black leading-[1.05] tracking-[-0.03em] mb-6 text-text-primary"
-        style="font-size: clamp(2.75rem, 8vw, 5.5rem);"
-      >
-        {t(locale, 'home.heroTitle')}<br /><span class="gradient-text">{t(locale, 'home.heroTitleAccent')}</span>
-      </h1>
-
-      <p
-        class="text-text-secondary max-w-[600px] mx-auto mb-10 leading-[1.7]"
-        style="font-size: clamp(1rem, 2.5vw, 1.25rem);"
-      >
-        {t(locale, 'home.heroSubtitle')}
-      </p>
-
-      <div class="flex gap-4 justify-center flex-wrap">
-        <a href={localizedPath('/projects', locale)} class="btn-primary">{t(locale, 'home.ctaProjects')}</a>
-        <a href={localizedPath('/get-involved', locale)} class="btn-ghost">{t(locale, 'home.ctaInvolved')}</a>
-      </div>
+      <HeroTerminal client:load files={files} locale={locale} />
     </div>
   </section>
 
