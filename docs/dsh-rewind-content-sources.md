@@ -36,3 +36,11 @@ The blue/white anime whale-girl cover was generated with the built-in imagegen t
 - No deployment, push, external issue or email performed as part of authoring.
 
 Before publishing, review prose and source links, then use the repository's normal deployment workflow. After publishing, open both language routes, check the cover and install commands, and record actual publication URLs in the promotion tracker. A successful local build is not a search-indexing result.
+
+## Search-readiness revision — 2026-09-09
+
+Both comparison translations now lead with documented workflow-based recommendations after the disclosure. No hands-on result was added. The localized project pages link to the matching tutorial and comparison.
+
+Added static sitemap and robots endpoints. The sitemap follows the existing localized canonical convention, including only existing translated posts and excluding root-level English aliases. It intentionally omits lastmod because a build is not evidence of a content change. If shared page routes change, update the sitemap's sharedPaths list.
+
+Validation: production build succeeded; parsed XML contains 32 unique URLs matching all rendered canonical URLs, including all four DSH articles. Robots points to the sitemap; project links and comparison article local links resolve in generated output. Search Console inspection, live deployment checks and Google indexing remain outstanding.

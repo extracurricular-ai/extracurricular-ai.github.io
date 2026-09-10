@@ -17,6 +17,14 @@ Choosing a **DeepSeek Harness rewind plugin** starts with two questions: do you 
 
 **Disclosure and method:** we maintain dsh-filesnap, displayed as **DSH Rewind & Redo — by FileSnap**. This comparison reviews versioned documentation and selected shipped code as of **September 9, 2026**. It is not a fresh end-to-end test or a performance benchmark. The claims below describe these releases, not every future release or every DSH host version.
 
+## Choose by workflow
+
+- **Stay in the same conversation, with conversation-only rewind available:** consider SiriLee's `dsh-rewind-plugin`. In the reviewed version, `/undo` opens rewind; it does not reverse a previous rewind.
+- **Keep the original conversation and reverse a mistaken rewind:** consider `dsh-filesnap` and `/redo`. You continue in a child conversation sharing the same workspace, and captured sessions currently need the plugin installed to reopen.
+- **Use Git-based snapshots with recovery of the latest rewind:** consider LJH-dot's `dsh-rewind` and `/unrewind`. Check its Git restore behavior and exclusion of untracked files first.
+
+These recommendations follow the documented behavior of the releases below. The table and linked sources explain the tradeoffs; no overall winner is claimed from an unperformed hands-on test.
+
 ## First, distinguish the packages
 
 Two projects have a repository called `dsh-rewind`, but their npm packages differ.

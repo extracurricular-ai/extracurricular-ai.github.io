@@ -15,7 +15,15 @@ imageAlt: "DSH Rewind & Redo — by FileSnap 蓝白二次元鲸鱼娘封面"
 
 [English version](/en/blog/dsh-rewind-plugin-comparison/) · [FileSnap 安装与使用教程](/zh/blog/dsh-rewind-restore-files/)
 
-**作者关系与核查方式：**我们维护 dsh-filesnap，展示名为 **DSH Rewind & Redo — by FileSnap**。本文于 **2026 年 9 月 9 日**核查指定版本的文档及部分发布包代码，没有重新进行完整的端到端实测或性能对比。下文描述这些版本，不代表后续版本或所有 DSH 宿主版本。
+**作者关系与核查方式：** 我们维护 dsh-filesnap，展示名为 **DSH Rewind & Redo — by FileSnap**。本文于 **2026 年 9 月 9 日**核查指定版本的文档及部分发布包代码，没有重新进行完整的端到端实测或性能对比。下文描述这些版本，不代表后续版本或所有 DSH 宿主版本。
+
+## 按使用习惯选择
+
+- **希望留在同一个对话，也需要只回退对话：** 可以考虑 SiriLee 的 `dsh-rewind-plugin`。本文核查版本的 `/undo` 是打开回退操作，不是撤销上一次回退。
+- **希望保留原对话，并撤销选错的回退：** 可以考虑 `dsh-filesnap` 和 `/redo`。代价是进入一个共用工作区的子会话，而且被记录过的会话目前需要保留插件才能重新打开。
+- **希望使用 Git 快照，并恢复最近一次回退：** 可以考虑 LJH-dot 的 `dsh-rewind` 和 `/unrewind`。先确认其 Git 恢复操作以及不含未追踪文件的边界是否适合你。
+
+以上选择依据下列版本的文档行为。后面的表格与来源解释具体取舍；本文没有通过尚未执行的实测给出综合排名。
 
 ## 先分清三个安装包
 
