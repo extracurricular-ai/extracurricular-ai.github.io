@@ -11,11 +11,23 @@ imageHeight: 640
 imageAlt: "DSH Rewind & Redo — by FileSnap 蓝白二次元鲸鱼娘封面"
 ---
 
-**DSH Rewind & Redo — by FileSnap** 是 DeepSeek Harness 的回退插件，安装包名是 `dsh-filesnap`。它把对话和已追踪文件一起恢复，保留原对话，以新分支继续；如果回退点选错了，可以用 `/redo` 撤销回退。无需 Git 仓库。
+**DSH Rewind & Redo — by FileSnap** 是 DeepSeek Harness 的回退插件，安装包名是 `dsh-filesnap`。它把对话和已追踪文件一起恢复，保留原对话，以新分支继续；如果回退点选错了，可以用 `/redo` 撤销回退。无需 Git 仓库。`filesnap` Rust 引擎负责存储，`dsh-filesnap` 负责 DSH 轮次集成与 Web UI 控件；与 App Store 的 File Converter — FileSnap 无关。
 
 [English tutorial](/en/blog/dsh-rewind-restore-files/) · [DSH 回退插件选型比较](/zh/blog/dsh-rewind-plugin-comparison/)
 
 我们是 dsh-filesnap 的维护者。本文按 **0.2.2** 编写，资料核查日期为 **2026 年 9 月 9 日**。截图来自已有的 0.2.2 Web UI 实际会话，宿主为 DSH 0.1.2-rc.1 本地构建；这不代表已经验证后续所有宿主版本。
+
+与 SiriLee 的 `dsh-rewind-plugin` 0.9.1 相比，本文版本提供 `/redo`，以及共享存储中跨路径、保留版本和会话的整文件内容复用。参见 [固定版本比较与 7 组存储实验](/zh/blog/dsh-rewind-plugin-comparison/)；对方则提供原会话交互和仅回退对话的选项。
+
+
+## 跨助手应用：Codex、DSH 与 Pi
+
+FileSnap 的快照设计源自我们已发布的 [codex-rewind](https://github.com/extracurricular-ai/codex-rewind)（`codexr`）实践，独立引擎已用于 DSH 的 `dsh-filesnap` 和 Pi 的 [pi-better-rewind-redo](https://github.com/extracurricular-ai/pi-better-rewind-redo)。截至 2026-09-10，DSH 插件发布版为 0.2.2，依赖 `filesnap ^0.4.0`；Pi 扩展发布版为 0.1.1，依赖 `filesnap 0.5.0`；Codex 增强发行版为 0.151.0-rewind.0，保留同源的内置快照模块。
+
+这套设计已积累 Codex、DSH 和 Pi 的轮次接入、文件恢复与 redo 实践，是我们说明工程成熟度的具体依据。Codex 保留内置实现，DSH 与 Pi 使用不同版本的独立引擎；各自的兼容性与验证范围见项目文档。
+
+[公开版本、源码与验证范围](https://github.com/extracurricular-ai/dsh-filesnap/blob/main/docs/cross-assistant.zh.md)。
+
 
 ## 完整操作演示（1.5 倍速）
 
@@ -29,7 +41,7 @@ imageAlt: "DSH Rewind & Redo — by FileSnap 蓝白二次元鲸鱼娘封面"
 
 需要 Node.js **^22.19 或 >=24**，支持 Linux、macOS、Windows 的 x64 和 arm64。安装包包含 FileSnap 原生引擎，无需自行安装 Rust 工具链。
 
-安装前需要了解当前限制：被插件记录过的会话，需要保留插件才能在 DSH 中打开。卸载不会删除会话数据，但需要重装才能重新读取。从源码目录用 `pnpm dsh` 启动，也可能遇到同样的事件注册错误；请使用构建好的 CLI 或 npm 安装的 CLI。参见[安装与故障排查说明](https://github.com/extracurricular-ai/dsh-filesnap/blob/857481528bd17c2ea5434c8d358ad6ede7f8b844/README.md)。
+卸载插件不会删除对话记录或工作区文件。当前的读取限制是：已包含插件记录的会话，需要重装插件后才能在 DSH 中重新打开。从源码目录用 `pnpm dsh` 启动，也可能遇到同样的事件注册错误；请使用构建好的 CLI 或 npm 安装的 CLI。参见[安装与故障排查说明](https://github.com/extracurricular-ai/dsh-filesnap/blob/857481528bd17c2ea5434c8d358ad6ede7f8b844/README.md)。
 
 ```sh
 dsh plugin --profile web add dsh-filesnap

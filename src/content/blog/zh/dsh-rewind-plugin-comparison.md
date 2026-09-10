@@ -1,6 +1,6 @@
 ---
-title: "DSH 回退插件怎么选：原地回退、对话分支、文件恢复与 redo"
-description: "比较 dsh-filesnap、SiriLee 的 dsh-rewind-plugin 和 LJH-dot 的 dsh-rewind，说明回退方式、可撤销性、文件覆盖与 Git 依赖。"
+title: "dsh-filesnap 与 dsh-rewind-plugin 怎么选：文件去重与回退撤销"
+description: "对比 dsh-filesnap 与 dsh-rewind-plugin：7 组存储实验说明 FileSnap 更广的文件去重复用范围，并比较 redo、对话交互和文件覆盖。"
 pubDate: "2026-09-09"
 author: "ExAI Team"
 tags: ["DeepSeek Harness", "rewind", "dsh-filesnap", "comparison"]
@@ -17,10 +17,12 @@ imageAlt: "DSH Rewind & Redo — by FileSnap 蓝白二次元鲸鱼娘封面"
 
 **作者关系与核查方式：** 我们维护 dsh-filesnap，展示名为 **DSH Rewind & Redo — by FileSnap**。本文于 **2026 年 9 月 9 日**核查指定版本的文档及部分发布包代码，没有重新进行完整的端到端实测或性能对比。下文描述这些版本，不代表后续版本或所有 DSH 宿主版本。
 
+**2026-09-10 更新：新增 7 组存储组件实验。FileSnap 相对于本次核查的 SiriLee 版本，优势是更广的去重复用范围，以及用 `/redo` 撤销回退。** 双方都有 Web UI 控件，且能联动恢复对话和文件；下面分别说明适合的场景。对话行为仍是文档核查，存储组件实验不代表完整宿主实测。
+
 ## 按使用习惯选择
 
 - **希望留在同一个对话，也需要只回退对话：** 可以考虑 SiriLee 的 `dsh-rewind-plugin`。本文核查版本的 `/undo` 是打开回退操作，不是撤销上一次回退。
-- **希望保留原对话，并撤销选错的回退：** 可以考虑 `dsh-filesnap` 和 `/redo`。代价是进入一个共用工作区的子会话，而且被记录过的会话目前需要保留插件才能重新打开。
+- **希望保留原对话，并撤销选错的回退：** 可以考虑 `dsh-filesnap` 和 `/redo`。代价是进入一个共用工作区的子会话，卸载不会删除对话记录或工作区文件，但含插件记录的会话需要重装后重新打开。
 - **希望使用 Git 快照，并恢复最近一次回退：** 可以考虑 LJH-dot 的 `dsh-rewind` 和 `/unrewind`。先确认其 Git 恢复操作以及不含未追踪文件的边界是否适合你。
 
 以上选择依据下列版本的文档行为。后面的表格与来源解释具体取舍；本文没有通过尚未执行的实测给出综合排名。
@@ -50,6 +52,38 @@ imageAlt: "DSH Rewind & Redo — by FileSnap 蓝白二次元鲸鱼娘封面"
 
 “对话和文件一起恢复”“不需要 Git”是 FileSnap 和 SiriLee 插件共有的能力，不能作为 FileSnap 独占的卖点。
 
+## 文件去重：FileSnap 的复用范围更广
+
+`dsh-filesnap` 是 DSH 对话与文件回退插件，`filesnap` 是它使用的 Rust 存储引擎；与 App Store 的 **File Converter — FileSnap** 无关。插件接入 DSH 轮次生命周期，并提供消息旁的回退控件，不需要用户在独立备份软件里手工匹配时间戳。
+
+**与 SiriLee 的 dsh-rewind-plugin 0.9.1 相比，dsh-filesnap 0.2.2 搭配 filesnap 0.4.0 的文件内容复用范围更广。** 引擎用完整文件内容的 SHA-256 标识 blob，在路径、保留的版本、会话以及同一数据目录下的工作区之间共享。对方则用会话和路径索引最近内容，相同才存引用。
+
+2026 年 9 月 10 日，我们用已发布的 FileSnap CLI 和对方发布包中的 `SnapshotStore` 跑了 7 组存储组件实验。每组为全新存储、64 KiB ASCII 内容。下表是**文件正文副本数**，不包含元数据和文件系统分配：
+
+| 输入场景 | FileSnap 0.4.0 | dsh-rewind-plugin 0.9.1 |
+|---|---:|---:|
+| 同路径、同会话，A → A → A | 1 | 1 |
+| 同路径、同会话，A → B → A | **2** | 3 |
+| 两个路径内容相同 | **1** | 2 |
+| 两个会话内容相同 | **1** | 2 |
+| 两个工作区共享存储、内容相同 | **1** | 2 |
+| 三份内容各不相同 | 3 | 3 |
+| 重新打开存储后记录相同内容 | 1 | 1 |
+
+保存的内容哈希、对方记录的解引用结果均与输入核对通过。提取模块只适配默认宿主目录解析器，测试始终显式传入临时路径。这不是两个完整插件在 DSH 内的测试，不是完整恢复或捕获速度测试；更广泛的 R01–R06 方案仍未执行。
+
+可以据此强调**相同内容的复用范围更广**，不能直接推算所有工作负载的总空间节省百分比。双方都有元数据和保留策略；复用要求内容仍在库中，不同数据目录不共享 blob。整文件哈希也不等于块级去重或差量压缩：大文件改一个字符，仍可能新增完整 blob。
+
+[复现方法与固定版本源码](https://github.com/extracurricular-ai/dsh-filesnap/blob/main/docs/dedup-comparison.zh.md) · [原始结果与校验值](https://github.com/extracurricular-ai/dsh-filesnap/blob/main/docs/evidence/dedup-2026-09-10.json)。
+
+## 跨助手应用：Codex、DSH 与 Pi
+
+FileSnap 的快照设计源自我们已发布的 [codex-rewind](https://github.com/extracurricular-ai/codex-rewind)（`codexr`）实践，独立引擎已用于 DSH 的 `dsh-filesnap` 和 Pi 的 [pi-better-rewind-redo](https://github.com/extracurricular-ai/pi-better-rewind-redo)。截至 2026-09-10，DSH 插件发布版为 0.2.2，依赖 `filesnap ^0.4.0`；Pi 扩展发布版为 0.1.1，依赖 `filesnap 0.5.0`；Codex 增强发行版为 0.151.0-rewind.0，保留同源的内置快照模块。
+
+这套设计已积累 Codex、DSH 和 Pi 的轮次接入、文件恢复与 redo 实践，是我们说明工程成熟度的具体依据。Codex 保留内置实现，DSH 与 Pi 使用不同版本的独立引擎；各自的兼容性与验证范围见项目文档。
+
+[公开版本、源码与验证范围](https://github.com/extracurricular-ai/dsh-filesnap/blob/main/docs/cross-assistant.zh.md)。
+
 ## 什么时候适合原地回退
 
 如果你希望选中较早的消息后仍留在同一对话，并且需要“只回退对话”的选项，SiriLee 的插件值得考虑。它通过追加标记改变可见历史，底层日志仍采用追加模型。**原地回退不等于抹掉原始审计记录。**
@@ -66,7 +100,7 @@ imageAlt: "DSH Rewind & Redo — by FileSnap 蓝白二次元鲸鱼娘封面"
 
 ![FileSnap 的 redo 结果将原会话列为继续操作的目标](/images/blog/dsh-rewind/shot-6-redo.png)
 
-FileSnap 0.2.2 还有明显的卸载限制：捕获过的会话需要插件注册事件类型，所以卸载后需要重装才能重新打开。源码环境用 `pnpm dsh` 启动也可能遇到相同的注册问题。这一版没有逐文件选择恢复的界面。选型时应把这些成本与 redo 的收益一起考虑。[FileSnap 文档](https://github.com/extracurricular-ai/dsh-filesnap/blob/857481528bd17c2ea5434c8d358ad6ede7f8b844/README.md)。
+卸载 FileSnap 0.2.2 不会删除对话记录或工作区文件。捕获过的会话需要插件注册事件类型，所以需要重装插件后才能在 DSH 中重新打开。源码环境用 `pnpm dsh` 启动也可能遇到相同的注册问题。这一版没有逐文件选择恢复的界面。选型时应把这些成本与 redo 的收益一起考虑。[FileSnap 文档](https://github.com/extracurricular-ai/dsh-filesnap/blob/857481528bd17c2ea5434c8d358ad6ede7f8b844/README.md)。
 
 ## 文件覆盖范围可能决定最终选择
 

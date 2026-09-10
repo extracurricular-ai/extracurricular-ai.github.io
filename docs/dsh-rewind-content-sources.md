@@ -75,3 +75,19 @@ Both frames use lazy loading, autoplay disabled, accessible localized titles, fu
 References: https://developers.google.com/youtube/player_parameters and https://player.bilibili.com/ . Video publication is recorded from user confirmation; local layout validation does not establish third-party playback availability in every region.
 
 Validation: final Astro build passed (37 pages). Chromium checked both language routes at 1440px, 390px, and 320px: exactly one iframe per tutorial, correct video IDs, no autoplay, full-screen enabled, direct links present, minimum 200px player height, and no page overflow. Third-party requests were blocked for these deterministic layout checks; external playback must be verified after deployment. No commit, push, or deployment was performed.
+
+
+## 2026-09-10: entity clarification and deduplication comparison
+
+The user supplied a Google AI conversation confusing the DSH plugin, the Rust engine, and an unrelated App Store application. Both tutorial translations now state the identities explicitly. Comparison pages add the FileSnap/SiriLee storage distinction, seven component-exercise results, exact versions, and links to reproducible evidence in the plugin repository. These links must be published in that repository before deploying this revision.
+
+Artifacts: dsh-filesnap 0.2.2 and dsh-rewind-plugin 0.9.1 have the same SHA-256 values recorded above. Tested FileSnap engine: 0.4.0; Linux binary SHA-256 d933638cde3d8ac93c49fe9ed71859c1ba89c8cb011c648f82592b9362bbac23, matched to a fresh npm artifact. Source tag v0.4.0 resolves to commit 320c42877cd260f7dcd836f75c971785434af29d (annotated tag object: 225ac92b6adb28f06f8c1a4524d0362529583d60). filesnap 0.5.0 was observed in the registry but not used: the plugin depends on ^0.4.0.
+
+Method: real FileSnap CLI, extracted shipped SnapshotStore with only its unused default-home resolver adapted; explicit temporary stores, 64 KiB ASCII payloads, hash/reference-resolution checks. Broader reuse is demonstrated; total storage savings, timing and DSH end-to-end behavior are not. The general R01–R06 suite remains unexecuted. Existing video embeds and user-confirmed publication URLs are preserved.
+
+
+## Cross-assistant evidence — 2026-09-10
+
+All four articles now describe Codex ancestry and the DSH/Pi standalone-engine integrations. Public manifests checked: pi-better-rewind-redo 0.1.1 depends on filesnap 0.5.0; dsh-filesnap 0.2.2 depends on ^0.4.0; codex-rewind 0.151.0-rewind.0 is a published distribution retaining an inlined codex-file-snapshots crate. The engine README explicitly identifies Codex as an ancestor rather than a consumer. Exact source links and review scope are recorded in the plugin repository docs/cross-assistant.md. Pi and Codex end-to-end tests were not rerun. Integration history supports an engineering-experience claim, not a measured reliability ranking.
+
+Validation of this revision: Astro build generated 37 pages. The content cache reported duplicate IDs during synchronization; each final article route was generated once and its current text was verified. Chromium checked all four articles at 1440, 390 and 320 px (12 cases): no page overflow or broken images, correct canonical URLs, cross-assistant project names, comparison tables and preserved video IDs. External requests were blocked, so this is layout/content validation rather than a new platform playback test. No commit, push, deployment or external article update was performed.

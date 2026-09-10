@@ -11,11 +11,23 @@ imageHeight: 640
 imageAlt: "DSH Rewind & Redo by FileSnap, with a blue and white anime whale-girl mascot"
 ---
 
-**DSH Rewind & Redo — by FileSnap** is a DeepSeek Harness rewind plugin. Install it as `dsh-filesnap` to restore a conversation and its tracked files together. It preserves the original conversation in a branch, and `/redo` reverses the rewind. No Git repository is required.
+**DSH Rewind & Redo — by FileSnap** is a DeepSeek Harness rewind plugin. Install it as `dsh-filesnap` to restore a conversation and its tracked files together. It preserves the original conversation in a branch, and `/redo` reverses the rewind. No Git repository is required. The `filesnap` Rust engine handles storage; `dsh-filesnap` adds DSH turn integration and Web UI controls. This is unrelated to the App Store app File Converter — FileSnap.
 
 [中文教程](/zh/blog/dsh-rewind-restore-files/) · [Compare DSH rewind plugins](/en/blog/dsh-rewind-plugin-comparison/)
 
 We maintain dsh-filesnap. This guide describes **0.2.2**, reviewed on **September 9, 2026**. The screenshots come from an existing 0.2.2 Web UI session on a DSH 0.1.2-rc.1 local build; this article does not certify later host releases.
+
+Compared with SiriLee’s `dsh-rewind-plugin` 0.9.1, this documented release adds `/redo` and broader whole-file content reuse across paths, retained versions and sessions sharing one store. See our [versioned comparison and seven storage cases](/en/blog/dsh-rewind-plugin-comparison/); the other plugin offers in-place and conversation-only rewind.
+
+
+## Integration experience across Codex, DSH and Pi
+
+FileSnap’s snapshot design originated in our published [codex-rewind](https://github.com/extracurricular-ai/codex-rewind) distribution (`codexr`). The independent engine now powers the DSH integration `dsh-filesnap` and the Pi extension [pi-better-rewind-redo](https://github.com/extracurricular-ai/pi-better-rewind-redo). As of September 10, 2026, the DSH release is 0.2.2 with `filesnap ^0.4.0`; Pi’s release is 0.1.1 with `filesnap 0.5.0`; codex-rewind is 0.151.0-rewind.0 and retains its own related inlined snapshot module.
+
+These releases provide concrete experience integrating conversation turns, file recovery and redo across coding assistants. Codex retains its inlined implementation, while DSH and Pi use different standalone engine versions; compatibility and validation scope are documented per project.
+
+[Public versions, source and validation scope](https://github.com/extracurricular-ai/dsh-filesnap/blob/main/docs/cross-assistant.md).
+
 
 ## Full walkthrough at 1.5× speed
 
@@ -29,7 +41,7 @@ This 2-minute-29-second walkthrough keeps the full screen recording, with video 
 
 Use Node.js **^22.19 or >=24**, on Linux, macOS, or Windows, with x64 or arm64. The package includes its native FileSnap engine; a Rust toolchain is unnecessary.
 
-Before installing, know one current limitation: sessions captured by this plugin need it installed to open. Uninstalling leaves their data on disk, but you must reinstall to read them through DSH. Starting a source checkout with `pnpm dsh` can produce the same event-registration error; use a built or npm-installed CLI. See the [installation and troubleshooting documentation](https://github.com/extracurricular-ai/dsh-filesnap/blob/857481528bd17c2ea5434c8d358ad6ede7f8b844/README.md).
+Uninstalling the plugin does not delete conversation logs or workspace files. One current limitation: sessions containing plugin records require reinstalling the plugin before they can be reopened in DSH. Starting a source checkout with `pnpm dsh` can produce the same event-registration error; use a built or npm-installed CLI. See the [installation and troubleshooting documentation](https://github.com/extracurricular-ai/dsh-filesnap/blob/857481528bd17c2ea5434c8d358ad6ede7f8b844/README.md).
 
 ```sh
 dsh plugin --profile web add dsh-filesnap
