@@ -32,7 +32,12 @@
 .is-expanded .terminal-session { height: min(70vh, 700px); }
 .terminal-prompt-identity { display: flex; min-width: 0; max-width: 40%; }
 .terminal-prompt-identity .terminal-path { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.terminal-welcome { margin-bottom: 24px; color: #cedbd2; }
+.terminal-welcome { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 20px; margin-bottom: 24px; color: #cedbd2; }
+.terminal-greeting { min-width: 0; }
+.terminal-donut { position: relative; justify-self: end; color: #73d8b1; }
+.terminal-donut-art { margin: 0; font: 7px/7px var(--font-mono); letter-spacing: 0; white-space: pre; user-select: none; pointer-events: none; }
+.terminal-donut-toggle { position: absolute; bottom: 0; right: 0; width: 24px; height: 24px; border: 1px solid #315441; border-radius: 4px; color: #9cc7ad; background: #0b1c13; font: 10px/1 var(--font-mono); cursor: pointer; }
+.terminal-donut-toggle:hover { color: #b7f0cf; background: #193425; }
 .terminal-wordmark { color: #6addae; font-size: 25px; font-weight: 700; letter-spacing: -.07em; margin-bottom: 13px; }
 .terminal-wordmark > span { color: #dfebe2; letter-spacing: -.045em; }
 .terminal-muted { color: #8d9e93; font-size: 11px; margin-top: 5px; }
@@ -106,6 +111,10 @@
   .home-brand span { font-size: 9px; max-width: none; }
   .terminal-session { height: 380px; }
   .terminal-output { padding: 18px 14px; }
+  .terminal-welcome { gap: 10px; }
+  .terminal-welcome .terminal-wordmark { font-size: 16px; margin-bottom: 10px; }
+  .terminal-greeting > p { font-size: 10px; }
+  .terminal-donut-art { font-size: 3.8px; line-height: 4px; }
   .terminal-prompt-identity .terminal-user { display: none; }
   .terminal-titlebar { padding: 0 12px; }
   .terminal-shell-label { display: none; }

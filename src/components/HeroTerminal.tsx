@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { children, complete, findFile, longestCommonPrefix, resolvePath, type TerminalFile } from '../lib/terminal';
 import { terminalCopy } from './terminal-copy';
 import Invaders from './Invaders';
+import AsciiDonut from './AsciiDonut';
 import '../styles/terminal.css';
 
 interface Props { files: TerminalFile[]; locale: string }
@@ -127,7 +128,10 @@ export default function HeroTerminal({ files, locale }: Props) {
               inputRef.current?.focus({ preventScroll: true });
               event.currentTarget.scrollTop = event.currentTarget.scrollHeight;
             }}>
-            {showWelcome && <div class="terminal-welcome"><div class="terminal-wordmark" aria-hidden="true">&gt;_ <span>hello, world.</span></div><p>{copy.welcome}</p><p class="terminal-muted">{copy.hint}</p></div>}
+            {showWelcome && <div class="terminal-welcome">
+              <div class="terminal-greeting"><div class="terminal-wordmark" aria-hidden="true">&gt;_ <span>hello, world.</span></div><p>{copy.welcome}</p><p class="terminal-muted">{copy.hint}</p></div>
+              <AsciiDonut pauseLabel={copy.pause} resumeLabel={copy.resume} />
+            </div>}
             {entries.map((entry, index) => <div class="terminal-entry" key={index}>
               <div class="terminal-command"><span class="terminal-user">visitor<span>@exai</span></span> <span class="terminal-path">{entry.cwd === '/' ? '~' : `~${entry.cwd}`}</span> <span class="terminal-chevron">❯</span> {entry.command}</div>
               {entry.output.text && <pre class={entry.output.error ? 'terminal-error' : 'terminal-text'}>{entry.output.text}</pre>}

@@ -4,6 +4,8 @@ The homepage renders a Preact terminal with a virtual filesystem populated at bu
 
 The input prompt follows the last output line inside the scrollback, with no separate input bar. It receives focus when the homepage loads, without scrolling the page, so typing can begin immediately. Enter submits the command and reveals a new prompt beneath the result. Long output scrolls to the new prompt; scroll up to read earlier content. Clicking empty space in the terminal focuses the prompt.
 
+The welcome banner includes a rotating ASCII torus. Its animation runs at 20 fps, pauses when offscreen or the tab is hidden, and stops when the banner unmounts. The play/pause button is always available. Reduced-motion preferences start with a static frame, but pressing play explicitly enables rotation; changing the system preference resets this override. Character updates stay inside the artwork and do not rerender the command input.
+
 Try:
 
 ```sh
