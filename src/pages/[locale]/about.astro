@@ -36,7 +36,7 @@ const { locale } = { ...Astro.params, ...Astro.props } as { locale: Locale };
     </div>
   </section>
 
-  <!-- ORIGIN STORY -->
+  <!-- COMMUNITY APPROACH -->
   <AnimatedSection class="py-6">
     <div class="max-w-[1280px] mx-auto px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
@@ -49,15 +49,12 @@ const { locale } = { ...Astro.params, ...Astro.props } as { locale: Locale };
           <p class="text-text-secondary leading-[1.8]">{t(locale, 'about.originP3')}</p>
         </div>
         <div class="bg-bg-surface border border-border rounded-[1rem] p-8 font-mono text-[0.85rem] text-text-secondary leading-[1.8]">
-          <p class="text-accent-purple mb-2"># our approach</p>
-          <p>$ git clone [idea]</p>
-          <p>$ cd idea && ship it</p>
-          <p>$ open-source --everything</p>
-          <p>$ share --with community</p>
-          <p>$ repeat</p>
+          <p class="text-accent-purple mb-2"># {t(locale, 'about.approachLabel')}</p>
+          {['Discover', 'Create', 'Share', 'Listen', 'Improve'].map((step) => (
+            <p><span aria-hidden="true">→ </span>{t(locale, `about.approach${step}`)}</p>
+          ))}
           <br />
-          <p class="text-text-muted"># no gatekeeping. no paywalls.</p>
-          <p class="text-text-muted"># just building.</p>
+          <p class="text-text-muted">{t(locale, 'about.approachNote')}</p>
         </div>
       </div>
     </div>
@@ -71,10 +68,10 @@ const { locale } = { ...Astro.params, ...Astro.props } as { locale: Locale };
         <p class="text-text-secondary max-w-[480px]">{t(locale, 'about.valuesSubtitle')}</p>
       </div>
       <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
-        <ValuePill icon="⚡" title={t(locale, 'values.learnTitle')} description={t(locale, 'values.learnBody')} />
-        <ValuePill icon="🔓" title={t(locale, 'values.openTitle')} description={t(locale, 'values.openBody')} />
+        <ValuePill icon="✨" title={t(locale, 'values.delightTitle')} description={t(locale, 'values.delightBody')} />
+        <ValuePill icon="🔎" title={t(locale, 'values.discoverTitle')} description={t(locale, 'values.discoverBody')} />
         <ValuePill icon="🤝" title={t(locale, 'values.communityTitle')} description={t(locale, 'values.communityBody')} />
-        <ValuePill icon="🛠️" title={t(locale, 'values.freeTitle')} description={t(locale, 'values.freeBody')} />
+        <ValuePill icon="💬" title={t(locale, 'values.listenTitle')} description={t(locale, 'values.listenBody')} />
       </div>
     </div>
   </AnimatedSection>

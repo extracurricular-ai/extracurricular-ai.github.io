@@ -90,7 +90,7 @@ export default function HeroTerminal({ files, locale }: Props) {
       case 'echo': output = { text: args.join(' ') }; break;
       case 'coffee': output = { text: copy.coffee }; break;
       case 'sudo': output = { text: copy.sudo }; break;
-      case 'neofetch': output = { text: '  ▄▄▄  ▄   ▄ ▄▄▄  ▄\n  █▄▄   ▀▄▀  █▄█  █\n  █▄▄  ▄▀ ▀▄ █ █  █\n\n  OS       ExAI / collective edition\n  Host     extracurricular.ai\n  Shell    curiosity 1.0\n  License  open source\n  Members  learners + builders + you\n  Uptime   one experiment at a time' }; break;
+      case 'neofetch': output = { text: '  ▄▄▄  ▄   ▄ ▄▄▄  ▄\n  █▄▄   ▀▄▀  █▄█  █\n  █▄▄  ▄▀ ▀▄ █ █  █\n\n  OS       ExAI / community edition\n  Host     extracurricular.ai\n  Shell    curiosity 1.0\n  Purpose  delightful software\n  Members  users + creators + you\n  Spirit   discover + create + share' }; break;
       case 'games': output = { files: children(files, '/games') }; break;
       case 'play':
         if (target === 'invaders' || target === '/games/invaders') { setGame(true); output = { text: copy.arcade }; }

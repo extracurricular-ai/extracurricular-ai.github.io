@@ -99,7 +99,6 @@
   .home-intro { padding: 0; }
   .home-brand { margin-bottom: 15px; }
   .home-intro h1 { font-size: 34px; margin-bottom: 12px; }
-  .home-intro h1 br { display: none; }
   .home-intro > p { max-width: 560px; font-size: 14px; }
   .home-intro-actions { margin-top: 17px; }
   .home-explore-note { display: none; }

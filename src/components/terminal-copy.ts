@@ -1,6 +1,6 @@
 const en = {
   cancel: 'cancel the current input',
-  label: 'The collective, at your command.', intro: 'A little curiosity goes a long way. Start exploring.',
+  label: 'The community, at your command.', intro: 'A little curiosity goes a long way. Start exploring.',
   welcome: 'Welcome to the ExAI playground.', hint: 'Type a command or click a directory. Try man to find your way.',
   ready: 'Ready when you are', shortcuts: 'Tab complete · ↑ ↓ history', placeholder: 'try ls, cat README.md, or play invaders',
   input: 'Terminal command', run: 'Run command', close: 'Close terminal', minimize: 'Minimize terminal', expand: 'Toggle window size', reopen: 'Open terminal', restore: 'Restore terminal',
@@ -12,7 +12,7 @@ const en = {
     open: 'open <path> — visit the corresponding page or repository', man: 'man [command] — show this guide or a command reference',
     help: 'help — show the guide', clear: 'clear — clear the screen (Ctrl+L)', history: 'history — show previous commands (↑ / ↓ to recall)',
     whoami: 'whoami — meet your fellow explorer', date: 'date — the time is now', echo: 'echo <text> — say something',
-    neofetch: 'neofetch — a peek inside the collective', coffee: 'coffee — fuel your next experiment', sudo: 'sudo <command> — a little power trip',
+    neofetch: 'neofetch — a peek inside the community', coffee: 'coffee — fuel your next experiment', sudo: 'sudo <command> — a little power trip',
     games: 'games — browse the arcade', play: 'play invaders — launch the pixel arcade; Esc returns to the terminal',
   },
   explorer: 'visitor · curious human (or exceptionally curious AI)\nAccess level: everyone is welcome.',
@@ -49,13 +49,13 @@ export const terminalCopy: Record<string, TerminalCopy> = {
     score: '得分', lives: '生命', wave: '波次', paused: '已暂停', over: '游戏结束', fire: '射击', left: '向左移动', right: '向右移动', gameIntro: '小小飞船，大大好奇心。出发吧。',
   },
   es: {
-    ...en, label: 'El colectivo, a tus órdenes.', intro: 'La curiosidad es el primer paso. Explora.', welcome: 'Te damos la bienvenida al laboratorio ExAI.',
+    ...en, label: 'La comunidad, a tus órdenes.', intro: 'La curiosidad es el primer paso. Explora.', welcome: 'Te damos la bienvenida al laboratorio ExAI.',
     hint: 'Escribe un comando o pulsa un directorio. Prueba man para orientarte.', ready: 'Todo listo', shortcuts: 'Tab completar · ↑ ↓ historial',
     placeholder: 'prueba ls, cat README.md o play invaders', input: 'Comando de terminal', run: 'Ejecutar', close: 'Cerrar terminal', minimize: 'Minimizar', expand: 'Cambiar tamaño', reopen: 'Abrir terminal', restore: 'Restaurar',
     read: 'Leer en la web ↗', visit: 'Abrir página ↗', start: 'Jugar', pause: 'Pausar', resume: 'Continuar', restart: 'Volver a jugar', exit: 'Volver al terminal', score: 'Puntos', lives: 'Vidas', wave: 'Oleada', paused: 'En pausa', over: 'Fin del juego', fire: 'Disparar', left: 'Mover a la izquierda', right: 'Mover a la derecha', gameHint: '← → / A D mover · Espacio disparar · P pausa · Esc salir', gameIntro: 'Pequeña nave. Gran curiosidad. Despeja el cielo.',
   },
   fr: {
-    ...en, label: 'Le collectif, à vos commandes.', intro: 'Un peu de curiosité. Beaucoup à découvrir.', welcome: 'Bienvenue dans le terrain de jeu ExAI.',
+    ...en, label: 'La communauté, à vos commandes.', intro: 'Un peu de curiosité. Beaucoup à découvrir.', welcome: 'Bienvenue dans le terrain de jeu ExAI.',
     hint: 'Tapez une commande ou cliquez sur un dossier. Essayez man pour vous guider.', ready: 'À vous de jouer', shortcuts: 'Tab compléter · ↑ ↓ historique',
     placeholder: 'essayez ls, cat README.md ou play invaders', input: 'Commande du terminal', run: 'Exécuter', close: 'Fermer le terminal', minimize: 'Réduire', expand: 'Changer la taille', reopen: 'Ouvrir le terminal', restore: 'Restaurer',
     read: 'Lire sur le site ↗', visit: 'Ouvrir la page ↗', start: 'Jouer', pause: 'Pause', resume: 'Continuer', restart: 'Rejouer', exit: 'Retour au terminal', score: 'Score', lives: 'Vies', wave: 'Vague', paused: 'En pause', over: 'Partie terminée', fire: 'Tirer', left: 'Aller à gauche', right: 'Aller à droite', gameHint: '← → / A D bouger · Espace tirer · P pause · Esc quitter', gameIntro: 'Petit vaisseau. Grande curiosité. À vous le ciel.',

@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AnimatedSection from '../../components/AnimatedSection.astro';
-import { GITHUB_ORG, GITHUB_REPO, GITHUB_REPO_DISCUSSIONS, GITHUB_REPO_ISSUES } from '../../config';
+import { GITHUB_ORG, COMMUNITY_DISCUSSION_URL, GITHUB_REPO_ISSUES } from '../../config';
 import { t, locales, type Locale } from '../../i18n/index';
 
 export function getStaticPaths() {
@@ -57,15 +57,15 @@ const { locale } = { ...Astro.params, ...Astro.props } as { locale: Locale };
             title: t(locale, 'getInvolved.card2Title'),
             description: t(locale, 'getInvolved.card2Body'),
             cta: t(locale, 'getInvolved.card2Cta'),
-            href: GITHUB_REPO_DISCUSSIONS,
+            href: COMMUNITY_DISCUSSION_URL,
             external: true,
           },
           {
-            icon: '📣',
+            icon: '💬',
             title: t(locale, 'getInvolved.card3Title'),
             description: t(locale, 'getInvolved.card3Body'),
             cta: t(locale, 'getInvolved.card3Cta'),
-            href: GITHUB_REPO,
+            href: COMMUNITY_DISCUSSION_URL,
             external: true,
           },
         ].map(({ icon, title, description, cta, href, external }) => (
@@ -108,12 +108,10 @@ const { locale } = { ...Astro.params, ...Astro.props } as { locale: Locale };
           </a>
         </div>
         <div class="bg-bg-elevated border border-border rounded-[1rem] p-6 font-mono text-[0.82rem] leading-[1.9]">
-          <p class="text-text-muted mb-2"># how to contribute</p>
-          <p><span class="text-accent-cyan">1.</span> <span class="text-text-secondary">Fork the repo</span></p>
-          <p><span class="text-accent-cyan">2.</span> <span class="text-text-secondary">Create a branch</span></p>
-          <p><span class="text-accent-cyan">3.</span> <span class="text-text-secondary">Make your changes</span></p>
-          <p><span class="text-accent-cyan">4.</span> <span class="text-text-secondary">Open a PR</span></p>
-          <p><span class="text-accent-cyan">5.</span> <span class="text-accent-purple">Ship it 🚀</span></p>
+          <p class="text-text-muted mb-2"># {t(locale, 'getInvolved.participationLabel')}</p>
+          {[1, 2, 3, 4, 5].map((step) => (
+            <p><span class="text-accent-cyan" aria-hidden="true">→</span> <span class="text-text-secondary">{t(locale, `getInvolved.participation${step}`)}</span></p>
+          ))}
         </div>
       </div>
     </div>
@@ -128,7 +126,7 @@ const { locale } = { ...Astro.params, ...Astro.props } as { locale: Locale };
       <p class="text-text-secondary max-w-[440px] mx-auto mb-8 leading-[1.7]">
         {t(locale, 'getInvolved.finalBody')}
       </p>
-      <a href={GITHUB_ORG} target="_blank" rel="noopener noreferrer" class="btn-primary">
+      <a href={COMMUNITY_DISCUSSION_URL} target="_blank" rel="noopener noreferrer" class="btn-primary">
         {t(locale, 'getInvolved.finalCta')}
       </a>
     </div>

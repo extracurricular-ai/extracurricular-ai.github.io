@@ -34,7 +34,7 @@ const files: TerminalFile[] = [
   { path: '/games', title: copy.arcade, body: '', directory: true },
   { path: '/README.md', title: 'Hello, world.', body: `# Extracurricular AI\n\n${t(locale, 'home.heroSubtitle')}\n\n${copy.hint}\n\nls blog/\nls projects/\nplay invaders`, href: localizedPath('/about', locale) },
   { path: '/about/README.md', title: t(locale, 'nav.about'), body: `${t(locale, 'about.heroSubtitle')}\n\n${t(locale, 'about.originP1')}\n\n${t(locale, 'about.originP2')}\n\n${t(locale, 'about.originP3')}`, href: localizedPath('/about', locale) },
-  { path: '/get-involved/README.md', title: t(locale, 'nav.getInvolved'), body: `${t(locale, 'getInvolved.heroSubtitle')}\n\n${t(locale, 'getInvolved.card1Title')}\n${t(locale, 'getInvolved.card1Body')}\n\n${t(locale, 'getInvolved.card2Title')}\n${t(locale, 'getInvolved.card2Body')}`, href: localizedPath('/get-involved', locale) },
+  { path: '/get-involved/README.md', title: t(locale, 'nav.getInvolved'), body: `${t(locale, 'getInvolved.heroSubtitle')}\n\n${t(locale, 'getInvolved.card1Title')}\n${t(locale, 'getInvolved.card1Body')}\n\n${t(locale, 'getInvolved.card2Title')}\n${t(locale, 'getInvolved.card2Body')}\n\n${t(locale, 'getInvolved.card3Title')}\n${t(locale, 'getInvolved.card3Body')}`, href: localizedPath('/get-involved', locale) },
   { path: '/games/invaders', title: copy.arcade, body: `${copy.gameIntro}\n\n${copy.manuals.play}\n${copy.gameHint}` },
   { path: '/.secret', title: 'psst…', body: copy.secret },
   ...posts.map((post) => {
@@ -49,7 +49,7 @@ const files: TerminalFile[] = [
 ---
 
 <BaseLayout
-  title={t(locale, 'home.heroTitle')}
+  title={`${t(locale, 'home.heroTitle')} ${t(locale, 'home.heroTitleAccent')}`}
   description={t(locale, 'site.tagline')}
   locale={locale}
 >
@@ -73,7 +73,7 @@ const files: TerminalFile[] = [
     </div>
   </section>
 
-  <!-- STATS STRIP -->
+  <!-- COMMUNITY ACTIVITIES -->
   <AnimatedSection class="border-t border-b border-border py-8">
     <div class="max-w-[1280px] mx-auto px-6">
       <div class="flex flex-wrap justify-center gap-12">
@@ -125,10 +125,10 @@ const files: TerminalFile[] = [
         <p class="text-text-secondary max-w-[480px] mx-auto">{t(locale, 'home.valuesSubtitle')}</p>
       </div>
       <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
-        <ValuePill icon="⚡" title={t(locale, 'values.learnTitle')} description={t(locale, 'values.learnBody')} />
-        <ValuePill icon="🔓" title={t(locale, 'values.openTitle')} description={t(locale, 'values.openBody')} />
+        <ValuePill icon="✨" title={t(locale, 'values.delightTitle')} description={t(locale, 'values.delightBody')} />
+        <ValuePill icon="🔎" title={t(locale, 'values.discoverTitle')} description={t(locale, 'values.discoverBody')} />
         <ValuePill icon="🤝" title={t(locale, 'values.communityTitle')} description={t(locale, 'values.communityBody')} />
-        <ValuePill icon="🛠️" title={t(locale, 'values.freeTitle')} description={t(locale, 'values.freeBody')} />
+        <ValuePill icon="💬" title={t(locale, 'values.listenTitle')} description={t(locale, 'values.listenBody')} />
       </div>
     </div>
   </AnimatedSection>
