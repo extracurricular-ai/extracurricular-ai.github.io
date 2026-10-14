@@ -55,6 +55,10 @@ export default function HeroTerminal({ files, locale, embedded = false }: Props)
     let output: Output = {};
     const error = (message: string) => ({ text: `${command}: ${message}${target ? `: ${target}` : ''}`, error: true });
     switch (command) {
+      case 'msn':
+        document.dispatchEvent(new Event('desktop:messenger'));
+        setEntries(previous => [...previous, { command: line, cwd, output: { text: 'MSN Messenger :)' } }].slice(-60));
+        return;
       case 'ls':
         if (args.some((arg) => arg.startsWith('-') && !/^-[al]+$/.test(arg))) output = error(copy.manuals.ls);
         else if (!file) output = error(copy.missing);

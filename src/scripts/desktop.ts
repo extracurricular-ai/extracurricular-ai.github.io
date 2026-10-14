@@ -64,6 +64,7 @@ if (desktop) {
     else if (visible(icon)) icon.focus();
     else startButton.focus();
   }
+  document.addEventListener('desktop:messenger', () => openWindow('messenger', document.activeElement instanceof HTMLElement ? document.activeElement : undefined));
   function hideWindow(id: string, close: boolean) {
     const el = windows.get(id)!;
     el.dispatchEvent(new Event('desktop:hide'));

@@ -6,7 +6,7 @@ export interface TerminalFile {
   directory?: boolean;
 }
 
-export const commands = ['ls', 'cd', 'pwd', 'cat', 'open', 'man', 'help', 'clear', 'history', 'whoami', 'date', 'echo', 'neofetch', 'coffee', 'sudo', 'games', 'play'];
+export const commands = ['ls', 'cd', 'pwd', 'cat', 'open', 'man', 'help', 'clear', 'history', 'whoami', 'date', 'echo', 'neofetch', 'coffee', 'sudo', 'games', 'play', 'msn'];
 
 /** A virtual filesystem only: no user input is evaluated or sent to a shell. */
 export function resolvePath(input: string, cwd: string): string {

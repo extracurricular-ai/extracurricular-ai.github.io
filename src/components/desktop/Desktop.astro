@@ -9,6 +9,7 @@ import Blog from '../views/Blog.astro';
 import About from '../views/About.astro';
 import Community from '../views/Community.astro';
 import HeroTerminal from '../HeroTerminal';
+import Messenger from '../messenger/Messenger';
 import { terminalFiles } from '../../lib/terminal-files';
 import { t, localizedPath, type Locale } from '../../i18n/index';
 import { GITHUB_ORG } from '../../config';
@@ -25,6 +26,7 @@ const apps = [
 ];
 const utilities = [
   { id: 'browser', title: 'Internet Explorer', icon: 'browser' },
+  { id: 'messenger', title: 'MSN Messenger', icon: 'messenger' },
   { id: 'terminal', title: copy.terminal, icon: 'terminal' },
   { id: 'settings', title: copy.settings, icon: 'settings' },
   { id: 'help', title: copy.help, icon: 'help' },
@@ -35,7 +37,7 @@ const tasks = [...apps, ...utilities, ...(activeApp === 'article' ? [{ id: 'arti
   <a href={`#window-${activeApp}`} class="skip-link">{copy.skip}</a>
   <nav class="desktop-icons" aria-label={copy.desktop}>
     {apps.map(app => <a class="desktop-icon" href={localizedPath(app.path, locale)} data-app-link={app.id}><Icon name={app.icon} /><span>{app.title}</span></a>)}
-    {utilities.filter(app => app.id !== 'help').map(app => <button type="button" class="desktop-icon js-only" data-open={app.id}><Icon name={app.icon} /><span>{app.title}</span></button>)}
+    {utilities.filter(app => !['help', 'messenger'].includes(app.id)).map(app => <button type="button" class="desktop-icon js-only" data-open={app.id}><Icon name={app.icon} /><span>{app.title}</span></button>)}
   </nav>
   <div class="desktop-watermark" aria-hidden="true"><span>ExAI<span class="watermark-98">98</span></span><small>{copy.edition}</small><p>{copy.hint}</p></div>
   <aside class="desktop-note" aria-label={copy.note}><span aria-hidden="true">✳</span><strong>{copy.note}</strong><p>{copy.noteBody}</p><span class="note-signature">— your friends at ExAI</span></aside>
@@ -49,6 +51,9 @@ const tasks = [...apps, ...utilities, ...(activeApp === 'article' ? [{ id: 'arti
     </Window>)}
     <Window id="browser" title="Internet Explorer" icon="browser" copy={copy}>
       <Browser locale={locale} />
+    </Window>
+    <Window id="messenger" title="MSN Messenger" icon="messenger" copy={copy}>
+      <Messenger locale={locale} client:idle />
     </Window>
     <Window id="terminal" title={copy.terminal} icon="terminal" copy={copy}>
       <p class="terminal-desktop-hint">{copy.terminalHint}</p>
@@ -87,7 +92,7 @@ const tasks = [...apps, ...utilities, ...(activeApp === 'article' ? [{ id: 'arti
     <button type="button" id="start-button" class="os-button start-button js-only" aria-expanded="false" aria-controls="start-menu"><Icon name="computer" size={26} /><strong>{copy.start}</strong></button>
     <button type="button" class="show-desktop js-only" data-show-desktop aria-label={copy.showDesktop} title={copy.showDesktop}><Icon name="computer" size={24} /></button>
     <nav class="taskbar-tasks" aria-label={copy.windows}>{tasks.map(app => <button type="button" data-task={app.id} hidden={activeApp !== app.id} class="os-button task-button" aria-controls={`window-${app.id}`} aria-pressed={activeApp === app.id}><Icon name={app.icon} size={20} /><span>{app.title}</span></button>)}</nav>
-    <div class="system-tray"><button type="button" data-open="settings" class="js-only" aria-label={copy.settings} title={copy.settings}><Icon name="settings" size={22} /></button><span class="tray-locale">{locale.toUpperCase()}</span><time id="desktop-clock" aria-label={locale === 'zh' ? '当前时间' : 'Local time'}>ExAI 98</time></div>
+    <div class="system-tray"><button type="button" data-open="messenger" class="js-only" aria-label="MSN Messenger" title="MSN Messenger"><Icon name="messenger" size={22} /></button><button type="button" data-open="settings" class="js-only" aria-label={copy.settings} title={copy.settings}><Icon name="settings" size={22} /></button><span class="tray-locale">{locale.toUpperCase()}</span><time id="desktop-clock" aria-label={locale === 'zh' ? '当前时间' : 'Local time'}>ExAI 98</time></div>
   </footer>
   <p class="sr-only" id="desktop-announcement" role="status" aria-live="polite" aria-atomic="true"></p>
   <noscript><p class="no-script-note">{copy.noScript}</p><style>.js-only,.os-window-controls,.os-menubar,.taskbar-tasks{display:none!important}.os-taskbar{position:static}.os-desktop{height:auto;overflow:visible}.desktop-workspace{position:relative;margin:20px}.os-window{position:relative;inset:auto;width:100%;height:auto;max-height:none}.os-window-body{overflow:visible}.desktop-icons{position:relative;display:flex;flex-wrap:wrap;width:auto}.desktop-note,.desktop-watermark{display:none}</style></noscript>

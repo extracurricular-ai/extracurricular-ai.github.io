@@ -15,6 +15,12 @@ const { name, size = 40 } = Astro.props;
     <path d="M13 11h8v2h2v3H11v-3h2z" fill="#fff" />
     <path d="M2 19v-5h3v-4h4V7h5V4h7V2h8v2h2v5h-2V5h-7v2h-6v3h-5v3H7v4H5v5h4v2H4v-2H2z" fill="#f3c84e" />
     <path d="M3 17v-3h3v-4h4V7h5V4h7V3h6v1h-6v2h-6v3h-5v3H7v4H5v4H3z" fill="#fff3a6" />
+  </> : name === 'messenger' ? <>
+    <path d="M18 4h8v2h2v8h-2v2h-8v-2h-2V6h2zM15 18h14v3h2v8H13V21h2z" fill="#25649b" />
+    <path d="M19 5h6v2h2v6h-2v2h-6v-2h-2V7h2zM16 19h12v3h2v6H14v-6h2z" fill="#78b8e9" />
+    <path d="M7 2h9v2h2v9h-2v2H7v-2H5V4h2zM5 17h13v3h3v10H2V20h3z" fill="#387b2a" />
+    <path d="M8 3h7v2h2v7h-2v2H8v-2H6V5h2zM6 18h11v3h3v8H3v-8h3z" fill="#83c64d" />
+    <path d="M8 4h5v2H8zM5 21h2v6H5zM19 6h4v2h-4z" fill="#def6b7" />
   </> : name === 'folder' ? <>
     <path d="M2 7h12l3 3h13v19H2z" fill="#34321a" /><path d="M3 8h10l3 3h13v16H3z" fill="#f4cc54" />
     <path d="M1 13h30l-4 16H4z" fill="#9a6a13" /><path d="M2 14h28l-4 13H5z" fill="#ffdf77" /><path d="M3 14h26v2H3z" fill="#fff2bb" />
