@@ -50,6 +50,7 @@ if (desktop) {
     taskButtons.get(id)!.hidden = false;
     activate(id);
     focusWindow(el);
+    el.dispatchEvent(new Event('desktop:open'));
     announce(copy.opened, el);
   }
   function fallbackFocus(id: string) {
@@ -66,6 +67,7 @@ if (desktop) {
   function hideWindow(id: string, close: boolean) {
     const el = windows.get(id)!;
     el.dispatchEvent(new Event('desktop:hide'));
+    if (close) el.dispatchEvent(new Event('desktop:close'));
     el.hidden = true;
     el.dataset.state = close ? 'closed' : 'minimized';
     const task = taskButtons.get(id)!;
@@ -123,8 +125,17 @@ if (desktop) {
     const link = target.closest<HTMLAnchorElement>('a');
     if (link && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey && !link.target && !link.hasAttribute('download')) {
       const url = new URL(link.href);
-      const id = url.origin === location.origin && !url.hash && !url.search ? routes.get(url.pathname.replace(/\/$/, '') || '/') : undefined;
-      if (id && !link.closest('.language-links,.start-languages')) { event.preventDefault(); openWindow(id, link); return; }
+      const id = url.origin === location.origin && !url.search ? routes.get(url.pathname.replace(/\/$/, '') || '/') : undefined;
+      if (id && !link.closest('.language-links,.start-languages')) {
+        event.preventDefault(); openWindow(id, link);
+        if (url.hash) {
+          const destination = document.getElementById(url.hash.slice(1));
+          if (destination && windows.get(id)?.contains(destination)) {
+            destination.scrollIntoView({ block: 'center' }); destination.focus({ preventScroll: true });
+          }
+        }
+        return;
+      }
       if (link.classList.contains('skip-link')) {
         event.preventDefault(); openWindow(desktop!.dataset.initialApp!, link); return;
       }

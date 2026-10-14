@@ -1,0 +1,70 @@
+---
+import Icon from './Icon.astro';
+import { browserCopy } from './browser-copy';
+import { searchCopy } from './search-copy';
+import '../../styles/browser.css';
+interface Props { locale: string }
+const copy = browserCopy[Astro.props.locale] ?? browserCopy.en;
+const search = searchCopy[Astro.props.locale] ?? searchCopy.en;
+const favorites = [
+  { href: 'https://example.com/', title: copy.example, body: copy.exampleBody, icon: 'globe', domain: 'example.com', year: '01' },
+  { href: 'https://info.cern.ch/hypertext/WWW/TheProject.html', title: copy.cern, body: copy.cernBody, icon: 'notebook', domain: 'info.cern.ch', year: '1991' },
+];
+---
+<div class="ie-browser" data-browser data-browser-copy={JSON.stringify(copy)} data-search-copy={JSON.stringify(search)} data-locale={Astro.props.locale} data-search-index={`/${Astro.props.locale}/search.json`}>
+  <nav class="ie-toolbar" aria-label={copy.toolbar}>
+    <button type="button" data-browser-action="back" title={copy.backHint} disabled><span aria-hidden="true">←</span>{copy.back}</button>
+    <button type="button" data-browser-action="forward" title={copy.forwardHint} disabled><span aria-hidden="true">→</span>{copy.forward}</button>
+    <button type="button" data-browser-action="refresh"><span aria-hidden="true">↻</span>{copy.refresh}</button>
+    <button type="button" data-browser-action="home"><Icon name="computer" size={25} />{copy.home}</button>
+    <button type="button" data-browser-action="search"><span aria-hidden="true">⌕</span>{search.button}</button>
+    <button type="button" data-browser-action="favorites" aria-expanded="false" aria-controls="ie-favorites"><span class="ie-star" aria-hidden="true">★</span>{copy.favorites}</button>
+    <span class="ie-toolbar-brand" aria-hidden="true"><Icon name="browser" size={38} /></span>
+  </nav>
+  <form class="ie-address-form" data-browser-form>
+    <label for="ie-address">{copy.address}</label>
+    <input id="ie-address" name="address" type="text" value="about:home" placeholder={search.addressHint} autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="ie-address-hint ie-address-error" />
+    <button type="submit" class="os-button">{copy.go} <span aria-hidden="true">→</span></button>
+  </form>
+  <p id="ie-address-hint" class="sr-only">{search.addressHint}</p>
+  <p id="ie-address-error" class="ie-address-error" role="alert" hidden></p>
+  <nav id="ie-favorites" class="ie-favorites" aria-label={copy.favorites} hidden>
+    {favorites.map(favorite => <a href={favorite.href} data-browser-visit><Icon name="globe" size={18} />{favorite.title}</a>)}
+  </nav>
+  <div class="ie-compatibility" data-browser-external hidden>
+    <span>{copy.compatibility}</span>
+    <a data-browser-external-link target="_blank" rel="noopener noreferrer">{copy.external} ↗</a>
+    <button type="button" data-browser-action="enter">{copy.entry} ↓</button>
+  </div>
+  <div class="ie-viewport">
+    <div class="ie-home" data-browser-home>
+      <div class="ie-home-heading"><Icon name="browser" size={106} /><div><p>Internet Explorer <span>— ExAI edition</span></p><h2>{search.title}</h2><p>{search.intro}</p></div></div>
+      <form class="ie-search-form" data-site-search-form role="search" aria-label={search.label}>
+        <label for="ie-home-query">{search.label}</label>
+        <div><input id="ie-home-query" name="q" type="search" maxlength="200" placeholder={search.placeholder} required aria-describedby="ie-home-scope" /><button class="os-button" type="submit">{search.button} →</button></div>
+        <p id="ie-home-scope">{search.scope}</p>
+      </form>
+      <div class="ie-home-rule"><span>WORLD WIDE WEB</span><span aria-hidden="true">✦ ✦ ✦</span></div>
+      <h3>{copy.favoritesTitle}</h3>
+      <div class="ie-home-favorites">{favorites.map(favorite => <a href={favorite.href} data-browser-visit><div><Icon name={favorite.icon} size={32} /><span>{favorite.year}</span></div><strong>{favorite.title}</strong><p>{favorite.body}</p><small>{favorite.domain} <span aria-hidden="true">↗</span></small></a>)}<button type="button" data-browser-action="address"><div><Icon name="browser" size={32} /><span>WWW</span></div><strong>{copy.yourSite}</strong><p>{copy.yourSiteBody}</p><small>https://… <span aria-hidden="true">↗</span></small></button></div>
+      <p class="ie-home-footer">{copy.edition}</p>
+    </div>
+    <section class="ie-search" data-browser-search aria-label={search.title} hidden>
+      <form class="ie-search-form" data-site-search-form role="search" aria-label={search.label}>
+        <label for="ie-search-query">{search.label}</label>
+        <div><input id="ie-search-query" name="q" type="search" maxlength="200" placeholder={search.placeholder} required aria-describedby="ie-search-scope" /><button class="os-button" type="submit">{search.button} →</button></div>
+        <p id="ie-search-scope">{search.scope}</p>
+      </form>
+      <h2 class="ie-search-heading" data-search-heading tabindex="-1">{search.prompt}</h2>
+      <p data-search-message></p>
+      <ol class="ie-search-results" data-search-results></ol>
+    </section>
+    <div class="ie-frame-host" data-browser-frame hidden></div>
+  </div>
+  <div class="ie-return" data-browser-external hidden><button type="button" data-browser-action="address">↑ {copy.returnAddress}</button></div>
+  <details class="ie-details"><summary>{copy.details}</summary><p>{copy.explanation}</p></details>
+  <p class="ie-status" role="status" aria-live="polite" aria-atomic="true" data-browser-status>{copy.ready}</p>
+</div>
+<script>
+  import '../../scripts/browser';
+</script>

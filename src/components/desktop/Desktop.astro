@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import Browser from './Browser.astro';
 import Window from './Window.astro';
 import { desktopCopy } from './copy';
 import Welcome from '../views/Welcome.astro';
@@ -23,6 +24,7 @@ const apps = [
   { id: 'about', title: t(locale, 'nav.about'), icon: 'globe', path: '/about' },
 ];
 const utilities = [
+  { id: 'browser', title: 'Internet Explorer', icon: 'browser' },
   { id: 'terminal', title: copy.terminal, icon: 'terminal' },
   { id: 'settings', title: copy.settings, icon: 'settings' },
   { id: 'help', title: copy.help, icon: 'help' },
@@ -33,7 +35,7 @@ const tasks = [...apps, ...utilities, ...(activeApp === 'article' ? [{ id: 'arti
   <a href={`#window-${activeApp}`} class="skip-link">{copy.skip}</a>
   <nav class="desktop-icons" aria-label={copy.desktop}>
     {apps.map(app => <a class="desktop-icon" href={localizedPath(app.path, locale)} data-app-link={app.id}><Icon name={app.icon} /><span>{app.title}</span></a>)}
-    {utilities.slice(0, 2).map(app => <button type="button" class="desktop-icon js-only" data-open={app.id}><Icon name={app.icon} /><span>{app.title}</span></button>)}
+    {utilities.filter(app => app.id !== 'help').map(app => <button type="button" class="desktop-icon js-only" data-open={app.id}><Icon name={app.icon} /><span>{app.title}</span></button>)}
   </nav>
   <div class="desktop-watermark" aria-hidden="true"><span>ExAI<span class="watermark-98">98</span></span><small>{copy.edition}</small><p>{copy.hint}</p></div>
   <aside class="desktop-note" aria-label={copy.note}><span aria-hidden="true">✳</span><strong>{copy.note}</strong><p>{copy.noteBody}</p><span class="note-signature">— your friends at ExAI</span></aside>
@@ -45,6 +47,9 @@ const tasks = [...apps, ...utilities, ...(activeApp === 'article' ? [{ id: 'arti
       {app.id === 'about' && <About locale={locale} />}
       {app.id === 'get-involved' && <Community locale={locale} />}
     </Window>)}
+    <Window id="browser" title="Internet Explorer" icon="browser" copy={copy}>
+      <Browser locale={locale} />
+    </Window>
     <Window id="terminal" title={copy.terminal} icon="terminal" copy={copy}>
       <p class="terminal-desktop-hint">{copy.terminalHint}</p>
       <HeroTerminal client:idle files={files} locale={locale} embedded />
