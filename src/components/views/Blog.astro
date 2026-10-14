@@ -1,0 +1,153 @@
+---
+import AnimatedSection from '../AnimatedSection.astro';
+import { getCollection } from 'astro:content';
+import { t, localizedPath, type Locale } from '../../i18n/index';
+
+const { locale } = Astro.props as { locale: Locale };
+
+const allPosts = await getCollection('blog');
+const posts = allPosts
+  .filter((p) => p.data.locale === locale || (locale === 'en' && !p.id.startsWith('zh/') && !p.id.startsWith('es/') && !p.id.startsWith('fr/')))
+  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const displayPosts = posts.length > 0 ? posts : allPosts
+  .filter((p) => p.data.locale === 'en')
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const [featured, ...rest] = displayPosts;
+const featuredSlug = featured?.id.split('/').pop()?.replace(/\.md$/, '') ?? featured?.id;
+---
+
+  <!-- PAGE HERO -->
+  <section class="pt-40 pb-16 relative overflow-hidden animate-fade-up">
+    <div
+      class="absolute inset-0 pointer-events-none"
+      style="background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(42, 181, 165, 0.1) 0%, transparent 70%);"
+    ></div>
+    <div class="max-w-[1280px] mx-auto px-6 relative">
+      <p class="text-accent-purple text-[0.8rem] font-semibold uppercase tracking-[0.08em] mb-4">{t(locale, 'blog.heroLabel')}</p>
+      <h1 class="font-black tracking-[-0.03em] mb-6" style="font-size: clamp(2.25rem, 6vw, 4rem);">
+        {t(locale, 'blog.heroTitle')} <span class="gradient-text">{t(locale, 'blog.heroTitleAccent')}</span>
+      </h1>
+      <p class="text-text-secondary max-w-[520px] leading-[1.75]" style="font-size: clamp(1rem, 2vw, 1.2rem);">
+        {t(locale, 'blog.heroSubtitle')}
+      </p>
+    </div>
+  </section>
+
+  {displayPosts.length === 0 ? (
+    <div class="max-w-[1280px] mx-auto px-6 py-20 text-text-muted">{t(locale, 'blog.noPosts')}</div>
+  ) : (
+    <>
+      <!-- FEATURED POST -->
+      <AnimatedSection class="py-6">
+        <div class="max-w-[1280px] mx-auto px-6">
+          <a
+            href={localizedPath(`/blog/${featuredSlug}`, featured.data.locale)}
+            class="group relative block rounded-[1.25rem] overflow-hidden no-underline border border-border hover:border-accent-purple/40 transition-colors duration-300"
+            style="background: linear-gradient(135deg, rgba(42, 181, 165, 0.08), rgba(245, 130, 31, 0.04));"
+          >
+            <div class="p-10 md:p-14">
+              {featured.data.image && (
+                <img src={featured.data.image} alt={featured.data.imageAlt ?? ''} width="1672" height="941" class="w-full max-h-[360px] object-cover rounded-xl mb-8" />
+              )}
+              <!-- Top row -->
+              <div class="flex items-center justify-between mb-6">
+                <span class="text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-accent-purple bg-accent-purple/10 border border-accent-purple/20 rounded-full px-3 py-1">
+                  {t(locale, 'blog.latestPost')}
+                </span>
+                <time class="text-text-muted text-[0.8rem] font-mono">
+                  {featured.data.pubDate.toLocaleDateString(
+                    locale === 'zh' ? 'zh-CN' : locale === 'es' ? 'es-ES' : locale === 'fr' ? 'fr-FR' : 'en-US',
+                    { year: 'numeric', month: 'long', day: 'numeric' }
+                  )}
+                </time>
+              </div>
+
+              <!-- Title -->
+              <h2
+                class="font-black tracking-[-0.03em] text-text-primary mb-4 group-hover:text-accent-purple transition-colors duration-200 leading-[1.1]"
+                style="font-size: clamp(1.75rem, 4vw, 3rem);"
+              >
+                {featured.data.title}
+              </h2>
+
+              <!-- Description -->
+              <p class="text-text-secondary text-[1.05rem] leading-[1.75] max-w-[680px] mb-8">
+                {featured.data.description}
+              </p>
+
+              <!-- Footer row -->
+              <div class="flex items-center justify-between flex-wrap gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="h-8 w-8 rounded-full bg-accent-purple/20 border border-accent-purple/30 flex items-center justify-center text-[0.7rem] font-bold text-accent-purple">
+                    {featured.data.author.slice(0, 2).toUpperCase()}
+                  </div>
+                  <span class="text-text-secondary text-[0.875rem] font-medium">{featured.data.author}</span>
+                </div>
+                <div class="flex items-center gap-4">
+                  <div class="flex gap-2">
+                    {featured.data.tags.map((tag) => (
+                      <span class="text-[0.72rem] px-2.5 py-0.5 rounded-full bg-bg-elevated text-text-muted border border-border font-medium">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <span class="text-accent-purple font-semibold text-[0.9rem] flex items-center gap-1.5 group-hover:gap-3 transition-all duration-200">
+                    {t(locale, 'blog.readPost')} <span>→</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </AnimatedSection>
+
+      <!-- MORE POSTS -->
+      {rest.length > 0 && (
+        <AnimatedSection class="py-6">
+          <div class="max-w-[1280px] mx-auto px-6">
+            <h2 class="text-[0.8rem] font-semibold text-text-muted uppercase tracking-[0.1em] mb-6">{t(locale, 'blog.morePosts')}</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" data-animate-group>
+              {rest.map((post) => {
+                const slug = post.id.split('/').pop()?.replace(/\.md$/, '') ?? post.id;
+                const href = localizedPath(`/blog/${slug}`, post.data.locale);
+                const date = post.data.pubDate.toLocaleDateString(
+                  locale === 'zh' ? 'zh-CN' : locale === 'es' ? 'es-ES' : locale === 'fr' ? 'fr-FR' : 'en-US',
+                  { year: 'numeric', month: 'short', day: 'numeric' }
+                );
+                return (
+                  <a
+                    data-animate-child
+                    href={href}
+                    class="group bg-bg-surface border border-border hover:border-accent-purple/40 rounded-[var(--radius-card)] p-7 flex flex-col no-underline transition-colors duration-200"
+                  >
+                    {post.data.image && (
+                      <img src={post.data.image} alt={post.data.imageAlt ?? ''} width="1672" height="941" loading="lazy" class="w-full h-auto rounded-lg mb-5" />
+                    )}
+                    <div class="flex items-center justify-between mb-5">
+                      <time class="text-text-muted text-[0.775rem] font-mono">{date}</time>
+                      <span class="text-accent-purple opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-sm">→</span>
+                    </div>
+                    <h3 class="text-text-primary font-bold text-[1.05rem] mb-2 leading-snug group-hover:text-accent-purple transition-colors duration-200">
+                      {post.data.title}
+                    </h3>
+                    <p class="text-text-secondary text-[0.875rem] leading-relaxed line-clamp-3 flex-1 mb-5">
+                      {post.data.description}
+                    </p>
+                    <div class="flex flex-wrap gap-1.5 mt-auto">
+                      {post.data.tags.slice(0, 3).map((tag) => (
+                        <span class="text-[0.72rem] px-2 py-0.5 rounded-full bg-accent-purple/10 text-accent-purple border border-accent-purple/20 font-medium">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </AnimatedSection>
+      )}
+    </>
+  )}

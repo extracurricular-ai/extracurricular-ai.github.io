@@ -1,0 +1,29 @@
+---
+import Icon from './Icon.astro';
+import type { DesktopCopy } from './copy';
+interface Props { id: string; title: string; icon: string; active?: boolean; copy: DesktopCopy; address?: string; }
+const { id, title, icon, active = false, copy, address } = Astro.props;
+---
+<section id={`window-${id}`} class:list={['os-window', { 'is-active': active }]} data-window={id} data-title={title} data-state={active ? 'open' : 'closed'} hidden={!active} role="region" aria-labelledby={`title-${id}`} tabindex="-1">
+  <header class="os-titlebar" data-drag-handle>
+    <div class="os-title"><Icon name={icon} size={20} /><h2 id={`title-${id}`}>{title}</h2></div>
+    <div class="os-window-controls">
+      <button type="button" data-window-action="minimize" aria-label={`${copy.minimize}: ${title}`} title={copy.minimize}>_</button>
+      <button type="button" data-window-action="maximize" aria-label={`${copy.maximize}: ${title}`} data-maximize={copy.maximize} data-restore={copy.restore} aria-pressed="false" title={copy.maximize}>□</button>
+      <button type="button" data-window-action="close" aria-label={`${copy.close}: ${title}`} title={copy.close}>×</button>
+    </div>
+  </header>
+  <div class="os-menubar">
+    <button type="button" data-move-toggle aria-expanded="false" aria-controls={`move-${id}`}>{copy.move}</button>
+    <button type="button" data-open="settings">{copy.settings}</button>
+    <button type="button" data-open="help">{copy.help}</button>
+  </div>
+  <div id={`move-${id}`} class="os-move-controls" hidden>
+    {['left', 'up', 'down', 'right', 'center'].map((direction) => <button type="button" class="os-button" data-move={direction}>{copy[direction as keyof DesktopCopy]}</button>)}
+  </div>
+  {address && <div class="os-address"><span>{copy.address}</span><span class="os-address-value"><Icon name={icon} size={16} />{address}</span><span aria-hidden="true">↵</span></div>}
+  <div class="os-window-body" tabindex="0" aria-label={title}>
+    <slot />
+  </div>
+  <footer class="os-statusbar"><span>{copy.ready}</span><span>ExAI · 98</span></footer>
+</section>

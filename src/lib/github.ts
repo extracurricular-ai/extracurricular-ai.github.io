@@ -82,7 +82,12 @@ export function localize(project: Project, locale: string): Project {
  * JS and no per-visitor API calls. Re-run the build to pick up changes made on
  * GitHub — the deploy workflow does this on a daily schedule.
  */
-export async function fetchProjects(): Promise<Project[]> {
+let projectRequest: Promise<Project[]> | undefined;
+export function fetchProjects(): Promise<Project[]> {
+  return projectRequest ??= loadProjects();
+}
+
+async function loadProjects(): Promise<Project[]> {
   const url = `https://api.github.com/orgs/${GITHUB_ORG_NAME}/repos?per_page=100&sort=updated`;
   const headers: Record<string, string> = {
     Accept: 'application/vnd.github+json',

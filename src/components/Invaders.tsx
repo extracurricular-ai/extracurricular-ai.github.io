@@ -39,7 +39,7 @@ export default function Invaders({ copy, onExit }: { copy: TerminalCopy; onExit:
       ctx!.fillStyle = '#244239';
       for (let i = 0; i < 55; i++) ctx!.fillRect((i * 137 + 13) % WIDTH, (i * 83 + 29) % HEIGHT, 1, 1);
       s.enemies.forEach((enemy) => sprite(alien, enemy.x, enemy.y, '#65dac2'));
-      if (s.invincible <= time || Math.floor(time * 12) % 2 === 0) sprite(ship, s.player, 250, '#f3bc75');
+      sprite(ship, s.player, 250, s.invincible > time ? '#b6c5ad' : '#f3bc75');
       ctx!.fillStyle = '#ecf8dc'; s.bullets.forEach((b) => ctx!.fillRect(b.x, b.y, 2, 7));
       ctx!.fillStyle = '#ff7f83'; s.bombs.forEach((b) => ctx!.fillRect(b.x, b.y, 3, 7));
       ctx!.fillStyle = '#2a5144'; ctx!.fillRect(0, 272, WIDTH, 1);
@@ -89,9 +89,11 @@ export default function Invaders({ copy, onExit }: { copy: TerminalCopy; onExit:
     }
     frame = requestAnimationFrame(tick);
     const visibility = () => { if (document.hidden) pause(); };
+    const desktopWindow = area.current?.closest('[data-window]');
+    desktopWindow?.addEventListener('desktop:hide', pause);
     window.addEventListener('blur', pause);
     document.addEventListener('visibilitychange', visibility);
-    return () => { cancelAnimationFrame(frame); held.current.clear(); window.removeEventListener('blur', pause); document.removeEventListener('visibilitychange', visibility); };
+    return () => { desktopWindow?.removeEventListener('desktop:hide', pause); cancelAnimationFrame(frame); held.current.clear(); window.removeEventListener('blur', pause); document.removeEventListener('visibilitychange', visibility); };
   }, []);
 
   const keyAction = (key: string) => ({ ArrowLeft: 'left', a: 'left', ArrowRight: 'right', d: 'right', ' ': 'fire' })[key];

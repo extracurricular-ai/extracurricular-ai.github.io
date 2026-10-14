@@ -1,11 +1,13 @@
 ---
 import '../styles/global.css';
-import Nav from '../components/Nav.tsx';
-import Footer from '../components/Footer.astro';
+import Desktop from '../components/desktop/Desktop.astro';
+import '../styles/desktop.css';
+
 import { locales, localeNames, localizedPath, t, defaultLocale, type Locale } from '../i18n/index';
 
 interface Props {
   title: string;
+  desktopApp?: string;
   description?: string;
   locale?: string;
   image?: string;
@@ -32,16 +34,6 @@ const hreflangLinks = availableLocales.map((loc) => ({
 const xDefaultLocale = availableLocales.includes(defaultLocale) ? defaultLocale : availableLocales[0] ?? defaultLocale;
 const xDefaultHref = new URL(localizedPath(Astro.url.pathname, xDefaultLocale), SITE).toString();
 const imageURL = Astro.props.image ? new URL(Astro.props.image, SITE).toString() : undefined;
-
-const navLabels = {
-  home: t(locale, 'nav.home'),
-  about: t(locale, 'nav.about'),
-  projects: t(locale, 'nav.projects'),
-  getInvolved: t(locale, 'nav.getInvolved'),
-  blog: t(locale, 'nav.blog'),
-  github: t(locale, 'nav.github'),
-  switchLanguage: t(locale, 'nav.switchLanguage'),
-};
 
 const switcherLinks = locales.map((loc) => ({
   locale: loc,
@@ -82,21 +74,10 @@ const switcherLinks = locales.map((loc) => ({
     {imageURL && <meta name="twitter:image" content={imageURL} />}
     {imageURL && Astro.props.imageAlt && <meta name="twitter:image:alt" content={Astro.props.imageAlt} />}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
-    <Nav client:load currentLocale={locale} currentPath={Astro.url.pathname} labels={navLabels} switcherLinks={switcherLinks} />
-    <main class="flex-1">
+    <Desktop locale={locale as Locale} activeApp={Astro.props.desktopApp ?? 'article'} title={title} switcherLinks={switcherLinks}>
       <slot />
-    </main>
-    <Footer locale={locale} />
-    <script>
-      import '../scripts/animations.ts';
-    </script>
+    </Desktop>
   </body>
 </html>

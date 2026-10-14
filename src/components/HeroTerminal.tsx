@@ -5,11 +5,11 @@ import Invaders from './Invaders';
 import AsciiDonut from './AsciiDonut';
 import '../styles/terminal.css';
 
-interface Props { files: TerminalFile[]; locale: string }
+interface Props { files: TerminalFile[]; locale: string; embedded?: boolean }
 interface Output { text?: string; files?: TerminalFile[]; href?: string; error?: boolean }
 interface Entry { command: string; cwd: string; output: Output }
 
-export default function HeroTerminal({ files, locale }: Props) {
+export default function HeroTerminal({ files, locale, embedded = false }: Props) {
   const copy = terminalCopy[locale] ?? terminalCopy.en;
   const [cwd, setCwd] = useState('/');
   const [input, setInput] = useState('');
@@ -27,7 +27,7 @@ export default function HeroTerminal({ files, locale }: Props) {
   const interacted = useRef(false);
 
   useEffect(() => {
-    inputRef.current?.focus({ preventScroll: true });
+    if (!embedded) inputRef.current?.focus({ preventScroll: true });
   }, []);
 
   useEffect(() => {
@@ -106,7 +106,7 @@ export default function HeroTerminal({ files, locale }: Props) {
     run(file.directory ? `cd ${file.path}` : file.path === '/games/invaders' ? 'play invaders' : `cat ${file.path}`, false);
   }
 
-  return <div class={`terminal-wrap ${expanded ? 'is-expanded' : ''}`}>
+  return <div class={`terminal-wrap ${embedded ? 'is-embedded' : ''} ${expanded ? 'is-expanded' : ''}`}>
     <div class="terminal-caption"><span><span class="terminal-status-dot" /> EXAI / PLAYGROUND</span><span>v.01</span></div>
     {closed ? <div class="terminal-closed"><span>{copy.label}</span><button onClick={() => { setClosed(false); setMinimized(false); }}>{copy.reopen} ↗</button></div> :
       <section class="terminal-window" aria-label="ExAI Terminal">
@@ -153,9 +153,9 @@ export default function HeroTerminal({ files, locale }: Props) {
                 else if (event.key === 'Tab' && !event.shiftKey && input) {
                   const options = complete(input, cwd, files);
                   if (options.length) {
-                    event.preventDefault();
                     const prefix = longestCommonPrefix(options);
-                    if (prefix.length > input.length) setInput(prefix);
+                    // Only consume Tab when it actually completes text; another Tab can leave the field.
+                    if (prefix.length > input.length) { event.preventDefault(); setInput(prefix); }
                     else if (options.length > 1) { interacted.current = true; setEntries((previous) => [...previous, { command: input, cwd, output: { text: options.join('\n') } }].slice(-60)); }
                   }
                 } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
@@ -165,6 +165,7 @@ export default function HeroTerminal({ files, locale }: Props) {
                   setHistoryIndex(next); setInput(next === -1 ? draft.current : history[history.length - 1 - next]);
                 }
               }} />
+            <button type="submit" class="terminal-run">{copy.run}</button>
           </form>
           </div>
           </div>

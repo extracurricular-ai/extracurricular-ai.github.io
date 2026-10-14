@@ -52,10 +52,11 @@ export default function AsciiDonut({ pauseLabel, resumeLabel }: { pauseLabel: st
 
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const update = () => { setReducedMotion(media.matches); setPlayingOverride(null); };
+    const update = () => { setReducedMotion(media.matches || document.documentElement.dataset.reduceMotion === 'true'); setPlayingOverride(null); };
     update();
     media.addEventListener('change', update);
-    return () => media.removeEventListener('change', update);
+    document.addEventListener('desktop:preferences', update);
+    return () => { media.removeEventListener('change', update); document.removeEventListener('desktop:preferences', update); };
   }, []);
 
   useLayoutEffect(() => {

@@ -1,0 +1,29 @@
+---
+interface Props { name: string; size?: number; }
+const { name, size = 40 } = Astro.props;
+---
+<svg width={size} height={size} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" class="pixel-icon" shape-rendering="crispEdges">
+  {name === 'computer' ? <>
+    <path d="M4 2h24v21H4zM2 25h28v5H2z" fill="#242438" />
+    <path d="M5 3h22v19H5zM3 26h26v3H3z" fill="#c3c3c3" />
+    <path d="M6 4h20v16H6z" fill="#fff" /><path d="M8 6h16v12H8z" fill="#008080" />
+    <path d="M10 8h12v8H10z" fill="#64d8ce" /><path d="M12 10h2v2h-2zM18 10h2v2h-2zM14 14h4v1h-4z" fill="#003d44" />
+    <path d="M12 23h8v2h-8zM24 27h3v1h-3z" fill="#777" />
+  </> : name === 'folder' ? <>
+    <path d="M2 7h12l3 3h13v19H2z" fill="#34321a" /><path d="M3 8h10l3 3h13v16H3z" fill="#f4cc54" />
+    <path d="M1 13h30l-4 16H4z" fill="#9a6a13" /><path d="M2 14h28l-4 13H5z" fill="#ffdf77" /><path d="M3 14h26v2H3z" fill="#fff2bb" />
+  </> : name === 'notebook' ? <>
+    <path d="M6 2h22v28H6z" fill="#222" /><path d="M7 3h20v26H7z" fill="#fffdf1" /><path d="M7 3h4v26H7z" fill="#79bdc5" />
+    <path d="M4 6h5v2H4zM4 12h5v2H4zM4 18h5v2H4zM4 24h5v2H4z" fill="#53535c" /><path d="M14 8h10v1H14zM14 12h10v1H14zM14 16h8v1h-8zM14 20h10v1H14z" fill="#6a8c9d" />
+  </> : name === 'terminal' ? <>
+    <path d="M2 4h28v24H2z" fill="#222" /><path d="M3 5h26v22H3z" fill="#c0c0c0" /><path d="M4 6h24v4H4z" fill="#000080" /><path d="M4 11h24v14H4z" fill="#101010" /><path d="m7 14 4 3-4 3M14 20h6" stroke="#fff" stroke-width="2" />
+  </> : name === 'community' ? <>
+    <path d="M1 5h22v16H9l-5 5v-5H1z" fill="#263d36" /><path d="M2 6h20v14H8l-3 3v-3H2z" fill="#ffffc7" /><path d="M12 14h18v13h-3v4l-5-4H12z" fill="#263d36" /><path d="M13 15h16v11h-3v3l-4-3h-9z" fill="#a1dcd0" /><path d="M5 10h14v1H5zM5 14h5v1H5zM16 19h10v1H16zM16 22h7v1h-7z" fill="#436d6c" />
+  </> : name === 'settings' ? <>
+    <path d="M2 3h28v26H2z" fill="#222" /><path d="M3 4h26v24H3z" fill="#c0c0c0" /><path d="M4 5h24v4H4z" fill="#000080" /><path d="M8 12h2v12H8zM15 12h2v12h-2zM22 12h2v12h-2z" fill="#555" /><path d="M6 14h6v4H6zM13 20h6v4h-6zM20 12h6v4h-6z" fill="#fff" /><path d="M6 17h6v2H6zM13 23h6v2h-6zM20 15h6v2h-6z" fill="#808080" />
+  </> : name === 'help' ? <>
+    <path d="M8 2h16v3h4v24H5V5h3z" fill="#222" /><path d="M8 3h15v3h4v22H6V6h2z" fill="#fff5ba" /><path d="M12 8h9v3h2v5h-5v4h-4v-7h5v-2h-7zM14 23h4v3h-4z" fill="#000080" />
+  </> : <>
+    <path d="M10 2h12v3h5v5h3v12h-3v5h-5v3H10v-3H5v-5H2V10h3V5h5z" fill="#143343" /><path d="M10 4h12v3h4v4h2v10h-3v5h-5v2H11v-3H6v-5H4v-9h3V7h3z" fill="#68c1ef" /><path d="M10 5h8v4h-4v5H9v-3H6V8h4zM20 12h6v9h-4v5h-5v-7h3zM7 19h5v5H8z" fill="#43a75d" /><path d="M13 4h2v24h-2zM4 15h24v1H4z" fill="#fff" fill-opacity=".45" />
+  </>}
+</svg>

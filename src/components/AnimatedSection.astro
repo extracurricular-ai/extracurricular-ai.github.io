@@ -1,8 +1,9 @@
 ---
+import type { HTMLTag } from 'astro/types';
 interface Props {
   class?: string;
   group?: boolean;
-  tag?: string;
+  tag?: HTMLTag;
 }
 
 const { class: className = '', group = false, tag = 'section' } = Astro.props;

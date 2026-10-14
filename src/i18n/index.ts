@@ -8,7 +8,7 @@ export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = 'en';
 
 type TranslationKeys = typeof en;
-const translations: Record<Locale, TranslationKeys> = { en, zh, es, fr };
+const translations: Record<Locale, { [K in keyof TranslationKeys]: Partial<TranslationKeys[K]> }> = { en, zh, es, fr };
 
 export function t(locale: string, key: string, fallback?: string): string {
   const lang = (locales.includes(locale as Locale) ? locale : defaultLocale) as Locale;
