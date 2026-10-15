@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#008080"/>
+  <path d="M0 540H1200M0 580H1200M80 0V630M1120 0V630" stroke="#ffffff" stroke-opacity=".12"/>
+  <rect x="90" y="82" width="1020" height="466" fill="#c0c0c0" stroke="#ffffff" stroke-width="4"/>
+  <path d="M1110 82V548H90" fill="none" stroke="#202025" stroke-width="5"/>
+  <rect x="100" y="92" width="1000" height="48" fill="#000080"/>
+  <text x="120" y="125" fill="white" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="bold">Extracurricular AI</text>
+  <rect x="1051" y="101" width="36" height="30" fill="#c0c0c0"/>
+  <path d="M1060 109L1078 123M1078 109L1060 123" stroke="#202025" stroke-width="3"/>
+  <rect x="108" y="151" width="984" height="345" fill="#fffef8"/>
+  <text x="155" y="278" fill="#000080" font-family="DejaVu Sans, sans-serif" font-size="100" font-weight="bold">ExAI</text>
+  <text x="157" y="349" fill="#202025" font-family="DejaVu Sans, sans-serif" font-size="33">Open-source software.</text>
+  <text x="157" y="397" fill="#006d67" font-family="DejaVu Sans, sans-serif" font-size="33">Tools, tutorials, and a curious community.</text>
+  <text x="120" y="529" fill="#202025" font-family="DejaVu Sans, sans-serif" font-size="19">extracurricular.ai</text>
+</svg>

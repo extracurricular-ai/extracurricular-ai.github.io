@@ -34,10 +34,6 @@ test('real site search stays local, searches articles and projects, and keeps se
   const project = page.locator('[data-search-results] a[href*="#project-"]').first();
   await expect(project).toBeVisible();
   const href = await project.getAttribute('href');
-  await project.click();
-  await expect(page.locator('#window-projects')).toHaveClass(/is-active/);
-  await expect(page.locator(href!.slice(href!.indexOf('#')))).toBeFocused();
-  await page.locator('[data-task="browser"]').click();
   await page.locator('[data-browser-action="back"]').click();
   await expect(page.locator('#ie-search-query')).toHaveValue('回退');
   await expect(page.locator('[data-search-results] li').first()).toBeVisible();
@@ -52,6 +48,11 @@ test('real site search stays local, searches articles and projects, and keeps se
   await search(page, '<img src=x onerror=alert(1)>');
   await expect(page.locator('[data-search-heading]')).toContainText('<img src=x onerror=alert(1)>');
   await expect(page.locator('[data-browser-search] img')).toHaveCount(0);
+  await search(page, 'open-deep-research');
+  await project.click();
+  await expect(page).toHaveURL(new RegExp('/zh/projects/#project-'));
+  await expect(page.locator('#window-projects')).toHaveClass(/is-active/);
+  await expect(page.locator(href!.slice(href!.indexOf('#')))).toBeFocused();
 });
 
 test('articles open as real site pages and the public domain maps to local preview', async ({ page }) => {

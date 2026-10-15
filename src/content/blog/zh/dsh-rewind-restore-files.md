@@ -5,9 +5,7 @@ pubDate: "2026-09-09"
 author: "ExAI Team"
 tags: ["DeepSeek Harness", "rewind", "dsh-filesnap", "tutorial"]
 locale: "zh"
-image: "/images/blog/dsh-rewind/cover-rewind-redo.jpg"
-imageWidth: 1280
-imageHeight: 640
+image: "../../../assets/blog/dsh-rewind/cover-rewind-redo.jpg"
 imageAlt: "DSH Rewind & Redo — by FileSnap 蓝白二次元鲸鱼娘封面"
 ---
 

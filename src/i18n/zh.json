@@ -58,7 +58,9 @@
     "commentsUnavailable": "暂时无法在这里加载留言，你仍然可以前往 GitHub 查看并参与讨论。",
     "commentsUpdated": "更新于",
     "commentDeletedUser": "已注销用户",
-    "commentRead": "在 GitHub 阅读 ↗"
+    "commentRead": "在 GitHub 阅读 ↗",
+    "metaTitle": "开源软件与开发者工具社区",
+    "metaDescription": "发现 ExAI 社区构建和推荐的开源软件与开发者工具，阅读 Cursor 历史记录、搜索恢复及 FileSnap 回退教程，分享经验并参与贡献。"
   },
   "about": {
     "metaTitle": "关于",
@@ -138,8 +140,8 @@
     "participation5": "一起讨论，让体验更好"
   },
   "blog": {
-    "metaTitle": "博客",
-    "metaDescription": "来自 ExAI 开放社区的软件发现、开发记录、使用心得与社区动态。",
+    "metaTitle": "开发工具教程与开源软件指南",
+    "metaDescription": "阅读 Cursor 聊天记录搜索与恢复、FileSnap 对话回退等实用教程，了解 ExAI 社区的软件发现、开发经验与项目动态。",
     "heroLabel": "博客",
     "heroTitle": "来自",
     "heroTitleAccent": "社区",

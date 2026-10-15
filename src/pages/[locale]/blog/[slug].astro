@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BlogImage from '../../../components/BlogImage.astro';
 import { getCollection } from 'astro:content';
 import { locales, localizedPath, type Locale } from '../../../i18n/index';
 
@@ -31,7 +32,7 @@ const date = post.data.pubDate.toLocaleDateString(
   locale={locale}
   image={post.data.image}
   imageAlt={post.data.imageAlt}
-  article={{ author: post.data.author, publishedAt: post.data.pubDate.toISOString() }}
+  article={{ author: post.data.author, publishedAt: post.data.pubDate.toISOString(), modifiedAt: post.data.updatedDate?.toISOString() }}
   translationLocales={translationLocales}
 >
   <article class="pt-36 pb-24">
@@ -64,18 +65,17 @@ const date = post.data.pubDate.toLocaleDateString(
           </div>
           <div class="flex flex-col gap-0.5">
             <span class="text-text-primary text-[0.875rem] font-semibold">{post.data.author}</span>
-            <time class="text-text-muted text-[0.8rem]">{date}</time>
+            <time datetime={post.data.pubDate.toISOString()} class="text-text-muted text-[0.8rem]">{date}</time>
+            {post.data.updatedDate && <span class="text-text-muted text-[0.8rem]">{({ en: 'Updated', zh: '更新于', es: 'Actualizado', fr: 'Mis à jour' })[locale]}: <time datetime={post.data.updatedDate.toISOString()}>{post.data.updatedDate.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' })}</time></span>}
           </div>
         </div>
       </header>
 
       {post.data.image && (
-        <img
+        <BlogImage
           src={post.data.image}
           alt={post.data.imageAlt ?? ''}
-          width={post.data.imageWidth}
-          height={post.data.imageHeight}
-          fetchpriority="high"
+          featured
           class="w-full h-auto rounded-xl border border-border mb-10"
         />
       )}

@@ -5,7 +5,7 @@ pubDate: "2026-09-09"
 author: "S2thend"
 tags: ["cursor", "recovery", "backup"]
 locale: "en"
-image: "/images/blog/cursor-history/cover_recovery_editorial.png"
+image: "../../../assets/blog/cursor-history/cover_recovery_editorial.png"
 imageAlt: "Editorial illustration: a moved folder and an older archive worth checking."
 featured: false
 ---

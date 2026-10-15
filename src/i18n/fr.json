@@ -58,7 +58,9 @@
     "commentsUnavailable": "Les commentaires sont temporairement indisponibles ici. Vous pouvez les lire et participer sur GitHub.",
     "commentsUpdated": "Mis à jour",
     "commentDeletedUser": "Compte supprimé",
-    "commentRead": "Lire sur GitHub ↗"
+    "commentRead": "Lire sur GitHub ↗",
+    "metaTitle": "Logiciels libres et outils de développement",
+    "metaDescription": "Découvrez les logiciels libres et les outils de développement d’ExAI. Explorez nos projets, nos tutoriels pratiques et les façons de rejoindre la communauté."
   },
   "about": {
     "metaTitle": "À propos",
@@ -138,8 +140,8 @@
     "participation5": "En discuter et améliorer ensemble"
   },
   "blog": {
-    "metaTitle": "Blog",
-    "metaDescription": "Découvertes de logiciels, récits de développement, retours d’expérience et actualités de la communauté ExAI.",
+    "metaTitle": "Tutoriels de développement et guides logiciels",
+    "metaDescription": "Découvrez les tutoriels, les retours d’expérience et les nouveautés logicielles de la communauté ExAI, avec des guides techniques aussi disponibles en anglais.",
     "heroLabel": "Blog",
     "heroTitle": "La voix de la",
     "heroTitleAccent": "communauté",

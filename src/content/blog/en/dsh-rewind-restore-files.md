@@ -5,9 +5,7 @@ pubDate: "2026-09-09"
 author: "ExAI Team"
 tags: ["DeepSeek Harness", "rewind", "dsh-filesnap", "tutorial"]
 locale: "en"
-image: "/images/blog/dsh-rewind/cover-rewind-redo.jpg"
-imageWidth: 1280
-imageHeight: 640
+image: "../../../assets/blog/dsh-rewind/cover-rewind-redo.jpg"
 imageAlt: "DSH Rewind & Redo by FileSnap, with a blue and white anime whale-girl mascot"
 ---
 

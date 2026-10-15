@@ -36,8 +36,9 @@ test('windows open, move without dragging, maximize, minimize, restore and retur
   const icon = page.locator('.desktop-icons [data-app-link="projects"]');
   await icon.focus(); await page.keyboard.press('Enter');
   const window = page.locator('#window-projects');
-  await expect(window).toBeVisible(); await expect(window).toBeFocused();
-  await expect(page.locator('#window-home')).toBeVisible();
+  await expect(page).toHaveURL(/\/zh\/projects\/$/);
+  await expect(window).toBeVisible();
+  await expect(page.locator('#window-home')).toHaveCount(0);
   const before = await window.boundingBox();
   await window.locator('[data-move-toggle]').click();
   await window.locator('[data-move="right"]').click();
@@ -57,10 +58,12 @@ test('windows open, move without dragging, maximize, minimize, restore and retur
   await window.locator('[data-window-action="close"]').click();
   await expect(window).toBeHidden(); await expect(icon).toBeFocused();
   await expect(page.locator('[data-task="projects"]')).toBeHidden();
+  await icon.click();
+  await expect(window).toBeVisible();
   await page.locator('[data-show-desktop]').click();
   await expect(page.locator('[data-window]:visible')).toHaveCount(0);
   await page.locator('[data-show-desktop]').click();
-  await expect(page.locator('#window-home')).toBeVisible();
+  await expect(window).toBeVisible();
 });
 
 test('all content windows and a direct article remain readable and accessible', async ({ page }) => {
@@ -150,8 +153,7 @@ test('without JavaScript, content and ordinary route links still work', async ({
 test('forced colors and keyboard focus remain usable with overlapping windows', async ({ page }) => {
   await page.emulateMedia({ forcedColors: 'active' });
   await page.goto('/zh/');
-  await page.locator('.desktop-icons [data-app-link="projects"]').click();
-  await page.locator('.desktop-icons [data-app-link="about"]').click();
+  await page.locator('.desktop-icons [data-open="settings"]').click();
   await expect(page.locator('#window-home .os-window-body')).toHaveAttribute('inert', '');
   await page.locator('[data-task="home"]').focus();
   await page.keyboard.press('Enter');

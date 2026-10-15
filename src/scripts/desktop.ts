@@ -127,7 +127,9 @@ if (desktop) {
     if (link && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey && !link.target && !link.hasAttribute('download')) {
       const url = new URL(link.href);
       const id = url.origin === location.origin && !url.search ? routes.get(url.pathname.replace(/\/$/, '') || '/') : undefined;
-      if (id && !link.closest('.language-links,.start-languages')) {
+      // Only reopen the current document in place. Other content links use
+      // native navigation so URL, metadata, history and the visible page agree.
+      if (id && id === desktop!.dataset.initialApp && !link.closest('.language-links,.start-languages')) {
         event.preventDefault(); openWindow(id, link);
         if (url.hash) {
           const destination = document.getElementById(url.hash.slice(1));

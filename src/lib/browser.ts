@@ -29,7 +29,8 @@ export function siteAddress(input: string, origin: string, locale: string): stri
     if (!['https:', 'http:'].includes(url.protocol) || url.username || url.password) return null;
     if (url.origin !== origin && !['extracurricular.ai', 'www.extracurricular.ai'].includes(url.host)) return null;
     const path = url.pathname === '/' ? `/${locale}` : url.pathname;
-    return `${path}${url.search}${url.hash}`;
+    const normalized = /\.[^/]+$/.test(path) ? path : `${path.replace(/\/+$/, '')}/`;
+    return `${normalized}${url.search}${url.hash}`;
   } catch { return null; }
 }
 

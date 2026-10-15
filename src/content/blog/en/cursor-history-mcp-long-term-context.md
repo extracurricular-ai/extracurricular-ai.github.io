@@ -5,7 +5,7 @@ pubDate: "2026-09-09"
 author: "S2thend"
 tags: ["cursor", "mcp", "ai-memory"]
 locale: "en"
-image: "/images/blog/cursor-history/cover_memory_editorial.png"
+image: "../../../assets/blog/cursor-history/cover_memory_editorial.png"
 imageAlt: "Editorial illustration: a reader consults a page from an existing archive."
 featured: false
 ---

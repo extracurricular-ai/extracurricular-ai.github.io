@@ -21,10 +21,11 @@ test('index text strips markup without losing link labels and code content', () 
 
 test('site addresses stay on this deployment and lookalike domains are not treated as local', () => {
   const origin = 'http://localhost:4321';
-  assert.equal(siteAddress('extracurricular.ai', origin, 'zh'), '/zh');
-  assert.equal(siteAddress('https://extracurricular.ai/en/blog/hello-world', origin, 'zh'), '/en/blog/hello-world');
-  assert.equal(siteAddress('https://www.extracurricular.ai/zh/projects#project-test', origin, 'zh'), '/zh/projects#project-test');
-  assert.equal(siteAddress('/zh/about', origin, 'zh'), '/zh/about');
+  assert.equal(siteAddress('extracurricular.ai', origin, 'zh'), '/zh/');
+  assert.equal(siteAddress('https://extracurricular.ai/en/blog/hello-world', origin, 'zh'), '/en/blog/hello-world/');
+  assert.equal(siteAddress('https://www.extracurricular.ai/zh/projects#project-test', origin, 'zh'), '/zh/projects/#project-test');
+  assert.equal(siteAddress('/zh/about', origin, 'zh'), '/zh/about/');
+  assert.equal(siteAddress('/zh/search.json?q=test', origin, 'zh'), '/zh/search.json?q=test');
   for (const input of ['https://extracurricular.ai.evil.example', '//evil.example', 'https://extracurricular.ai@evil.example', 'https://user@extracurricular.ai', 'javascript:alert(1)']) assert.equal(siteAddress(input, origin, 'zh'), null);
 });
 

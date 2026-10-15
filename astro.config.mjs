@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://extracurricular.ai',
+  trailingSlash: 'always',
   devToolbar: { enabled: false },
   integrations: [
     preact(),

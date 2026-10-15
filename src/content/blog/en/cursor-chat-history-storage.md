@@ -5,7 +5,7 @@ pubDate: "2026-09-09"
 author: "S2thend"
 tags: ["cursor", "developer-tools", "local-history"]
 locale: "en"
-image: "/images/blog/cursor-history/cover_storage_editorial.png"
+image: "../../../assets/blog/cursor-history/cover_storage_editorial.png"
 imageAlt: "Editorial illustration: several distinct archives share a reading desk."
 featured: true
 ---

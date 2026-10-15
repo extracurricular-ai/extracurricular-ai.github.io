@@ -26,8 +26,11 @@ export const localeNames: Record<Locale, string> = {
 };
 
 export function localizedPath(currentPath: string, targetLocale: Locale): string {
-  const stripped = stripLocalePrefix(currentPath);
-  return `/${targetLocale}${stripped === '/' ? '' : stripped}`;
+  const [, pathname, suffix = ''] = currentPath.match(/^([^?#]*)(.*)$/)!;
+  const stripped = stripLocalePrefix(pathname).replace(/\/+$/, '');
+  // HTML pages use directory URLs; static endpoints keep their extension.
+  const path = `/${targetLocale}${stripped}`;
+  return `${path}${/\.[^/]+$/.test(stripped) ? '' : '/'}${suffix}`;
 }
 
 function stripLocalePrefix(path: string): string {

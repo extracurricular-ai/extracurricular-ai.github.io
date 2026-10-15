@@ -5,12 +5,32 @@ import Invaders from './Invaders';
 import AsciiDonut from './AsciiDonut';
 import '../styles/terminal.css';
 
-interface Props { files: TerminalFile[]; locale: string; embedded?: boolean }
+interface Props { filesUrl: string; locale: string; embedded?: boolean }
 interface Output { text?: string; files?: TerminalFile[]; href?: string; error?: boolean }
 interface Entry { command: string; cwd: string; output: Output }
 
-export default function HeroTerminal({ files, locale, embedded = false }: Props) {
+export default function HeroTerminal({ filesUrl, locale, embedded = false }: Props) {
   const copy = terminalCopy[locale] ?? terminalCopy.en;
+  const [files, setFiles] = useState<TerminalFile[]>([]);
+  const [loadState, setLoadState] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [attempt, setAttempt] = useState(0);
+  const loadingCopy = ({
+    en: ['Loading files…', 'Could not load files.', 'Retry'],
+    zh: ['正在加载文件…', '文件加载失败。', '重试'],
+    es: ['Cargando archivos…', 'No se pudieron cargar los archivos.', 'Reintentar'],
+    fr: ['Chargement des fichiers…', 'Impossible de charger les fichiers.', 'Réessayer'],
+  } as Record<string, string[]>)[locale] ?? ['Loading files…', 'Could not load files.', 'Retry'];
+  useEffect(() => {
+    const controller = new AbortController();
+    setLoadState('loading');
+    fetch(filesUrl, { signal: controller.signal }).then(async response => {
+      if (!response.ok) throw new Error('Terminal files unavailable');
+      const data: TerminalFile[] = await response.json();
+      if (!Array.isArray(data)) throw new Error('Invalid terminal files');
+      if (!controller.signal.aborted) { setFiles(data); setLoadState('ready'); }
+    }).catch(() => { if (!controller.signal.aborted) setLoadState('error'); });
+    return () => controller.abort();
+  }, [filesUrl, attempt]);
   const [cwd, setCwd] = useState('/');
   const [input, setInput] = useState('');
   const [showWelcome, setShowWelcome] = useState(true);
@@ -42,6 +62,7 @@ export default function HeroTerminal({ files, locale, embedded = false }: Props)
   }
 
   function run(raw: string, focus = true) {
+    if (loadState !== 'ready') return;
     const line = raw.trim();
     if (!line) return;
     interacted.current = true;
@@ -144,11 +165,12 @@ export default function HeroTerminal({ files, locale, embedded = false }: Props)
               </button>)}</div>}
               {entry.output.href && <a class="terminal-result-link" href={entry.output.href}>{copy.read}</a>}
             </div>)}
+          {loadState !== 'ready' && <p role="status" class="terminal-muted">{loadingCopy[loadState === 'error' ? 1 : 0]} {loadState === 'error' && <button type="button" onClick={() => setAttempt(value => value + 1)}>{loadingCopy[2]}</button>}</p>}
           <form class="terminal-input-row" onSubmit={(event) => { event.preventDefault(); run(input); }}>
             <label for="hero-terminal-input" class="sr-only">{copy.input}</label>
             <span class="terminal-prompt-identity" aria-hidden="true"><span class="terminal-user">visitor@exai</span><span class="terminal-path">{cwd === '/' ? '~' : `~${cwd}`}</span></span>
             <span class="terminal-chevron" aria-hidden="true">❯</span>
-            <input ref={inputRef} id="hero-terminal-input" value={input} autoComplete="off" autoCapitalize="off" spellcheck={false} enterKeyHint="go" maxLength={500}
+            <input ref={inputRef} id="hero-terminal-input" value={input} disabled={loadState !== 'ready'} autoComplete="off" autoCapitalize="off" spellcheck={false} enterKeyHint="go" maxLength={500}
               onInput={(event) => { setInput(event.currentTarget.value); setHistoryIndex(-1); }}
               onKeyDown={(event) => {
                 if (event.isComposing) return;
@@ -169,7 +191,7 @@ export default function HeroTerminal({ files, locale, embedded = false }: Props)
                   setHistoryIndex(next); setInput(next === -1 ? draft.current : history[history.length - 1 - next]);
                 }
               }} />
-            <button type="submit" class="terminal-run">{copy.run}</button>
+            <button type="submit" class="terminal-run" disabled={loadState !== 'ready'}>{copy.run}</button>
           </form>
           </div>
           </div>

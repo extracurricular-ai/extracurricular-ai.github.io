@@ -5,7 +5,7 @@ pubDate: "2026-09-09"
 author: "S2thend"
 tags: ["cursor", "search", "cli"]
 locale: "en"
-image: "/images/blog/cursor-history/cover_search_editorial.png"
+image: "../../../assets/blog/cursor-history/cover_search_editorial.png"
 imageAlt: "Editorial illustration: a lens examines conversation pages across project folders."
 featured: false
 ---

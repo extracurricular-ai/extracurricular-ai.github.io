@@ -58,7 +58,9 @@
     "commentsUnavailable": "Comments are temporarily unavailable here. You can still read and join the conversation on GitHub.",
     "commentsUpdated": "Updated",
     "commentDeletedUser": "Deleted user",
-    "commentRead": "Read on GitHub ↗"
+    "commentRead": "Read on GitHub ↗",
+    "metaTitle": "Open-Source Software & Developer Tools",
+    "metaDescription": "Discover open-source software and developer tools from ExAI. Explore projects, Cursor workflows, practical tutorials, and ways to join our community."
   },
   "about": {
     "metaTitle": "About",
@@ -142,8 +144,8 @@
     "participation5": "Talk it through and make it better"
   },
   "blog": {
-    "metaTitle": "Blog",
-    "metaDescription": "Software discoveries, development stories, practical experiences, and news from the ExAI community.",
+    "metaTitle": "Developer Tool Tutorials & Software Guides",
+    "metaDescription": "Practical guides to Cursor chat history, search and recovery, FileSnap rewind workflows, and open-source software from the ExAI community.",
     "heroLabel": "Blog",
     "heroTitle": "From the",
     "heroTitleAccent": "community",

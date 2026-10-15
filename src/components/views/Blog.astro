@@ -1,5 +1,6 @@
 ---
 import AnimatedSection from '../AnimatedSection.astro';
+import BlogImage from '../BlogImage.astro';
 import { getCollection } from 'astro:content';
 import { t, localizedPath, type Locale } from '../../i18n/index';
 
@@ -49,14 +50,14 @@ const featuredSlug = featured?.id.split('/').pop()?.replace(/\.md$/, '') ?? feat
           >
             <div class="p-10 md:p-14">
               {featured.data.image && (
-                <img src={featured.data.image} alt={featured.data.imageAlt ?? ''} width="1672" height="941" class="w-full max-h-[360px] object-cover rounded-xl mb-8" />
+                <BlogImage src={featured.data.image} alt={featured.data.imageAlt ?? ''} featured class="w-full max-h-[360px] object-cover rounded-xl mb-8" />
               )}
               <!-- Top row -->
               <div class="flex items-center justify-between mb-6">
                 <span class="text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-accent-purple bg-accent-purple/10 border border-accent-purple/20 rounded-full px-3 py-1">
                   {t(locale, 'blog.latestPost')}
                 </span>
-                <time class="text-text-muted text-[0.8rem] font-mono">
+                <time datetime={featured.data.pubDate.toISOString()} class="text-text-muted text-[0.8rem] font-mono">
                   {featured.data.pubDate.toLocaleDateString(
                     locale === 'zh' ? 'zh-CN' : locale === 'es' ? 'es-ES' : locale === 'fr' ? 'fr-FR' : 'en-US',
                     { year: 'numeric', month: 'long', day: 'numeric' }
@@ -123,10 +124,10 @@ const featuredSlug = featured?.id.split('/').pop()?.replace(/\.md$/, '') ?? feat
                     class="group bg-bg-surface border border-border hover:border-accent-purple/40 rounded-[var(--radius-card)] p-7 flex flex-col no-underline transition-colors duration-200"
                   >
                     {post.data.image && (
-                      <img src={post.data.image} alt={post.data.imageAlt ?? ''} width="1672" height="941" loading="lazy" class="w-full h-auto rounded-lg mb-5" />
+                      <BlogImage src={post.data.image} alt={post.data.imageAlt ?? ''} card class="w-full h-auto rounded-lg mb-5" />
                     )}
                     <div class="flex items-center justify-between mb-5">
-                      <time class="text-text-muted text-[0.775rem] font-mono">{date}</time>
+                      <time datetime={post.data.pubDate.toISOString()} class="text-text-muted text-[0.775rem] font-mono">{date}</time>
                       <span class="text-accent-purple opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-sm">→</span>
                     </div>
                     <h3 class="text-text-primary font-bold text-[1.05rem] mb-2 leading-snug group-hover:text-accent-purple transition-colors duration-200">

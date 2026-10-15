@@ -14,13 +14,16 @@ export const GET: APIRoute = async ({ site }) => {
   // Root-level English aliases are omitted in favor of their canonical URLs.
   const sharedPaths = ['/', '/about/', '/blog/', '/projects/', '/get-involved/'];
   const paths = locales.flatMap((locale) => sharedPaths.map((path) => localizedPath(path, locale)));
+  const modifiedDates = new Map<string, string>();
   for (const post of await getCollection('blog')) {
     // Match [locale]/blog/[slug].astro's actual route construction.
     const slug = post.id.split('/').pop()?.replace(/\.md$/, '') ?? post.id;
-    paths.push(localizedPath(`/blog/${slug}/`, post.data.locale));
+    const path = localizedPath(`/blog/${slug}/`, post.data.locale);
+    paths.push(path);
+    modifiedDates.set(path, (post.data.updatedDate ?? post.data.pubDate).toISOString());
   }
   const entries = [...new Set(paths)].sort().map((path) =>
-    `  <url><loc>${escapeXml(new URL(path, origin).href)}</loc></url>`
+    `  <url><loc>${escapeXml(new URL(path, origin).href)}</loc>${modifiedDates.has(path) ? `<lastmod>${modifiedDates.get(path)}</lastmod>` : ''}</url>`
   );
   // No synthetic lastmod: rebuild time is not the time content was changed.
   return new Response(`<?xml version="1.0" encoding="UTF-8"?>

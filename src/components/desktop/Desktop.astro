@@ -10,13 +10,11 @@ import About from '../views/About.astro';
 import Community from '../views/Community.astro';
 import HeroTerminal from '../HeroTerminal';
 import Messenger from '../messenger/Messenger';
-import { terminalFiles } from '../../lib/terminal-files';
 import { t, localizedPath, type Locale } from '../../i18n/index';
 import { GITHUB_ORG } from '../../config';
 interface Props { locale: Locale; activeApp: string; title: string; switcherLinks: { locale: string; label: string; href: string; active: boolean }[]; }
 const { locale, activeApp, title, switcherLinks } = Astro.props;
 const copy = desktopCopy[locale] ?? desktopCopy.en;
-const files = await terminalFiles(locale);
 const apps = [
   { id: 'home', title: copy.welcome, icon: 'computer', path: '/' },
   { id: 'projects', title: t(locale, 'nav.projects'), icon: 'folder', path: '/projects' },
@@ -31,7 +29,7 @@ const utilities = [
   { id: 'settings', title: copy.settings, icon: 'settings' },
   { id: 'help', title: copy.help, icon: 'help' },
 ];
-const tasks = [...apps, ...utilities, ...(activeApp === 'article' ? [{ id: 'article', title, icon: 'notebook' }] : [])];
+const tasks = [...apps.filter(app => app.id === activeApp), ...utilities, ...(activeApp === 'article' ? [{ id: 'article', title, icon: 'notebook' }] : [])];
 ---
 <div class="os-desktop" data-desktop data-initial-app={activeApp} data-copy={JSON.stringify(copy)}>
   <a href={`#window-${activeApp}`} class="skip-link">{copy.skip}</a>
@@ -42,7 +40,7 @@ const tasks = [...apps, ...utilities, ...(activeApp === 'article' ? [{ id: 'arti
   <div class="desktop-watermark" aria-hidden="true"><span>ExAI<span class="watermark-98">98</span></span><small>{copy.edition}</small><p>{copy.hint}</p></div>
   <aside class="desktop-note" aria-label={copy.note}><span aria-hidden="true">✳</span><strong>{copy.note}</strong><p>{copy.noteBody}</p><span class="note-signature">— your friends at ExAI</span></aside>
   <main id="desktop-workspace" class="desktop-workspace" aria-label={copy.windows}>
-    {apps.map(app => <Window id={app.id} title={app.title} icon={app.icon} active={activeApp === app.id} copy={copy} address={`exai://${app.id === 'home' ? 'welcome' : app.id}`}>
+    {apps.filter(app => app.id === activeApp).map(app => <Window id={app.id} title={app.title} icon={app.icon} active copy={copy} address={localizedPath(app.path, locale)}>
       {app.id === 'home' && <Welcome locale={locale} />}
       {app.id === 'projects' && <Projects locale={locale} />}
       {app.id === 'blog' && <Blog locale={locale} />}
@@ -53,11 +51,11 @@ const tasks = [...apps, ...utilities, ...(activeApp === 'article' ? [{ id: 'arti
       <Browser locale={locale} />
     </Window>
     <Window id="messenger" title="MSN Messenger" icon="messenger" copy={copy}>
-      <Messenger locale={locale} client:idle />
+      <Messenger locale={locale} client:visible />
     </Window>
     <Window id="terminal" title={copy.terminal} icon="terminal" copy={copy}>
       <p class="terminal-desktop-hint">{copy.terminalHint}</p>
-      <HeroTerminal client:idle files={files} locale={locale} embedded />
+      <HeroTerminal client:visible filesUrl={localizedPath('/terminal.json', locale)} locale={locale} embedded />
       <p class="terminal-desktop-hint">{copy.gameNote}</p>
     </Window>
     <Window id="settings" title={copy.settings} icon="settings" copy={copy}>

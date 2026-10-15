@@ -58,7 +58,9 @@
     "commentsUnavailable": "Los comentarios no están disponibles aquí por ahora. Puedes leerlos y participar en GitHub.",
     "commentsUpdated": "Actualizado",
     "commentDeletedUser": "Usuario eliminado",
-    "commentRead": "Leer en GitHub ↗"
+    "commentRead": "Leer en GitHub ↗",
+    "metaTitle": "Software de código abierto y herramientas de desarrollo",
+    "metaDescription": "Descubre software de código abierto y herramientas de desarrollo de ExAI. Explora proyectos, tutoriales prácticos y formas de participar en la comunidad."
   },
   "about": {
     "metaTitle": "Acerca de",
@@ -138,8 +140,8 @@
     "participation5": "Conversar y mejorar en comunidad"
   },
   "blog": {
-    "metaTitle": "Blog",
-    "metaDescription": "Descubrimientos de software, historias de desarrollo, experiencias de uso y novedades de la comunidad ExAI.",
+    "metaTitle": "Tutoriales de desarrollo y guías de software",
+    "metaDescription": "Explora tutoriales, experiencias de desarrollo y novedades de software de la comunidad ExAI, con guías técnicas disponibles también en inglés.",
     "heroLabel": "Blog",
     "heroTitle": "Desde la",
     "heroTitleAccent": "comunidad",
