@@ -11,7 +11,7 @@ export interface ComposerLabels {
   open: string;
 }
 
-export default function DiscussionComposer({ href, labels }: { href: string; labels: ComposerLabels }) {
+export default function DiscussionComposer({ href, labels, idPrefix = 'community' }: { href: string; labels: ComposerLabels; idPrefix?: string }) {
   const [draft, setDraft] = useState('');
   const [status, setStatus] = useState<'idle' | 'copying' | 'copied' | 'failed'>('idle');
   const textarea = useRef<HTMLTextAreaElement>(null);
@@ -37,14 +37,14 @@ export default function DiscussionComposer({ href, labels }: { href: string; lab
   }
 
   return <form class="discussion-composer" onSubmit={(event) => { event.preventDefault(); void copyAndOpen(); }}>
-    <label for="community-message">{labels.label}</label>
-    <textarea ref={textarea} id="community-message" rows={4} value={draft} disabled={status === 'copying'} maxLength={10000} placeholder={labels.placeholder} aria-describedby="community-message-hint community-message-status"
+    <label for={`${idPrefix}-message`}>{labels.label}</label>
+    <textarea ref={textarea} id={`${idPrefix}-message`} rows={4} value={draft} disabled={status === 'copying'} maxLength={10000} placeholder={labels.placeholder} aria-describedby={`${idPrefix}-message-hint ${idPrefix}-message-status`}
       onInput={(event) => { setDraft(event.currentTarget.value); setStatus('idle'); }} />
-    <p id="community-message-hint" class="discussion-hint">{labels.hint}</p>
+    <p id={`${idPrefix}-message-hint`} class="discussion-hint">{labels.hint}</p>
     <div class="discussion-composer-actions">
       <button class="btn-primary" type="submit" disabled={!draft.trim() || status === 'copying'}>{status === 'copying' ? labels.copying : labels.submit}</button>
       <a class="discussion-text-link" href={href}>{labels.open}</a>
     </div>
-    <p id="community-message-status" class="discussion-status" role="status" aria-live="polite">{status === 'failed' ? labels.failed : status === 'copied' ? labels.copied : ''}</p>
+    <p id={`${idPrefix}-message-status`} class="discussion-status" role="status" aria-live="polite">{status === 'failed' ? labels.failed : status === 'copied' ? labels.copied : ''}</p>
   </form>;
 }

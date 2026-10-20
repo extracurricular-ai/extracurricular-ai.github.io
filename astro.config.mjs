@@ -4,7 +4,9 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://extracurricular.ai',
-  trailingSlash: 'always',
+  // localizedPath normalizes HTML links and canonicals. Requiring a slash on
+  // every route also rejects /en/terminal.json and /en/search.json in dev.
+  trailingSlash: 'ignore',
   devToolbar: { enabled: false },
   integrations: [
     preact(),

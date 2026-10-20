@@ -38,7 +38,8 @@ test('windows open, move without dragging, maximize, minimize, restore and retur
   const window = page.locator('#window-projects');
   await expect(page).toHaveURL(/\/zh\/projects\/$/);
   await expect(window).toBeVisible();
-  await expect(page.locator('#window-home')).toHaveCount(0);
+  await expect(page.locator('#window-home')).toBeVisible();
+  await expect(window).toBeFocused();
   const before = await window.boundingBox();
   await window.locator('[data-move-toggle]').click();
   await window.locator('[data-move="right"]').click();
@@ -189,10 +190,10 @@ test('mobile and 400% equivalent reflow have no horizontal page overflow', async
   }
 });
 
-test('without JavaScript, content and ordinary route links still work', async ({ browser }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false });
+test('without JavaScript, content and ordinary route links still work', async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, baseURL });
   const page = await context.newPage();
-  await page.goto('http://127.0.0.1:4321/zh/');
+  await page.goto('/zh/');
   await expect(page.locator('#window-home h1')).toBeVisible();
   await page.locator('.desktop-icons [data-app-link="projects"]').click();
   await expect(page).toHaveURL(/\/zh\/projects\/?$/);

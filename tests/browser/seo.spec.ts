@@ -58,7 +58,8 @@ test('content navigation updates the URL, title and canonical, and supports brow
   await expect(page).toHaveURL(/\/en\/blog\/$/);
   await expect(page).toHaveTitle('Developer Tool Tutorials & Software Guides | ExAI');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://extracurricular.ai/en/blog/');
-  await expect(page.locator('h1')).toHaveCount(1);
+  await expect(page.locator('#window-blog h1')).toHaveCount(1);
+  await expect(page.locator('#window-home')).toBeVisible();
   await page.goBack();
   await expect(page).toHaveTitle(homeTitle);
   await expect(page).toHaveURL(/\/en\/$/);

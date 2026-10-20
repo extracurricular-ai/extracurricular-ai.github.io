@@ -4,6 +4,7 @@ import { terminalCopy } from './terminal-copy';
 import Invaders from './Invaders';
 import AsciiDonut from './AsciiDonut';
 import '../styles/terminal.css';
+import { navigateToPage } from '../lib/desktop-navigation';
 
 interface Props { filesUrl: string; locale: string; embedded?: boolean }
 interface Output { text?: string; files?: TerminalFile[]; href?: string; error?: boolean }
@@ -98,7 +99,7 @@ export default function HeroTerminal({ filesUrl, locale, embedded = false }: Pro
       case 'open':
         if (!target) output = error(`${copy.usage}: ${copy.manuals[command]}`);
         else if (!file) output = error(copy.missing);
-        else if (command === 'open' && file.href) { window.location.assign(file.href); output = { text: file.title, href: file.href }; }
+        else if (command === 'open' && file.href) { navigateToPage(file.href); output = { text: file.title, href: file.href }; }
         else if (file.directory) output = { text: `${copy.isDir} ${target}`, files: children(files, path) };
         else output = { text: file.body, href: file.href };
         break;
@@ -200,6 +201,5 @@ export default function HeroTerminal({ filesUrl, locale, embedded = false }: Pro
       </section>}
     <div class="terminal-quickstart"><span>$</span>{['ls /', 'cat /README.md', 'man', 'clear', 'play invaders'].map((command) => <button onClick={() => { setClosed(false); setMinimized(false); setGame(false); run(command, false); }}>{command}<span aria-hidden="true"> ↗</span></button>)}</div>
     <span class="sr-only" role="status" aria-live="polite" aria-atomic="true">{interacted.current && entries.length > 0 ? `${entries[entries.length - 1].command}: ${entries[entries.length - 1].output.text?.slice(0, 180) ?? entries[entries.length - 1].output.files?.map((file) => file.path.split('/').pop()).join(', ') ?? ''}` : ''}</span>
-    <noscript><p>{copy.hint} (JavaScript required.)</p></noscript>
   </div>;
 }

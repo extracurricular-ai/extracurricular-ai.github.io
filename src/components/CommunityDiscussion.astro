@@ -21,7 +21,7 @@ const labels = {
     <p class="community-eyebrow">GITHUB DISCUSSIONS / 01</p>
     <h2 id="community-title">{t(locale, 'home.ctaTitle')} <span class="gradient-text">{t(locale, 'home.ctaTitleAccent')}</span></h2>
     <p class="community-description">{t(locale, 'home.ctaBody')}</p>
-    <DiscussionComposer client:visible href={commentHref} labels={labels} />
+    <DiscussionComposer client:visible href={commentHref} labels={labels} idPrefix={`community-${locale}`} />
     <noscript><p><a class="btn-primary" href={commentHref}>{t(locale, 'home.messageOpen')}</a></p></noscript>
   </div>
   <div class="community-comments">

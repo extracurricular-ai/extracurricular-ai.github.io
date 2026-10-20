@@ -31,7 +31,7 @@ const utilities = [
 ];
 const tasks = [...apps.filter(app => app.id === activeApp), ...utilities, ...(activeApp === 'article' ? [{ id: 'article', title, icon: 'notebook' }] : [])];
 ---
-<div class="os-desktop" data-desktop data-initial-app={activeApp} data-copy={JSON.stringify(copy)}>
+<div class="os-desktop" lang={locale} data-desktop data-initial-app={activeApp} data-copy={JSON.stringify(copy)}>
   <a href={`#window-${activeApp}`} class="skip-link">{copy.skip}</a>
   <nav class="desktop-icons" aria-label={copy.desktop}>
     {apps.map(app => <a class="desktop-icon" href={localizedPath(app.path, locale)} data-app-link={app.id}><Icon name={app.icon} /><span>{app.title}</span></a>)}

@@ -10,12 +10,12 @@ async function search(page: Page, query: string) {
   await expect(page.locator('[data-search-results]')).not.toHaveAttribute('aria-busy');
 }
 
-test('real site search stays local, searches articles and projects, and keeps search history', async ({ page }) => {
+test('real site search stays local, searches articles and projects, and keeps search history', async ({ page, baseURL }) => {
   const external: string[] = [];
   let indexRequests = 0;
   page.on('request', r => {
     if (r.url().endsWith('/zh/search.json')) indexRequests++;
-    if (!r.url().startsWith('http://127.0.0.1:4321') && !r.url().startsWith('http://localhost:4321')) external.push(r.url());
+    if (new URL(r.url()).origin !== new URL(baseURL!).origin) external.push(r.url());
   });
   await open(page);
   expect(indexRequests).toBe(0);
@@ -55,7 +55,7 @@ test('real site search stays local, searches articles and projects, and keeps se
   await expect(page.locator(href!.slice(href!.indexOf('#')))).toBeFocused();
 });
 
-test('articles open as real site pages and the public domain maps to local preview', async ({ page }) => {
+test('articles open as real site pages and the public domain maps to local preview', async ({ page, baseURL }) => {
   await open(page);
   await search(page, 'Hello');
   const article = page.locator('[data-search-results] a[href*="/blog/hello-world"]').first();
@@ -67,7 +67,7 @@ test('articles open as real site pages and the public domain maps to local previ
   await page.locator('.desktop-icons [data-open="browser"]').click();
   await page.locator('#ie-address').fill('https://extracurricular.ai/zh/about');
   await page.locator('#ie-address').press('Enter');
-  await expect(page).toHaveURL(/127\.0\.0\.1:4321\/zh\/about\/?$/);
+  await expect(page).toHaveURL(new URL('/zh/about/', baseURL).href);
   await expect(page.locator('#window-about')).toBeVisible();
 });
 

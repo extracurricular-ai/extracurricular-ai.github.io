@@ -1,5 +1,6 @@
 import { BROWSER_HOME, browserUrl, isSearchInput, searchAddress, searchQuery, siteAddress, visitAddress, type BrowserHistory } from '../lib/browser';
 import { searchSite, type SearchDocument } from '../lib/site-search';
+import { navigateToPage } from '../lib/desktop-navigation';
 import type { BrowserCopy } from '../components/desktop/browser-copy';
 import type { SearchCopy } from '../components/desktop/search-copy';
 
@@ -117,7 +118,7 @@ if (browser) {
   function navigate(value: string) {
     const trimmed = value.trim();
     const local = siteAddress(trimmed, location.origin, locale);
-    if (local) { location.assign(`${location.origin}${local}`); return; }
+    if (local) { navigateToPage(local); return; }
     const query = searchQuery(trimmed);
     const url = trimmed === BROWSER_HOME ? BROWSER_HOME : query !== null ? searchAddress(query)
       : isSearchInput(trimmed) ? searchAddress(trimmed) : browserUrl(trimmed, location.origin);

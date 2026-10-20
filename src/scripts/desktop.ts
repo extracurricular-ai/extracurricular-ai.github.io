@@ -1,4 +1,5 @@
 import type { DesktopCopy } from '../components/desktop/copy';
+import { contentWindows } from './content-windows';
 
 const desktop = document.querySelector<HTMLElement>('[data-desktop]');
 if (desktop) {
@@ -9,7 +10,7 @@ if (desktop) {
   const menu = document.querySelector<HTMLElement>('#start-menu')!;
   const announcement = document.querySelector<HTMLElement>('#desktop-announcement')!;
   const launchers = new Map<string, HTMLElement>();
-  const routes = new Map(Array.from(desktop.querySelectorAll<HTMLAnchorElement>('.desktop-icons [data-app-link]')).map(el => [new URL(el.href).pathname.replace(/\/$/, '') || '/', el.dataset.appLink!]));
+  let navigation: ReturnType<typeof contentWindows> | undefined;
   let z = 10;
   let active = desktop.dataset.initialApp!;
   let desktopSnapshot: string[] = [];
@@ -30,6 +31,7 @@ if (desktop) {
     });
     taskButtons.forEach((button, key) => button.setAttribute('aria-pressed', String(key === id)));
     el.style.zIndex = String(++z);
+    navigation?.activate(id);
   }
   function focusWindow(el: HTMLElement) {
     el.focus({ preventScroll: !isFlow() });
@@ -40,18 +42,23 @@ if (desktop) {
     startButton.setAttribute('aria-expanded', 'false');
     if (returnFocus) startButton.focus();
   }
-  function openWindow(id: string, launcher?: HTMLElement) {
+  function openWindow(id: string, launcher?: HTMLElement, focus = true) {
     const el = windows.get(id);
     if (!el) return;
     if (launcher && !el.contains(launcher) && !menu.contains(launcher)) launchers.set(id, launcher);
-    closeMenu();
+    if (focus) closeMenu();
     el.hidden = false;
     el.dataset.state = 'open';
     taskButtons.get(id)!.hidden = false;
-    activate(id);
-    focusWindow(el);
+    if (focus) {
+      activate(id);
+      focusWindow(el);
+    } else {
+      el.querySelectorAll<HTMLElement>('.os-window-controls, .os-menubar, .os-move-controls, .os-window-body')
+        .forEach(part => { part.inert = !isFlow(); });
+    }
     el.dispatchEvent(new Event('desktop:open'));
-    announce(copy.opened, el);
+    if (focus) announce(copy.opened, el);
   }
   function fallbackFocus(id: string) {
     const launcher = launchers.get(id);
@@ -126,21 +133,14 @@ if (desktop) {
     const link = target.closest<HTMLAnchorElement>('a');
     if (link && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey && !link.target && !link.hasAttribute('download')) {
       const url = new URL(link.href);
-      const id = url.origin === location.origin && !url.search ? routes.get(url.pathname.replace(/\/$/, '') || '/') : undefined;
-      // Only reopen the current document in place. Other content links use
-      // native navigation so URL, metadata, history and the visible page agree.
-      if (id && id === desktop!.dataset.initialApp && !link.closest('.language-links,.start-languages')) {
-        event.preventDefault(); openWindow(id, link);
-        if (url.hash) {
-          const destination = document.getElementById(url.hash.slice(1));
-          if (destination && windows.get(id)?.contains(destination)) {
-            destination.scrollIntoView({ block: 'center' }); destination.focus({ preventScroll: true });
-          }
-        }
-        return;
-      }
       if (link.classList.contains('skip-link')) {
-        event.preventDefault(); openWindow(desktop!.dataset.initialApp!, link); return;
+        const destination = document.getElementById(url.hash.slice(1))?.dataset.window;
+        event.preventDefault(); openWindow(destination ?? desktop!.dataset.initialApp!, link); return;
+      }
+      if (navigation?.accepts(url) && !link.closest('.language-links,.start-languages')) {
+        event.preventDefault();
+        void navigation.navigate(url, link);
+        return;
       }
     }
     const button = target.closest<HTMLButtonElement>('button');
@@ -186,7 +186,7 @@ if (desktop) {
     }
   });
 
-  windows.forEach((el, id) => {
+  function registerWindow(el: HTMLElement, id: string) {
     el.addEventListener('pointerdown', () => activate(id));
     const handle = el.querySelector<HTMLElement>('[data-drag-handle]')!;
     let drag: { id: number; x: number; y: number; left: number; top: number } | undefined;
@@ -205,7 +205,8 @@ if (desktop) {
     handle.addEventListener('pointerup', end);
     handle.addEventListener('pointercancel', end);
     handle.addEventListener('lostpointercapture', end);
-  });
+  }
+  windows.forEach(registerWindow);
   window.addEventListener('resize', () => {
     activate(active);
     if (isFlow()) return;
@@ -233,6 +234,7 @@ if (desktop) {
   });
   applyPreferences();
   activate(active);
+  navigation = contentWindows({ desktop, windows, taskButtons, registerWindow, openWindow });
   const clock = document.querySelector<HTMLTimeElement>('#desktop-clock')!;
   function updateClock() { const now = new Date(); clock.textContent = now.toLocaleTimeString(document.documentElement.lang, { hour: '2-digit', minute: '2-digit' }); clock.dateTime = now.toISOString(); }
   updateClock(); setInterval(updateClock, 30_000);
