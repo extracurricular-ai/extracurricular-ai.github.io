@@ -12,7 +12,7 @@ export const GET: APIRoute = async ({ site }) => {
   const origin = site ?? new URL('https://extracurricular.ai');
   // Keep these shared routes aligned with the localized page templates.
   // Root-level English aliases are omitted in favor of their canonical URLs.
-  const sharedPaths = ['/', '/about/', '/blog/', '/projects/', '/get-involved/'];
+  const sharedPaths = ['/', '/about/', '/blog/', '/projects/', '/get-involved/', '/privacy/'];
   const paths = locales.flatMap((locale) => sharedPaths.map((path) => localizedPath(path, locale)));
   const modifiedDates = new Map<string, string>();
   for (const post of await getCollection('blog')) {

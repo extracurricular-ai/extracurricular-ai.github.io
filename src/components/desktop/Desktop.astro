@@ -74,7 +74,7 @@ const tasks = [...apps.filter(app => app.id === activeApp), ...utilities, ...(ac
     <Window id="help" title={copy.help} icon="help" copy={copy}>
       <div class="settings-content"><Icon name="help" size={48} /><h2>{copy.help}</h2><p>{copy.helpBody}</p><p>{copy.moveHelp}</p><p>{copy.shortcuts}</p><button type="button" class="os-button" data-open="settings">{copy.settings}</button></div>
     </Window>
-    {activeApp === 'article' && <Window id="article" title={title} icon="notebook" active copy={copy} address="exai://blog"><slot /></Window>}
+    {activeApp === 'article' && <Window id="article" title={title} icon="notebook" active copy={copy} address={Astro.url.pathname}><slot /></Window>}
   </main>
   <nav id="start-menu" class="start-menu" aria-label={copy.start} hidden>
     <div class="start-brand" aria-hidden="true">ExAI <strong>98</strong></div>
@@ -98,4 +98,5 @@ const tasks = [...apps.filter(app => app.id === activeApp), ...utilities, ...(ac
 </div>
 <script>
   import '../../scripts/desktop';
+  import '../../scripts/adsense';
 </script>

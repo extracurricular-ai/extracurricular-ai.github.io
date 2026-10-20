@@ -39,8 +39,8 @@ export function contentWindows({ desktop, windows, taskButtons, registerWindow, 
   const key = (path: string) => `${path.replace(/\/+$/, '')}/`;
   function accepts(url: URL) {
     return url.origin === location.origin && !url.search && (
-      /^\/(?:en|zh|es|fr)(?:\/(?:about|projects|get-involved|blog(?:\/[^/]+)?))?\/?$/.test(url.pathname)
-      || /^\/(?:about|projects|get-involved|blog)?\/?$/.test(url.pathname)
+      /^\/(?:en|zh|es|fr)(?:\/(?:about|projects|get-involved|privacy|blog(?:\/[^/]+)?))?\/?$/.test(url.pathname)
+      || /^\/(?:about|projects|get-involved|privacy|blog)?\/?$/.test(url.pathname)
     );
   }
   function snapshot(doc: Document, id: string): PageData {

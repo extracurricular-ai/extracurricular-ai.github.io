@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BlogImage from '../../../components/BlogImage.astro';
+import ArticleAd from '../../../components/ArticleAd.astro';
 import { getCollection } from 'astro:content';
 import { locales, localizedPath, type Locale } from '../../../i18n/index';
 
@@ -84,6 +85,7 @@ const date = post.data.pubDate.toLocaleDateString(
       <div class="prose">
         <Content />
       </div>
+      <ArticleAd locale={locale} />
 
     </div>
   </article>

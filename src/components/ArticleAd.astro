@@ -1,0 +1,36 @@
+---
+import type { Locale } from '../i18n/index';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const copy = {
+  en: ['Advertisements', 'Ad placement preview'],
+  zh: ['广告', '广告位预览'],
+  es: ['Publicidad', 'Vista previa del espacio publicitario'],
+  fr: ['Publicité', 'Aperçu de l’emplacement publicitaire'],
+}[locale];
+---
+<aside class="article-ad" data-article-ad aria-label={copy[0]} hidden>
+  <p class="article-ad-label">{copy[0]}</p>
+  <div class="article-ad-surface" data-ad-surface>
+    <span class="article-ad-preview">{copy[1]}</span>
+  </div>
+  <template data-ad-template>
+    <!-- Keep mobile ads inside the article window rather than the viewport. -->
+    <ins class="adsbygoogle" style="display:block"
+      data-ad-client="ca-pub-4514332323196968"
+      data-ad-slot="5669534073"
+      data-ad-format="auto"
+      data-full-width-responsive="false"></ins>
+  </template>
+</aside>
+<style>
+  .article-ad { margin-block: 48px 16px; width: 100%; text-align: center; }
+  .article-ad-label { margin-bottom: 12px; font-size: .75rem; color: #555; }
+  .article-ad-surface { width: 100%; max-width: 300px; min-height: 250px; margin-inline: auto; }
+  .article-ad-preview { display: none; }
+  [data-ad-state="preview"] .article-ad-surface {
+    display: grid; place-items: center; border: 1px dashed #888; background: #f0f0e8; color: #555;
+  }
+  [data-ad-state="preview"] .article-ad-preview { display: block; font-size: .8rem; padding: 12px; }
+  @media print { .article-ad { display: none; } }
+</style>

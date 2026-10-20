@@ -99,6 +99,8 @@ test('mobile reflow, clear, nudge and reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 390, height: 844 });
   await open(page);
+  // Make the first-visit cookie choice before interacting beneath the banner.
+  await page.getByRole('button', { name: '拒绝统计', exact: true }).click();
   await page.getByRole('button', { name: '发送抖动' }).click();
   await expect(page.locator('.msn-system-message')).toContainText('窗口抖动');
   expect(await page.locator('.msn').evaluate(el => getComputedStyle(el).animationName)).toBe('none');

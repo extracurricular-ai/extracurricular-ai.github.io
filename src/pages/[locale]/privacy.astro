@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { locales, type Locale } from '../../i18n/index';
+import { privacyCopy } from '../../i18n/privacy';
+import { GITHUB_ORG } from '../../config';
+interface Props { locale?: Locale; }
+export function getStaticPaths() { return locales.map(locale => ({ params: { locale } })); }
+const locale = (Astro.props.locale ?? Astro.params.locale ?? 'en') as Locale;
+const copy = privacyCopy[locale];
+const links = [
+  [copy.contact, GITHUB_ORG],
+  [copy.google, 'https://policies.google.com/privacy'],
+  [copy.partners, 'https://policies.google.com/technologies/partner-sites'],
+  [copy.ads, 'https://myadcenter.google.com/'],
+  [copy.github, 'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement'],
+  [copy.horde, 'https://aihorde.net/'],
+];
+---
+<BaseLayout title={copy.title} description={copy.description} locale={locale}>
+  <article class="privacy-content">
+    <h1>{copy.title}</h1>
+    <p>{copy.updated}</p>
+    {copy.sections.map(([title, text]) => <section><h2>{title}</h2><p>{text}</p></section>)}
+    <h2>{copy.links}</h2>
+    <ul>{links.map(([title, href]) => <li><a href={href} target="_blank" rel="noopener noreferrer">{title} ↗</a></li>)}</ul>
+  </article>
+</BaseLayout>
+<style>
+  .privacy-content { padding: 28px; max-width: 760px; margin: auto; line-height: 1.8; }
+  h1 { font-size: 1.8rem; font-weight: bold; margin-bottom: 12px; }
+  h2 { font-size: 1.1rem; font-weight: bold; margin: 28px 0 10px; }
+  a { color: #000080; text-decoration: underline; display: inline-flex; align-items: center; min-height: 32px; }
+  ul { padding-left: 20px; list-style: disc; }
+  @media (max-width: 700px) { .privacy-content { padding: 18px; } }
+</style>
