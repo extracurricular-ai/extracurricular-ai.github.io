@@ -133,12 +133,13 @@ button { font: inherit; }
 .os-desktop .terminal-wrap.is-embedded > .terminal-caption, .os-desktop .terminal-wrap.is-embedded .terminal-titlebar { display: none; }
 .os-desktop .terminal-window { border: none; border-radius: 0; box-shadow: none; }
 .os-desktop .terminal-session { height: min(420px, 50dvh); min-height: 220px; }
-/* Pass the maximized window's available height through to the scrollback.
+/* Pass the maximized window's available height through to the shell or game.
    Mobile and list layouts have no bounded window height, so keep their sizing. */
 @media (min-width: 701px) {
   .os-desktop:not(.pref-simple) [data-window='terminal'].is-maximized .os-window-body,
   .os-desktop:not(.pref-simple) [data-window='terminal'].is-maximized .terminal-wrap,
-  .os-desktop:not(.pref-simple) [data-window='terminal'].is-maximized .terminal-window {
+  .os-desktop:not(.pref-simple) [data-window='terminal'].is-maximized .terminal-window,
+  .os-desktop:not(.pref-simple) [data-window='terminal'].is-maximized .arcade {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -151,6 +152,25 @@ button { font: inherit; }
   }
   .os-desktop:not(.pref-simple) [data-window='terminal'].is-maximized :is(.terminal-desktop-hint, .terminal-footer, .terminal-quickstart) {
     flex-shrink: 0;
+  }
+  .os-desktop:not(.pref-simple) [data-window='terminal'].is-maximized .arcade {
+    overflow: auto;
+  }
+  .os-desktop:not(.pref-simple) [data-window='terminal'].is-maximized .arcade > :not(.arcade-stage) {
+    flex-shrink: 0;
+  }
+  .os-desktop:not(.pref-simple) [data-window='terminal'].is-maximized .arcade-stage {
+    flex: 1;
+    min-height: 180px;
+  }
+  .os-desktop:not(.pref-simple) [data-window='terminal'].is-maximized .arcade canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    /* The 480×280 playfield keeps its proportions inside the larger stage. */
+    object-fit: contain;
   }
 }
 .os-desktop .terminal-footer { font-size: .75rem; }

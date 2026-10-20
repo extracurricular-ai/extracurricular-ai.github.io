@@ -112,6 +112,56 @@ test('terminal retains commands, history, completion, output and arcade state', 
   await expect(input).toBeFocused();
 });
 
+test('Invaders fills the maximized terminal and restores its normal sizing', async ({ page }) => {
+  await page.goto('/zh/');
+  await page.locator('.desktop-icons [data-open="terminal"]').click();
+  const input = page.locator('#hero-terminal-input');
+  await input.fill('play invaders');
+  await input.press('Enter');
+  const terminal = page.locator('#window-terminal');
+  const stage = terminal.locator('.arcade-stage');
+  const canvas = stage.locator('canvas');
+  const maximize = terminal.locator('[data-window-action="maximize"]');
+  const normalHeight = (await stage.boundingBox())!.height;
+  expect(normalHeight).toBeLessThanOrEqual(322);
+
+  await maximize.click();
+  await expect.poll(async () => (await stage.boundingBox())!.height).toBeGreaterThan(normalHeight + 100);
+  const maximizedHeight = (await stage.boundingBox())!.height;
+  expect((await canvas.boundingBox())!.height).toBeCloseTo(maximizedHeight - 2, 0);
+  await expect(canvas).toHaveAttribute('width', '480');
+  await expect(canvas).toHaveAttribute('height', '280');
+  expect(await canvas.evaluate(el => getComputedStyle(el).objectFit)).toBe('contain');
+  const space = await terminal.evaluate(el => {
+    const shell = el.querySelector('.terminal-window')!.getBoundingClientRect();
+    const game = el.querySelector('.arcade')!.getBoundingClientRect();
+    const body = el.querySelector('.os-window-body')!;
+    return { gap: shell.bottom - game.bottom, overflow: body.scrollHeight - body.clientHeight };
+  });
+  expect(Math.abs(space.gap)).toBeLessThan(2);
+  expect(space.overflow).toBeLessThanOrEqual(1);
+
+  await page.setViewportSize({ width: 1440, height: 1200 });
+  await expect.poll(async () => (await stage.boundingBox())!.height).toBeGreaterThan(maximizedHeight + 190);
+  await maximize.click();
+  await expect.poll(async () => (await stage.boundingBox())!.height).toBeCloseTo(normalHeight, 0);
+
+  await maximize.click();
+  await page.setViewportSize({ width: 1440, height: 520 });
+  const controls = terminal.locator('.arcade-controls');
+  await controls.scrollIntoViewIfNeeded();
+  await expect(controls).toBeInViewport();
+  expect((await stage.boundingBox())!.height).toBeGreaterThanOrEqual(180);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect.poll(async () => (await stage.boundingBox())!.height).toBeLessThanOrEqual(322);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await terminal.locator('.os-menubar [data-open="settings"]').click();
+  await page.locator('[data-preference="simple"]').check();
+  await expect.poll(async () => (await stage.boundingBox())!.height).toBeLessThanOrEqual(322);
+});
+
 test('accessibility preferences persist, including reduced motion and list layout', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/zh/');
