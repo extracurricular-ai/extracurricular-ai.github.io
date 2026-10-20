@@ -79,6 +79,7 @@ export function contentWindows({ desktop, windows, taskButtons, registerWindow, 
     const url = paths.get(key(location.pathname))?.id === id
       ? `${location.pathname}${location.search}${location.hash}` : page.path;
     history.replaceState({ ...history.state, desktopWindow: id }, '', url);
+    document.dispatchEvent(new Event('desktop:pagechange'));
   }
 
   async function loadStyles(doc: Document) {

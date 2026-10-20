@@ -1,0 +1,77 @@
+---
+import type { Locale } from '../i18n/index';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const translations = {
+  en: {
+    settings: 'Cookie settings', title: 'Optional analytics cookies',
+    body: 'May ExAI use Google Analytics to understand visits and improve this site? If you allow it, Google receives page visits, referral sources and browser/device information. Browsing works equally well if you refuse.',
+    allow: 'Allow analytics', deny: 'Reject analytics', close: 'Close settings',
+    details: 'How your choice works',
+    explanation: 'Before you allow analytics, we do not load Google Analytics. We save your choice on this device for 180 days. If enabled, Google uses _ga cookies lasting up to 180 days. You can withdraw consent here at any time; this stops future analytics and removes these cookies, without closing your windows. Previously sent data is not deleted by withdrawing consent. Google may process data outside your country. Advertising consent stays disabled.',
+    privacy: 'How Google uses information',
+  },
+  zh: {
+    settings: 'Cookie 设置', title: '可选的访问统计 Cookie',
+    body: '是否允许 ExAI 使用 Google Analytics 了解访问情况、改进网站？允许后，Google 会收到页面浏览、来源及浏览器和设备信息。拒绝也可以正常浏览。',
+    allow: '允许统计', deny: '拒绝统计', close: '关闭设置',
+    details: '了解数据与选择',
+    explanation: '同意前不会加载 Google Analytics。你的选择会在本设备保存 180 天；启用后，Google 使用的 _ga Cookie 最长保存 180 天。你可以随时在这里撤回同意，停止后续统计并清除这些 Cookie，已打开的窗口不受影响。撤回不会删除此前已发送的数据。Google 可能在你所在国家或地区以外处理数据。广告相关同意始终关闭。',
+    privacy: 'Google 如何使用信息',
+  },
+  es: {
+    settings: 'Ajustes de cookies', title: 'Cookies de análisis opcionales',
+    body: '¿Permites que ExAI use Google Analytics para comprender las visitas y mejorar el sitio? Google recibirá visitas a páginas, fuentes de referencia e información del navegador y dispositivo. Puedes navegar igual si rechazas.',
+    allow: 'Permitir análisis', deny: 'Rechazar análisis', close: 'Cerrar ajustes',
+    details: 'Sobre los datos y tu elección',
+    explanation: 'No cargamos Google Analytics sin tu permiso. Guardamos tu elección en este dispositivo durante 180 días. Si aceptas, Google usa cookies _ga que duran hasta 180 días. Puedes retirar tu consentimiento aquí para detener el análisis y eliminar esas cookies sin cerrar tus ventanas. Esto no elimina los datos ya enviados. Google puede procesar datos fuera de tu país. El consentimiento publicitario permanece desactivado.',
+    privacy: 'Cómo utiliza Google la información',
+  },
+  fr: {
+    settings: 'Paramètres des cookies', title: 'Cookies statistiques facultatifs',
+    body: 'Autorises-tu ExAI à utiliser Google Analytics pour comprendre les visites et améliorer le site ? Google recevra les pages consultées, les sources de visite et des informations sur le navigateur et l’appareil. Refuser ne gêne pas la navigation.',
+    allow: 'Autoriser les statistiques', deny: 'Refuser les statistiques', close: 'Fermer les paramètres',
+    details: 'Les données et ton choix',
+    explanation: 'Nous ne chargeons pas Google Analytics sans ton accord. Ton choix est enregistré sur cet appareil pendant 180 jours. Après accord, les cookies _ga de Google durent jusqu’à 180 jours. Tu peux retirer ton accord ici pour arrêter les statistiques et supprimer ces cookies, sans fermer tes fenêtres. Cela ne supprime pas les données déjà envoyées. Google peut traiter les données hors de ton pays. Le consentement publicitaire reste désactivé.',
+    privacy: 'Utilisation des informations par Google',
+  },
+};
+const copy = translations[locale];
+---
+<button type="button" class="cookie-settings js-only" data-cookie-settings aria-controls="analytics-consent" aria-expanded="false" aria-label={copy.settings} title={copy.settings}>
+  <span aria-hidden="true">🍪</span>
+</button>
+<aside id="analytics-consent" class="analytics-consent" aria-labelledby="analytics-consent-title" hidden>
+  <h2 id="analytics-consent-title">{copy.title}</h2>
+  <p>{copy.body}</p>
+  <details>
+    <summary>{copy.details}</summary>
+    <p>{copy.explanation}</p>
+    <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">{copy.privacy} ↗</a>
+  </details>
+  <div class="consent-actions">
+    <button type="button" class="os-button" data-consent="denied">{copy.deny}</button>
+    <button type="button" class="os-button" data-consent="granted">{copy.allow}</button>
+    <button type="button" class="os-button" data-consent-close hidden>{copy.close}</button>
+  </div>
+</aside>
+<script>
+  import '../scripts/analytics';
+</script>
+<style>
+  .analytics-consent {
+    position: fixed; z-index: 100002; right: 12px; bottom: 64px;
+    width: min(460px, calc(100vw - 24px)); max-height: calc(100dvh - 84px);
+    overflow: auto; padding: 18px; background: #c0c0c0; color: #171717;
+    box-shadow: inset 1px 1px #fff, inset -1px -1px #444, 3px 3px #0005;
+    font-size: .875rem; line-height: 1.5; text-align: start; white-space: normal;
+  }
+  .analytics-consent[hidden], .consent-actions [hidden] { display: none; }
+  h2 { font-size: 1rem; font-weight: bold; margin: 0 0 10px; }
+  p { margin: 10px 0; }
+  summary { cursor: pointer; }
+  a { color: #000080; text-decoration: underline; }
+  .consent-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+  .consent-actions button { flex: 1 1 auto; }
+  @media print { .analytics-consent, .cookie-settings { display: none; } }
+</style>

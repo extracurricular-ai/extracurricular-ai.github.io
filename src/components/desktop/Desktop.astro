@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import AnalyticsConsent from '../AnalyticsConsent.astro';
 import Browser from './Browser.astro';
 import Window from './Window.astro';
 import { desktopCopy } from './copy';
@@ -90,7 +91,7 @@ const tasks = [...apps.filter(app => app.id === activeApp), ...utilities, ...(ac
     <button type="button" id="start-button" class="os-button start-button js-only" aria-expanded="false" aria-controls="start-menu"><Icon name="computer" size={26} /><strong>{copy.start}</strong></button>
     <button type="button" class="show-desktop js-only" data-show-desktop aria-label={copy.showDesktop} title={copy.showDesktop}><Icon name="computer" size={24} /></button>
     <nav class="taskbar-tasks" aria-label={copy.windows}>{tasks.map(app => <button type="button" data-task={app.id} hidden={activeApp !== app.id} class="os-button task-button" aria-controls={`window-${app.id}`} aria-pressed={activeApp === app.id}><Icon name={app.icon} size={20} /><span>{app.title}</span></button>)}</nav>
-    <div class="system-tray"><button type="button" data-open="messenger" class="js-only" aria-label="MSN Messenger" title="MSN Messenger"><Icon name="messenger" size={22} /></button><button type="button" data-open="settings" class="js-only" aria-label={copy.settings} title={copy.settings}><Icon name="settings" size={22} /></button><span class="tray-locale">{locale.toUpperCase()}</span><time id="desktop-clock" aria-label={locale === 'zh' ? '当前时间' : 'Local time'}>ExAI 98</time></div>
+    <div class="system-tray"><AnalyticsConsent locale={locale} /><button type="button" data-open="messenger" class="js-only" aria-label="MSN Messenger" title="MSN Messenger"><Icon name="messenger" size={22} /></button><button type="button" data-open="settings" class="js-only" aria-label={copy.settings} title={copy.settings}><Icon name="settings" size={22} /></button><span class="tray-locale">{locale.toUpperCase()}</span><time id="desktop-clock" aria-label={locale === 'zh' ? '当前时间' : 'Local time'}>ExAI 98</time></div>
   </footer>
   <p class="sr-only" id="desktop-announcement" role="status" aria-live="polite" aria-atomic="true"></p>
   <noscript><p class="no-script-note">{copy.noScript}</p><style>.js-only,.os-window-controls,.os-menubar,.taskbar-tasks{display:none!important}.os-taskbar{position:static}.os-desktop{height:auto;overflow:visible}.desktop-workspace{position:relative;margin:20px}.os-window{position:relative;inset:auto;width:100%;height:auto;max-height:none}.os-window-body{overflow:visible}.desktop-icons{position:relative;display:flex;flex-wrap:wrap;width:auto}.desktop-note,.desktop-watermark{display:none}</style></noscript>
